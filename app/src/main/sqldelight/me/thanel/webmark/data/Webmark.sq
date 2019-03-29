@@ -1,0 +1,25 @@
+CREATE TABLE webmark (
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  link TEXT NOT NULL,
+  title TEXT
+);
+
+selectAll:
+SELECT *
+FROM webmark;
+
+insert:
+INSERT INTO webmark(id, link)
+VALUES (?, ?);
+
+lastInsertId:
+SELECT last_insert_rowid();
+
+deleteById:
+DELETE FROM webmark
+WHERE id = ?;
+
+updateTitleById:
+UPDATE webmark
+SET title = ?
+WHERE id = ?;
