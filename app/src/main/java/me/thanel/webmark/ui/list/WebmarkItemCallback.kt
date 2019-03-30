@@ -10,11 +10,15 @@ object WebmarkItemCallback : DiffUtil.ItemCallback<Webmark>() {
     override fun areContentsTheSame(oldItem: Webmark, newItem: Webmark) =
         oldItem == newItem
 
-    override fun getChangePayload(oldItem: Webmark, newItem: Webmark): Any? {
-        val changes = mutableListOf<WebmarkChange>()
-        if (oldItem.title != newItem.title) {
-            changes.add(WebmarkChange.Title)
+    override fun getChangePayload(oldItem: Webmark, newItem: Webmark): Any? =
+        mutableListOf<WebmarkChange>()
+            .addIf(WebmarkChange.Title) { oldItem.title != newItem.title }
+            .addIf(WebmarkChange.Favicon) { oldItem.faviconUrl != newItem.faviconUrl }
+
+    private fun <E> MutableList<E>.addIf(item: E, condition: () -> Boolean): MutableList<E> {
+        if (condition()) {
+            add(item)
         }
-        return changes
+        return this
     }
 }

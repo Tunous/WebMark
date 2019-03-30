@@ -1,7 +1,10 @@
+import android.net.Uri;
+
 CREATE TABLE webmark (
   id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  link TEXT NOT NULL,
-  title TEXT
+  url TEXT AS Uri NOT NULL,
+  title TEXT,
+  faviconUrl TEXT AS Uri
 );
 
 selectAll:
@@ -9,7 +12,7 @@ SELECT *
 FROM webmark;
 
 insert:
-INSERT INTO webmark(id, link)
+INSERT INTO webmark(id, url)
 VALUES (?, ?);
 
 lastInsertId:
@@ -19,7 +22,9 @@ deleteById:
 DELETE FROM webmark
 WHERE id = ?;
 
-updateTitleById:
+updateById:
 UPDATE webmark
-SET title = ?
+SET
+  title = ?,
+  faviconUrl = ?
 WHERE id = ?;

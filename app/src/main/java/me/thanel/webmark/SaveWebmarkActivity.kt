@@ -2,6 +2,7 @@ package me.thanel.webmark
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.webkit.URLUtil
 import android.widget.Toast
@@ -19,13 +20,13 @@ class SaveWebmarkActivity : Activity() {
         finish()
     }
 
-    private fun getSharedUrlFromIntent(): String? {
+    private fun getSharedUrlFromIntent(): Uri? {
         val intent = intent ?: return null
         if (intent.action != Intent.ACTION_SEND) return null
 
         val url = intent.getStringExtra(Intent.EXTRA_TEXT) ?: return null
         if (!URLUtil.isHttpUrl(url) && !URLUtil.isHttpsUrl(url)) return null
 
-        return url
+        return Uri.parse(url)
     }
 }

@@ -3,6 +3,7 @@ package me.thanel.webmark
 import android.app.IntentService
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.widget.Toast
 import com.chimbori.crux.articles.ArticleExtractor
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +25,7 @@ class SaveWebmarkService : IntentService(SaveWebmarkService::class.java.simpleNa
     private val database: Database by instance()
 
     override fun onHandleIntent(intent: Intent?) {
-        val url = intent?.getStringExtra(EXTRA_URL)
+        val url = intent?.getParcelableExtra<Uri>(EXTRA_URL)
         runBlocking {
             if (url != null) {
                 showToast("Saving...")
@@ -35,10 +36,10 @@ class SaveWebmarkService : IntentService(SaveWebmarkService::class.java.simpleNa
         }
     }
 
-    private suspend fun saveWebmark(url: String) {
+    private suspend fun saveWebmark(uri: Uri) {
         val queries = database.webmarkQueries
         val id = queries.transactionWithResult {
-            queries.insert(null, url)
+            queries.insert(null, uri)
             queries.lastInsertId().executeAsOne()
         }
 
@@ -48,19 +49,36 @@ class SaveWebmarkService : IntentService(SaveWebmarkService::class.java.simpleNa
         }
 
         try {
+            val url = uri.toString()
             val document = Jsoup.connect(url).get()
             val article = ArticleExtractor.with(url, document.html())
                 .extractMetadata()
                 .article()
 
-            queries.updateTitleById(article.title, id)
+            queries.updateById(
+                id = id,
+                title = article.title,
+                faviconUrl = article.faviconUrl?.let(Uri::parse)
+            )
 
         } catch (e: HttpStatusException) {
-            queries.updateTitleById("Http status error (${e.statusCode}) :(", id)
+            queries.updateById(
+                id = id,
+                title = "Http status error (${e.statusCode}) :(",
+                faviconUrl = null
+            )
         } catch (e: SocketTimeoutException) {
-            queries.updateTitleById("Timeout :(", id)
+            queries.updateById(
+                id = id,
+                title = "Timeout :(",
+                faviconUrl = null
+            )
         } catch (e: IOException) {
-            queries.updateTitleById("Error (${e.localizedMessage}) :(", id)
+            queries.updateById(
+                id = id,
+                title = "Error (${e.localizedMessage}) :(",
+                faviconUrl = null
+            )
         }
 
         showToast("Saved page")
@@ -74,9 +92,9 @@ class SaveWebmarkService : IntentService(SaveWebmarkService::class.java.simpleNa
     companion object {
         private const val EXTRA_URL = "url"
 
-        fun getIntent(context: Context, url: String) =
+        fun getIntent(context: Context, uri: Uri) =
             Intent(context, SaveWebmarkService::class.java).apply {
-                putExtra(EXTRA_URL, url)
+                putExtra(EXTRA_URL, uri)
             }
     }
 }
