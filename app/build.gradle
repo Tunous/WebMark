@@ -22,6 +22,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/library_release.kotlin_module'
+    }
+}
+
+androidExtensions {
+    experimental = true
 }
 
 dependencies {
@@ -39,9 +46,9 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation 'me.drakeet.multitype:multitype:4.0.0-alpha3'
     implementation 'com.github.chimbori:crux:2.0.2'
     implementation 'org.jsoup:jsoup:1.11.3'
+    implementation 'com.github.Tunous:RecyclerViewUtils:-SNAPSHOT'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
