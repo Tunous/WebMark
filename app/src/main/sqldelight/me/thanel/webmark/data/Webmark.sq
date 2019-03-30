@@ -4,7 +4,8 @@ CREATE TABLE webmark (
   id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   url TEXT AS Uri NOT NULL,
   title TEXT,
-  faviconUrl TEXT AS Uri
+  faviconUrl TEXT AS Uri,
+  estimatedReadingTimeMinutes INTEGER AS Int DEFAULT 0 NOT NULL
 );
 
 selectAll:
@@ -26,5 +27,6 @@ updateById:
 UPDATE webmark
 SET
   title = ?,
-  faviconUrl = ?
+  faviconUrl = ?,
+  estimatedReadingTimeMinutes = ?
 WHERE id = ?;

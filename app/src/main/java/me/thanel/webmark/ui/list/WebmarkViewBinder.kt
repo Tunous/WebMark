@@ -49,18 +49,22 @@ class WebmarkViewBinder : BaseItemViewBinder<Webmark>(R.layout.item_webmark) {
     override fun onBindViewHolder(holder: ContainerViewHolder, item: Webmark) {
         super.onBindViewHolder(holder, item)
         holder.bindTitle(item)
-        holder.bindLink(item)
+        holder.bindDetails(item)
         holder.bindFavicon(item)
         holder.markAsDoneButton.tag = item
     }
 
     override fun onBindViewHolder(holder: ContainerViewHolder, item: Webmark, payloads: List<Any>) {
-        super.onBindViewHolder(holder, item, payloads)
+        if (payloads.isEmpty()) {
+            super.onBindViewHolder(holder, item, payloads)
+            return
+        }
         holder.itemView.setTag(R.id.bound_item, item)
         handleEnumPayloadChanges<WebmarkChange>(payloads) {
             when (it) {
                 WebmarkChange.Title -> holder.bindTitle(item)
                 WebmarkChange.Favicon -> holder.bindFavicon(item)
+                WebmarkChange.Details -> holder.bindDetails(item)
             }
         }
     }
@@ -69,9 +73,15 @@ class WebmarkViewBinder : BaseItemViewBinder<Webmark>(R.layout.item_webmark) {
         webmarkTitleTextView.text = item.title ?: item.url.toString()
     }
 
-    private fun ContainerViewHolder.bindLink(item: Webmark) {
-        val shortLink = item.url.host?.removePrefix("www.")
-        webmarkLinkTextView.text = shortLink
+    private fun ContainerViewHolder.bindDetails(item: Webmark) {
+        var details = item.url.host?.removePrefix("www.") ?: ""
+        if (item.estimatedReadingTimeMinutes > 0) {
+            if (details.isNotEmpty()) {
+                details += " ⸱ "
+            }
+            details += "${item.estimatedReadingTimeMinutes} min"
+        }
+        webmarkLinkTextView.text = details
     }
 
     private fun ContainerViewHolder.bindFavicon(item: Webmark) {

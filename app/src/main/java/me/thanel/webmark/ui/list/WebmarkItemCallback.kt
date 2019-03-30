@@ -14,6 +14,7 @@ object WebmarkItemCallback : DiffUtil.ItemCallback<Webmark>() {
         mutableListOf<WebmarkChange>()
             .addIf(WebmarkChange.Title) { oldItem.title != newItem.title }
             .addIf(WebmarkChange.Favicon) { oldItem.faviconUrl != newItem.faviconUrl }
+            .addIf(WebmarkChange.Details) { oldItem.url != newItem.url || oldItem.estimatedReadingTimeMinutes != newItem.estimatedReadingTimeMinutes }
 
     private fun <E> MutableList<E>.addIf(item: E, condition: () -> Boolean): MutableList<E> {
         if (condition()) {

@@ -4,6 +4,7 @@ import android.app.IntentService
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import com.chimbori.crux.articles.ArticleExtractor
 import kotlinx.coroutines.Dispatchers
@@ -53,32 +54,19 @@ class SaveWebmarkService : IntentService(SaveWebmarkService::class.java.simpleNa
             val document = Jsoup.connect(url).get()
             val article = ArticleExtractor.with(url, document.html())
                 .extractMetadata()
+                .extractContent()
+                .estimateReadingTime()
                 .article()
 
             queries.updateById(
                 id = id,
                 title = article.title,
-                faviconUrl = article.faviconUrl?.let(Uri::parse)
+                faviconUrl = article.faviconUrl?.let(Uri::parse),
+                estimatedReadingTimeMinutes = article.estimatedReadingTimeMinutes
             )
 
-        } catch (e: HttpStatusException) {
-            queries.updateById(
-                id = id,
-                title = "Http status error (${e.statusCode}) :(",
-                faviconUrl = null
-            )
-        } catch (e: SocketTimeoutException) {
-            queries.updateById(
-                id = id,
-                title = "Timeout :(",
-                faviconUrl = null
-            )
-        } catch (e: IOException) {
-            queries.updateById(
-                id = id,
-                title = "Error (${e.localizedMessage}) :(",
-                faviconUrl = null
-            )
+        } catch (e: Exception) {
+            Log.e("SaveWebmarkService", "Failed extracting details: ${e.localizedMessage}")
         }
 
         showToast("Saved page")
