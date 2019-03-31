@@ -1,18 +1,17 @@
 package me.thanel.webmark.ui.list
 
-import android.util.Log
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_webmark.*
-import me.thanel.recyclerviewutils.viewholder.BaseItemViewBinder
 import me.thanel.recyclerviewutils.viewholder.ContainerViewHolder
+import me.thanel.recyclerviewutils.viewholder.SimpleItemViewBinder
 import me.thanel.webmark.R
 import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.ext.glideVisibilityListener
 import me.thanel.webmark.ext.openInBrowser
 import me.thanel.webmark.ext.roundedCorners
 
-class WebmarkViewBinder : BaseItemViewBinder<Webmark>(R.layout.item_webmark) {
+class WebmarkViewBinder : SimpleItemViewBinder<Webmark>(R.layout.item_webmark) {
 
     private var imageCornerRadius: Int = 0
 
@@ -34,18 +33,6 @@ class WebmarkViewBinder : BaseItemViewBinder<Webmark>(R.layout.item_webmark) {
         }
     }
 
-    private fun <E : Enum<E>> handleEnumPayloadChanges(payloads: List<Any>, block: (E) -> Unit) {
-        for (payload in payloads) {
-            @Suppress("UNCHECKED_CAST")
-            val changes = payload as? List<E>
-            if (changes == null) {
-                Log.w("RecyclerViewUtils", "Unsupported payload type: $payload")
-                continue
-            }
-            changes.forEach(block)
-        }
-    }
-
     override fun onBindViewHolder(holder: ContainerViewHolder, item: Webmark) {
         super.onBindViewHolder(holder, item)
         holder.bindTitle(item)
@@ -55,11 +42,7 @@ class WebmarkViewBinder : BaseItemViewBinder<Webmark>(R.layout.item_webmark) {
     }
 
     override fun onBindViewHolder(holder: ContainerViewHolder, item: Webmark, payloads: List<Any>) {
-        if (payloads.isEmpty()) {
-            super.onBindViewHolder(holder, item, payloads)
-            return
-        }
-        holder.itemView.setTag(R.id.bound_item, item)
+        super.onBindViewHolder(holder, item, payloads)
         handleEnumPayloadChanges<WebmarkChange>(payloads) {
             when (it) {
                 WebmarkChange.Title -> holder.bindTitle(item)
