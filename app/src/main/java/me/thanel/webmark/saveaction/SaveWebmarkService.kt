@@ -1,4 +1,4 @@
-package me.thanel.webmark
+package me.thanel.webmark.saveaction
 
 import android.app.IntentService
 import android.content.Context
@@ -10,14 +10,12 @@ import com.chimbori.crux.articles.ArticleExtractor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import me.thanel.webmark.Database
 import me.thanel.webmark.ext.transactionWithResult
-import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
-import java.io.IOException
-import java.net.SocketTimeoutException
 
 class SaveWebmarkService : IntentService(SaveWebmarkService::class.java.simpleName), KodeinAware {
 

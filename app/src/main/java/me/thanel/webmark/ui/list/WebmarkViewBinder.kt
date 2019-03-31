@@ -1,17 +1,17 @@
 package me.thanel.webmark.ui.list
 
+import android.view.View
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_webmark.*
-import me.thanel.recyclerviewutils.viewholder.ContainerViewHolder
-import me.thanel.recyclerviewutils.viewholder.SimpleItemViewBinder
+import me.thanel.recyclerviewutils.viewholder.BaseItemViewBinder
 import me.thanel.webmark.R
 import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.ext.glideVisibilityListener
 import me.thanel.webmark.ext.openInBrowser
 import me.thanel.webmark.ext.roundedCorners
 
-class WebmarkViewBinder : SimpleItemViewBinder<Webmark>(R.layout.item_webmark) {
+class WebmarkViewBinder : BaseItemViewBinder<Webmark, WebmarkViewHolder>(R.layout.item_webmark) {
 
     private var imageCornerRadius: Int = 0
 
@@ -21,27 +21,22 @@ class WebmarkViewBinder : SimpleItemViewBinder<Webmark>(R.layout.item_webmark) {
         }
     }
 
-    var markAsRead: (Long) -> Unit = {}
+    override fun onCreateViewHolder(itemView: View) = WebmarkViewHolder(itemView)
 
-    override fun onInflateViewHolder(holder: ContainerViewHolder) {
+    override fun onInflateViewHolder(holder: WebmarkViewHolder) {
         super.onInflateViewHolder(holder)
         imageCornerRadius =
             holder.context.resources.getDimensionPixelOffset(R.dimen.webmark_image_corner_radius)
-        holder.markAsDoneButton.setOnClickListener {
-            val item = it.tag as Webmark
-            markAsRead(item.id)
-        }
     }
 
-    override fun onBindViewHolder(holder: ContainerViewHolder, item: Webmark) {
+    override fun onBindViewHolder(holder: WebmarkViewHolder, item: Webmark) {
         super.onBindViewHolder(holder, item)
         holder.bindTitle(item)
         holder.bindDetails(item)
         holder.bindFavicon(item)
-        holder.markAsDoneButton.tag = item
     }
 
-    override fun onBindViewHolder(holder: ContainerViewHolder, item: Webmark, payloads: List<Any>) {
+    override fun onBindViewHolder(holder: WebmarkViewHolder, item: Webmark, payloads: List<Any>) {
         super.onBindViewHolder(holder, item, payloads)
         handleEnumPayloadChanges<WebmarkChange>(payloads) {
             when (it) {
@@ -52,11 +47,11 @@ class WebmarkViewBinder : SimpleItemViewBinder<Webmark>(R.layout.item_webmark) {
         }
     }
 
-    private fun ContainerViewHolder.bindTitle(item: Webmark) {
+    private fun WebmarkViewHolder.bindTitle(item: Webmark) {
         webmarkTitleTextView.text = item.title ?: item.url.toString()
     }
 
-    private fun ContainerViewHolder.bindDetails(item: Webmark) {
+    private fun WebmarkViewHolder.bindDetails(item: Webmark) {
         var details = item.url.host?.removePrefix("www.") ?: ""
         if (item.estimatedReadingTimeMinutes > 0) {
             if (details.isNotEmpty()) {
@@ -67,7 +62,7 @@ class WebmarkViewBinder : SimpleItemViewBinder<Webmark>(R.layout.item_webmark) {
         webmarkLinkTextView.text = details
     }
 
-    private fun ContainerViewHolder.bindFavicon(item: Webmark) {
+    private fun WebmarkViewHolder.bindFavicon(item: Webmark) {
         val faviconUrl = item.faviconUrl
         webmarkImageView.isVisible = false
         Glide.with(webmarkImageView)
