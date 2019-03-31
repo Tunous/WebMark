@@ -2,6 +2,7 @@ package me.thanel.webmark.ui.list
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -49,6 +50,7 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.unreadWebmarks.observe(this, Observer {
+            noWebmarksView.isVisible = it.isEmpty()
             GlobalScope.launch(Dispatchers.IO) {
                 adapterWrapper.updateItems(it)
             }
