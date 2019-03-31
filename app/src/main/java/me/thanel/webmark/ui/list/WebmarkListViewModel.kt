@@ -11,11 +11,15 @@ import org.kodein.di.generic.instance
 class WebmarkListViewModel(app: Application) : BaseViewModel(app) {
     private val database: Database by instance()
 
-    val webmarks = database.webmarkQueries.selectAll()
+    val unreadWebmarks = database.webmarkQueries.selectUnread()
         .asLiveData()
         .mapToList(viewModelScope)
 
-    fun deleteWebmark(id: Long) = runInBackground {
-        database.webmarkQueries.deleteById(id)
+    fun markWebmarkAsRead(id: Long) = runInBackground {
+        database.webmarkQueries.marAsReadById(id)
+    }
+
+    fun markWebmarkAsUnread(id: Long) = runInBackground {
+        database.webmarkQueries.markAsUnreadById(id)
     }
 }

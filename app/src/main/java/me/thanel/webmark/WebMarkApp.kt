@@ -3,6 +3,7 @@ package me.thanel.webmark
 import android.app.Application
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
+import me.thanel.webmark.columnadapter.DateColumnAdapter
 import me.thanel.webmark.columnadapter.UriColumnAdapter
 import me.thanel.webmark.data.Webmark
 import org.kodein.di.Kodein
@@ -19,7 +20,8 @@ class WebMarkApp : Application(), KodeinAware {
         bind<Webmark.Adapter>() with singleton {
             Webmark.Adapter(
                 urlAdapter = UriColumnAdapter,
-                faviconUrlAdapter = UriColumnAdapter
+                faviconUrlAdapter = UriColumnAdapter,
+                readAtAdapter = DateColumnAdapter
             )
         }
         bind<Database>() with singleton { Database(instance(), instance()) }

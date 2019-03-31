@@ -21,7 +21,7 @@ class WebmarkViewBinder : SimpleItemViewBinder<Webmark>(R.layout.item_webmark) {
         }
     }
 
-    var markAsDone: (Long) -> Unit = {}
+    var markAsRead: (Long) -> Unit = {}
 
     override fun onInflateViewHolder(holder: ContainerViewHolder) {
         super.onInflateViewHolder(holder)
@@ -29,7 +29,7 @@ class WebmarkViewBinder : SimpleItemViewBinder<Webmark>(R.layout.item_webmark) {
             holder.context.resources.getDimensionPixelOffset(R.dimen.webmark_image_corner_radius)
         holder.markAsDoneButton.setOnClickListener {
             val item = it.tag as Webmark
-            markAsDone(item.id)
+            markAsRead(item.id)
         }
     }
 

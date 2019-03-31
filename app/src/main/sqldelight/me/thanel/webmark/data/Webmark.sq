@@ -1,16 +1,28 @@
 import android.net.Uri;
+import java.util.Date;
 
 CREATE TABLE webmark (
   id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   url TEXT AS Uri NOT NULL,
   title TEXT,
   faviconUrl TEXT AS Uri,
-  estimatedReadingTimeMinutes INTEGER AS Int DEFAULT 0 NOT NULL
+  estimatedReadingTimeMinutes INTEGER AS Int DEFAULT 0 NOT NULL,
+  readAt INTEGER AS Date
 );
 
 selectAll:
 SELECT *
 FROM webmark;
+
+selectUnread:
+SELECT *
+FROM webmark
+WHERE readAt IS NULL;
+
+selectRead:
+SELECT *
+FROM webmark
+WHERE readAt IS NOT NULL;
 
 insert:
 INSERT INTO webmark(id, url)
@@ -29,4 +41,14 @@ SET
   title = ?,
   faviconUrl = ?,
   estimatedReadingTimeMinutes = ?
+WHERE id = ?;
+
+marAsReadById:
+UPDATE webmark
+SET readAt = CURRENT_TIMESTAMP
+WHERE id = ?;
+
+markAsUnreadById:
+UPDATE webmark
+SET readAt = NULL
 WHERE id = ?;
