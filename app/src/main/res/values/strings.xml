@@ -5,7 +5,12 @@
 
     <string name="app_name">WebMark</string>
 
+    <string name="error_saving">Error saving page</string>
+
+    <string name="info_duplicate_url">Link is already in your list</string>
+    <string name="info_invalid_url">Invalid URL</string>
     <string name="info_marked_read">Marked as read</string>
+    <string name="info_saved">Saved page</string>
 
     <string name="question_save_copied_url">Save copied URL?\n%1$s</string>
 </resources>

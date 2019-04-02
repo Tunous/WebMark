@@ -6,11 +6,13 @@ import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.StringRes
 import com.chimbori.crux.articles.ArticleExtractor
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import me.thanel.webmark.Database
+import me.thanel.webmark.R
 import me.thanel.webmark.ext.transactionWithResult
 import org.jsoup.Jsoup
 import org.kodein.di.KodeinAware
@@ -26,13 +28,27 @@ class SaveWebmarkService : IntentService(SaveWebmarkService::class.java.simpleNa
     override fun onHandleIntent(intent: Intent?) {
         val url = intent?.getParcelableExtra<Uri>(EXTRA_URL)
         runBlocking {
-            if (url != null) {
-                showToast("Saving...")
-                saveWebmark(url)
-            } else {
-                showToast("Invalid URL")
+            if (url == null) {
+                showToast(R.string.info_invalid_url)
+                return@runBlocking
             }
+
+            if (checkIsAlreadySaved(url)) {
+                showToast(R.string.info_duplicate_url)
+            } else {
+                saveWebmark(url)
+            }
+
         }
+    }
+
+    private fun checkIsAlreadySaved(uri: Uri): Boolean {
+        val queries = database.webmarkQueries
+        val existingId = queries.selectIdForUrl(uri).executeAsOneOrNull() ?: return false
+
+        // If already saved mark the link as new to update its position on list
+        queries.markAsNewById(existingId)
+        return true
     }
 
     private suspend fun saveWebmark(uri: Uri) {
@@ -43,9 +59,10 @@ class SaveWebmarkService : IntentService(SaveWebmarkService::class.java.simpleNa
         }
 
         if (id == null) {
-            showToast("Error saving page")
+            showToast(R.string.error_saving)
             return
         }
+        showToast(R.string.info_saved)
 
         try {
             val url = uri.toString()
@@ -66,13 +83,11 @@ class SaveWebmarkService : IntentService(SaveWebmarkService::class.java.simpleNa
         } catch (e: Exception) {
             Log.e("SaveWebmarkService", "Failed extracting details: ${e.localizedMessage}")
         }
-
-        showToast("Saved page")
     }
 
-    private suspend fun showToast(message: String, length: Int = Toast.LENGTH_SHORT) =
+    private suspend fun showToast(@StringRes messageResId: Int, length: Int = Toast.LENGTH_SHORT) =
         withContext(Dispatchers.Main) {
-            Toast.makeText(this@SaveWebmarkService, message, length).show()
+            Toast.makeText(this@SaveWebmarkService, messageResId, length).show()
         }
 
     companion object {

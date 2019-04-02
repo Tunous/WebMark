@@ -23,7 +23,8 @@ class WebMarkApp : Application(), KodeinAware {
             Webmark.Adapter(
                 urlAdapter = UriColumnAdapter,
                 faviconUrlAdapter = UriColumnAdapter,
-                readAtAdapter = DateColumnAdapter
+                readAtAdapter = DateColumnAdapter,
+                savedAtAdapter = DateColumnAdapter
             )
         }
         bind<Database>() with singleton { Database(instance(), instance()) }
