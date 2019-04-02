@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -52,6 +53,10 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
         }
         val itemTouchHelper = ItemTouchHelper(itemTouchCallback)
         itemTouchHelper.attachToRecyclerView(webmarkRecyclerView)
+
+        filterInput.doAfterTextChanged {
+            viewModel.filter(it?.toString())
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

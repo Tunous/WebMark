@@ -19,7 +19,13 @@ ORDER BY savedAt DESC;
 selectUnread:
 SELECT *
 FROM webmark
-WHERE readAt IS NULL
+WHERE
+  readAt IS NULL
+  AND (
+    :text IS NULL -- Match all if text not specified
+    OR title LIKE ('%' || :text || '%') -- Match title
+    OR url LIKE ('%' || :text || '%') -- Match link
+  )
 ORDER BY savedAt DESC;
 
 selectRead:
