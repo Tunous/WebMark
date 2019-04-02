@@ -78,9 +78,11 @@ class SaveWebmarkService : IntentService(SaveWebmarkService::class.java.simpleNa
     companion object {
         private const val EXTRA_URL = "url"
 
-        fun getIntent(context: Context, uri: Uri) =
-            Intent(context, SaveWebmarkService::class.java).apply {
+        fun start(context: Context, uri: Uri) {
+            val intent = Intent(context, SaveWebmarkService::class.java).apply {
                 putExtra(EXTRA_URL, uri)
             }
+            context.startService(intent)
+        }
     }
 }
