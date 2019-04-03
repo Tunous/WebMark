@@ -31,7 +31,13 @@ ORDER BY savedAt DESC;
 selectRead:
 SELECT *
 FROM webmark
-WHERE readAt IS NOT NULL
+WHERE
+  readAt IS NOT NULL
+  AND (
+    :text IS NULL -- Match all if text not specified
+    OR title LIKE ('%' || :text || '%') -- Match title
+    OR url LIKE ('%' || :text || '%') -- Match link
+  )
 ORDER BY readAt DESC;
 
 insert:

@@ -55,7 +55,11 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
         itemTouchHelper.attachToRecyclerView(webmarkRecyclerView)
 
         filterInput.doAfterTextChanged {
-            viewModel.filter(it?.toString())
+            viewModel.filterText = it?.toString() ?: ""
+        }
+
+        archiveCheckBox.onCheckedChanged = { isChecked ->
+            viewModel.showArchive = isChecked
         }
     }
 
