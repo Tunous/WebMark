@@ -103,7 +103,7 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
         if (!Patterns.WEB_URL.matcher(text).matches()) return
 
         val message = getString(R.string.question_save_copied_url, text)
-        Snackbar.make(webmarkRecyclerView, message, Snackbar.LENGTH_LONG)
+        Snackbar.make(coordinator, message, Snackbar.LENGTH_LONG)
             .setAction(R.string.action_save) {
                 SaveWebmarkService.start(requireContext(), Uri.parse(text))
             }
@@ -113,7 +113,7 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
     private fun markAsRead(id: Long) {
         viewModel.markWebmarkAsRead(id)
 
-        Snackbar.make(webmarkRecyclerView, R.string.info_marked_read, Snackbar.LENGTH_LONG)
+        Snackbar.make(coordinator, R.string.info_marked_read, Snackbar.LENGTH_LONG)
             .setAction(R.string.action_undo) { viewModel.markWebmarkAsUnread(id) }
             .show()
     }
