@@ -6,6 +6,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
+import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.constraintlayout.motion.widget.TransitionAdapter
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_webmark_list.*
+import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -61,6 +64,19 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
         archiveCheckBox.onCheckedChanged = { isChecked ->
             viewModel.showArchive = isChecked
         }
+
+        view.findViewById<MotionLayout>(R.id.toolbar).setTransitionListener(object: TransitionAdapter() {
+            override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
+                if (currentId == R.id.start) {
+                    searchIcon.setImageResource(R.drawable.ic_search)
+                    filterInput.clearFocus()
+                    filterInput.text.clear()
+                } else {
+                    searchIcon.setImageResource(R.drawable.ic_close)
+                    filterInput.requestFocus()
+                }
+            }
+        })
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
