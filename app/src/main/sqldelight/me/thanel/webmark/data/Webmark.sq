@@ -1,4 +1,5 @@
 import android.net.Uri;
+import java.lang.Boolean;
 import java.util.Date;
 
 CREATE TABLE webmark (
@@ -8,12 +9,14 @@ CREATE TABLE webmark (
   faviconUrl TEXT AS Uri,
   estimatedReadingTimeMinutes INTEGER AS Int DEFAULT 0 NOT NULL,
   readAt INTEGER AS Date,
-  savedAt INTEGER AS Date DEFAULT CURRENT_TIMESTAMP
+  savedAt INTEGER AS Date DEFAULT CURRENT_TIMESTAMP,
+  markedForDeletion INTEGER AS Boolean NOT NULL DEFAULT 0
 );
 
 selectAll:
 SELECT *
 FROM webmark
+WHERE markedForDeletion = 0
 ORDER BY savedAt DESC;
 
 selectUnread:
@@ -21,6 +24,7 @@ SELECT *
 FROM webmark
 WHERE
   readAt IS NULL
+  AND markedForDeletion = 0
   AND (
     :text IS NULL -- Match all if text not specified
     OR title LIKE ('%' || :text || '%') -- Match title
@@ -33,6 +37,7 @@ SELECT *
 FROM webmark
 WHERE
   readAt IS NOT NULL
+  AND markedForDeletion = 0
   AND (
     :text IS NULL -- Match all if text not specified
     OR title LIKE ('%' || :text || '%') -- Match title
@@ -46,10 +51,6 @@ VALUES (?, ?);
 
 lastInsertId:
 SELECT last_insert_rowid();
-
-deleteById:
-DELETE FROM webmark
-WHERE id = ?;
 
 updateById:
 UPDATE webmark
@@ -79,5 +80,15 @@ markAsNewById:
 UPDATE webmark
 SET
   readAt = NULL,
-  savedAt = CURRENT_TIMESTAMP
+  savedAt = CURRENT_TIMESTAMP,
+  markedForDeletion = 0
+WHERE id = ?;
+
+deleteById:
+DELETE FROM webmark
+WHERE id = ?;
+
+setMarkedForDeletionById:
+UPDATE webmark
+SET markedForDeletion = ?
 WHERE id = ?;

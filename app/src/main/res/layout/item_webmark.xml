@@ -9,20 +9,14 @@
     android:stateListAnimator="@animator/raise">
 
     <ImageView
+        android:id="@+id/swipeActionIconView"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="start|center_vertical"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:srcCompat="@drawable/ic_done" />
-
-    <ImageView
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_gravity="end|center_vertical"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:srcCompat="@drawable/ic_done" />
+        android:tint="@android:color/white"
+        tools:srcCompat="@drawable/ic_archive" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/contentView"

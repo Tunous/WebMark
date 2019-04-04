@@ -4,11 +4,18 @@ import android.graphics.Canvas
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class ItemTouchCallback(
-    private val swipeElevation: Float
-) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+abstract class ItemTouchCallback :
+    ItemTouchHelper.SimpleCallback(0, 0) {
 
     abstract fun onSwiped(position: Int, direction: Int)
+
+    override fun getSwipeDirs(
+        recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder
+    ): Int {
+        val swipeableViewHolder = viewHolder as? SwipeableViewHolder
+        return swipeableViewHolder?.getSwipeDirs() ?: 0
+    }
 
     override fun onMove(
         recyclerView: RecyclerView,
@@ -25,10 +32,7 @@ abstract class ItemTouchCallback(
         super.clearView(recyclerView, viewHolder)
 
         val swipeableViewHolder = viewHolder as? SwipeableViewHolder
-        swipeableViewHolder?.swipeableView?.apply {
-            translationX = 0f
-            translationZ = 0f
-        }
+        swipeableViewHolder?.onClearSwipe()
 
         val draggableViewHolder = viewHolder as? DraggableViewHolder
         if (draggableViewHolder != null) {
@@ -53,12 +57,9 @@ abstract class ItemTouchCallback(
         actionState: Int,
         isCurrentlyActive: Boolean
     ) {
-        val swipeableViewHolder = viewHolder as? SwipeableViewHolder
-        swipeableViewHolder?.swipeableView?.apply {
-            translationX = dX
-            if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-                translationZ = if (dX != 0f) swipeElevation else 0f
-            }
+        if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+            val swipeableViewHolder = viewHolder as? SwipeableViewHolder
+            swipeableViewHolder?.onSwipe(dX)
         }
 
         val draggableViewHolder = viewHolder as? DraggableViewHolder
@@ -69,10 +70,9 @@ abstract class ItemTouchCallback(
     }
 
     companion object {
-        fun create(swipeElevation: Float, onSwiped: (Int, Int) -> Unit) =
-            object : ItemTouchCallback(swipeElevation) {
-                override fun onSwiped(position: Int, direction: Int) =
-                    onSwiped(position, direction)
-            }
+        fun create(onSwiped: (Int, Int) -> Unit) = object : ItemTouchCallback() {
+            override fun onSwiped(position: Int, direction: Int) =
+                onSwiped(position, direction)
+        }
     }
 }

@@ -54,4 +54,12 @@ class WebmarkListViewModel(app: Application) : BaseViewModel(app) {
     fun markWebmarkAsUnread(id: Long) = runInBackground {
         database.webmarkQueries.markAsUnreadById(id)
     }
+
+    fun deleteWebmark(id: Long) = runInBackground {
+        database.webmarkQueries.setMarkedForDeletionById(id = id, markedForDeletion = true)
+    }
+
+    fun undoDeleteWebmark(id: Long) = runInBackground {
+        database.webmarkQueries.setMarkedForDeletionById(id = id, markedForDeletion = false)
+    }
 }

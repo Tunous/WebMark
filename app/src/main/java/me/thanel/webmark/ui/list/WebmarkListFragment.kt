@@ -23,6 +23,7 @@ import kotlinx.coroutines.launch
 import me.thanel.recyclerviewutils.adapter.lazyAdapterWrapper
 import me.thanel.webmark.R
 import me.thanel.webmark.data.Webmark
+import me.thanel.webmark.data.ext.isRead
 import me.thanel.webmark.ext.viewModel
 import me.thanel.webmark.saveaction.SaveWebmarkService
 import me.thanel.webmark.ui.base.BaseFragment
@@ -47,11 +48,10 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
         )
         webmarkRecyclerView.adapter = adapterWrapper.adapter
 
-        val swipeElevation = resources.getDimension(R.dimen.swipe_elevation)
-        val itemTouchCallback = ItemTouchCallback.create(swipeElevation) { position, _ ->
+        val itemTouchCallback = ItemTouchCallback.create { position, direction ->
             val item = adapterWrapper.adapter.items.getOrNull(position)
             when (item) {
-                is Webmark -> markAsRead(item.id)
+                is Webmark -> onSwiped(direction, item)
             }
         }
         val itemTouchHelper = ItemTouchHelper(itemTouchCallback)
@@ -110,11 +110,33 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
             .show()
     }
 
+    private fun onSwiped(direction: Int, item: Webmark) {
+        if (item.isRead) {
+            if (direction == ItemTouchHelper.RIGHT) {
+                delete(item.id)
+            } else {
+                viewModel.markWebmarkAsUnread(item.id)
+            }
+            return
+        }
+
+        if (direction == ItemTouchHelper.RIGHT) {
+            markAsRead(item.id)
+        }
+    }
+
     private fun markAsRead(id: Long) {
         viewModel.markWebmarkAsRead(id)
 
         Snackbar.make(coordinator, R.string.info_marked_read, Snackbar.LENGTH_LONG)
             .setAction(R.string.action_undo) { viewModel.markWebmarkAsUnread(id) }
+            .show()
+    }
+
+    private fun delete(id: Long) {
+        viewModel.deleteWebmark(id)
+        Snackbar.make(coordinator, R.string.info_deleted, Snackbar.LENGTH_LONG)
+            .setAction(R.string.action_undo) { viewModel.undoDeleteWebmark(id) }
             .show()
     }
 
