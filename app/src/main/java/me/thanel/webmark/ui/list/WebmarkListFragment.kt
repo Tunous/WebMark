@@ -12,7 +12,6 @@ import androidx.constraintlayout.motion.widget.TransitionAdapter
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -48,9 +47,6 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
         super.onViewCreated(view, savedInstanceState)
 
         webmarkRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        webmarkRecyclerView.addItemDecoration(
-            DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-        )
         webmarkRecyclerView.adapter = adapterWrapper.adapter
 
         val itemTouchCallback = ItemTouchCallback.create { position, direction ->
