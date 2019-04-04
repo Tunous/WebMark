@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Patterns
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.TransitionAdapter
 import androidx.core.view.isVisible
@@ -34,6 +35,7 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
 
     private val viewModel: WebmarkListViewModel by viewModel()
     private val clipboard: ClipboardManager by instance()
+    private val inputMethodManager: InputMethodManager by instance()
 
     private val adapterWrapper by lazyAdapterWrapper {
         register(WebmarkViewBinder(), WebmarkItemCallback)
@@ -65,18 +67,27 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
             viewModel.showArchive = isChecked
         }
 
-        view.findViewById<MotionLayout>(R.id.toolbar).setTransitionListener(object: TransitionAdapter() {
-            override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
-                if (currentId == R.id.start) {
-                    searchIcon.setImageResource(R.drawable.ic_search)
-                    filterInput.clearFocus()
-                    filterInput.text.clear()
-                } else {
-                    searchIcon.setImageResource(R.drawable.ic_close)
-                    filterInput.requestFocus()
+        view.findViewById<MotionLayout>(R.id.toolbar)
+            .setTransitionListener(object : TransitionAdapter() {
+                override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
+                    if (currentId == R.id.start) {
+                        searchIcon.setImageResource(R.drawable.ic_search)
+                        filterInput.clearFocus()
+                        filterInput.text.clear()
+                    } else {
+                        searchIcon.setImageResource(R.drawable.ic_close)
+                        filterInput.requestFocus()
+                    }
                 }
+            })
+
+        filterInput.onFocusChangeListener = View.OnFocusChangeListener { focusView, hasFocus ->
+            if (hasFocus) {
+                inputMethodManager.showSoftInput(focusView, InputMethodManager.SHOW_IMPLICIT)
+            } else {
+                inputMethodManager.hideSoftInputFromWindow(focusView.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
             }
-        })
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -95,7 +106,8 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
 
     private fun suggestSaveCopiedUrl() {
         val hasTextMimeType =
-            clipboard.primaryClipDescription?.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN) ?: false
+            clipboard.primaryClipDescription?.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)
+                ?: false
         if (!clipboard.hasPrimaryClip() || !hasTextMimeType) return
 
         val item = clipboard.primaryClip?.getItemAt(0) ?: return
