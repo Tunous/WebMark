@@ -5,47 +5,41 @@
     android:layout_height="wrap_content"
     app:layoutDescription="@xml/toolbar_motion_scene">
 
+    <ImageView
+        android:id="@+id/searchIcon"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_search" />
+
     <EditText
         android:id="@+id/filterInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/filled_background"
-        android:hint="Search"
-        android:paddingStart="8dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="8dp"
-        android:paddingBottom="8dp"
         android:alpha="0"
+        android:background="@drawable/filled_background"
+        android:hint="@string/hint_search"
+        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <me.thanel.webmark.ui.CheckableImageView
         android:id="@+id/archiveCheckBox"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:background="?selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
-        android:padding="8dp"
+        android:padding="16dp"
         android:src="@drawable/ic_archive"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/checkable_color" />
-
-    <ImageView
-        android:id="@+id/searchIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="?selectableItemBackgroundBorderless"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_search" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

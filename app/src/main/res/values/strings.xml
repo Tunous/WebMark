@@ -7,6 +7,8 @@
 
     <string name="error_saving">Error saving page</string>
 
+    <string name="hint_search">Search</string>
+
     <string name="info_deleted">Deleted</string>
     <string name="info_duplicate_url">Link is already in your list</string>
     <string name="info_invalid_url">Invalid URL</string>
