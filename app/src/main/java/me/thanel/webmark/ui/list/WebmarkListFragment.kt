@@ -120,14 +120,19 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
         val latestSuggestedUrl = latestSuggestedUrlPreference.value
         if (latestSuggestedUrl == text) return
 
-        val message = getString(R.string.question_save_copied_url, text)
-        Snackbar.make(coordinator, message, Snackbar.LENGTH_LONG)
-            .setAction(R.string.action_save) {
-                SaveWebmarkService.start(requireContext(), Uri.parse(text))
-            }
-            .show()
+        launch {
+            val uri = Uri.parse(text)
+            if (viewModel.isSaved(uri)) return@launch
 
-        latestSuggestedUrlPreference.value = text
+            val message = getString(R.string.question_save_copied_url, text)
+            Snackbar.make(coordinator, message, Snackbar.LENGTH_LONG)
+                .setAction(R.string.action_save) {
+                    SaveWebmarkService.start(requireContext(), uri)
+                }
+                .show()
+
+            latestSuggestedUrlPreference.value = text
+        }
     }
 
     private fun onSwiped(direction: Int, item: Webmark) {
