@@ -14,4 +14,8 @@
     <string name="info_saved">Saved page</string>
 
     <string name="question_save_copied_url">Save copied URL?\n%1$s</string>
+
+    <string name="title_nothing_archived">Nothing archived</string>
+    <string name="title_nothing_found">Nothing found</string>
+    <string name="title_nothing_saved">Nothing saved</string>
 </resources>

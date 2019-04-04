@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_webmark_list.*
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.view_empty.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import me.thanel.recyclerviewutils.adapter.lazyAdapterWrapper
 import me.thanel.webmark.R
@@ -92,15 +92,32 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.unreadWebmarks.observe(this, Observer {
-            noWebmarksView.isVisible = it.isEmpty()
-            GlobalScope.launch(Dispatchers.IO) {
+            launch(Dispatchers.IO) {
                 adapterWrapper.updateItems(it)
             }
+            updateEmptyView(it.isEmpty())
         })
 
         if (savedInstanceState == null) {
             suggestSaveCopiedUrl()
         }
+    }
+
+    private fun updateEmptyView(shouldShow: Boolean) {
+        noWebmarksView.isVisible = shouldShow
+        if (!shouldShow) return
+
+        emptyViewTitleView.setText(
+            if (filterInput.text.isNullOrBlank()) {
+                if (archiveCheckBox.isChecked) {
+                    R.string.title_nothing_archived
+                } else {
+                    R.string.title_nothing_saved
+                }
+            } else {
+                R.string.title_nothing_found
+            }
+        )
     }
 
     private fun suggestSaveCopiedUrl() {
