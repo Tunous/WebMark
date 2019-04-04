@@ -26,6 +26,8 @@ import me.thanel.webmark.R
 import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.data.ext.isRead
 import me.thanel.webmark.ext.viewModel
+import me.thanel.webmark.preference.Preference
+import me.thanel.webmark.preference.PreferenceKey
 import me.thanel.webmark.saveaction.SaveWebmarkService
 import me.thanel.webmark.ui.base.BaseFragment
 import me.thanel.webmark.ui.touchhelper.ItemTouchCallback
@@ -36,6 +38,7 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
     private val viewModel: WebmarkListViewModel by viewModel()
     private val clipboard: ClipboardManager by instance()
     private val inputMethodManager: InputMethodManager by instance()
+    private val latestSuggestedUrlPreference: Preference<String> by instance(tag = PreferenceKey.LatestSuggestedUrl)
 
     private val adapterWrapper by lazyAdapterWrapper {
         register(WebmarkViewBinder(), WebmarkItemCallback)
@@ -114,12 +117,17 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
         val text = item.text.toString()
         if (!Patterns.WEB_URL.matcher(text).matches()) return
 
+        val latestSuggestedUrl = latestSuggestedUrlPreference.value
+        if (latestSuggestedUrl == text) return
+
         val message = getString(R.string.question_save_copied_url, text)
         Snackbar.make(coordinator, message, Snackbar.LENGTH_LONG)
             .setAction(R.string.action_save) {
                 SaveWebmarkService.start(requireContext(), Uri.parse(text))
             }
             .show()
+
+        latestSuggestedUrlPreference.value = text
     }
 
     private fun onSwiped(direction: Int, item: Webmark) {
