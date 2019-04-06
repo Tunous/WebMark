@@ -7,6 +7,7 @@ import me.thanel.webmark.columnadapter.DateColumnAdapter
 import me.thanel.webmark.columnadapter.UriColumnAdapter
 import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.preference.preferencesModule
+import me.thanel.webmark.work.CleanupDatabaseWorker
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
@@ -30,5 +31,10 @@ class WebMarkApp : Application(), KodeinAware {
             )
         }
         bind<Database>() with singleton { Database(instance(), instance()) }
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        CleanupDatabaseWorker.enqueuePeriodic()
     }
 }

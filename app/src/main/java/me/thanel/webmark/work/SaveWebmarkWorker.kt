@@ -5,7 +5,6 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.net.toUri
-import androidx.work.CoroutineWorker
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
@@ -16,18 +15,12 @@ import kotlinx.coroutines.withContext
 import me.thanel.webmark.Database
 import me.thanel.webmark.R
 import me.thanel.webmark.ext.transactionWithResult
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
 class SaveWebmarkWorker(
     private val appContext: Context,
     workerParams: WorkerParameters
-) : CoroutineWorker(appContext, workerParams), KodeinAware {
-
-    override val kodein by kodein(appContext)
-
-    override val coroutineContext = Dispatchers.IO
+) : BaseWorker(appContext, workerParams) {
 
     private val database: Database by instance()
 

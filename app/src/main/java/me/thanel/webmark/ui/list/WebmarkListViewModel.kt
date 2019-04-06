@@ -15,6 +15,7 @@ import me.thanel.webmark.ext.mutableLiveDataOf
 import me.thanel.webmark.ext.nullIfBlank
 import me.thanel.webmark.ext.switchMap
 import me.thanel.webmark.ui.base.BaseViewModel
+import me.thanel.webmark.work.CleanupDatabaseWorker
 import org.kodein.di.generic.instance
 
 class WebmarkListViewModel(app: Application) : BaseViewModel(app) {
@@ -60,10 +61,12 @@ class WebmarkListViewModel(app: Application) : BaseViewModel(app) {
 
     fun deleteWebmark(id: Long) = runInBackground {
         database.webmarkQueries.setMarkedForDeletionById(id = id, markedForDeletion = true)
+        CleanupDatabaseWorker.enqueueDelayed()
     }
 
     fun undoDeleteWebmark(id: Long) = runInBackground {
         database.webmarkQueries.setMarkedForDeletionById(id = id, markedForDeletion = false)
+        CleanupDatabaseWorker.cancelNonPeriodic()
     }
 
     suspend fun isSaved(uri: Uri): Boolean = withContext(Dispatchers.IO) {

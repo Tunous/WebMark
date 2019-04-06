@@ -26,9 +26,9 @@ WHERE
   readAt IS NULL
   AND markedForDeletion = 0
   AND (
-    :text IS NULL -- Match all if text not specified
-    OR title LIKE ('%' || :text || '%') -- Match title
-    OR url LIKE ('%' || :text || '%') -- Match link
+    :text IS NULL
+    OR title LIKE ('%' || :text || '%')
+    OR url LIKE ('%' || :text || '%')
   )
 ORDER BY savedAt DESC;
 
@@ -39,9 +39,9 @@ WHERE
   readAt IS NOT NULL
   AND markedForDeletion = 0
   AND (
-    :text IS NULL -- Match all if text not specified
-    OR title LIKE ('%' || :text || '%') -- Match title
-    OR url LIKE ('%' || :text || '%') -- Match link
+    :text IS NULL
+    OR title LIKE ('%' || :text || '%')
+    OR url LIKE ('%' || :text || '%')
   )
 ORDER BY readAt DESC;
 
@@ -98,3 +98,12 @@ setMarkedForDeletionById:
 UPDATE webmark
 SET markedForDeletion = ?
 WHERE id = ?;
+
+cleanup:
+DELETE FROM webmark
+WHERE
+  markedForDeletion = 1
+  OR (
+    readAt IS NOT NULL
+    AND JULIANDAY('now') - JULIANDAY(readAt) >= 30
+  );

@@ -4,29 +4,21 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import androidx.work.Constraints
-import androidx.work.CoroutineWorker
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.chimbori.crux.articles.ArticleExtractor
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import me.thanel.webmark.Database
 import org.jsoup.Jsoup
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
 class ExtractWebmarkDetailsWorker(
     appContext: Context,
     workerParams: WorkerParameters
-) : CoroutineWorker(appContext, workerParams), KodeinAware {
-
-    override val kodein by kodein(appContext)
-
-    override val coroutineContext = Dispatchers.IO
+) : BaseWorker(appContext, workerParams) {
 
     private val database: Database by instance()
 
