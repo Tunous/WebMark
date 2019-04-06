@@ -1,4 +1,4 @@
-package me.thanel.webmark.saveaction
+package me.thanel.webmark.work
 
 import android.app.Activity
 import android.content.Intent
@@ -13,7 +13,7 @@ class SaveWebmarkActivity : Activity() {
         super.onCreate(savedInstanceState)
         val url = getSharedUrlFromIntent()
         if (url != null) {
-            SaveWebmarkService.start(this, url)
+            SaveWebmarkWorker.enqueue(url)
         } else {
             Toast.makeText(this, "Invalid URL", Toast.LENGTH_SHORT).show()
         }

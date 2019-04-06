@@ -27,9 +27,9 @@ import me.thanel.webmark.data.ext.isRead
 import me.thanel.webmark.ext.viewModel
 import me.thanel.webmark.preference.Preference
 import me.thanel.webmark.preference.PreferenceKey
-import me.thanel.webmark.saveaction.SaveWebmarkService
 import me.thanel.webmark.ui.base.BaseFragment
 import me.thanel.webmark.ui.touchhelper.ItemTouchCallback
+import me.thanel.webmark.work.SaveWebmarkWorker
 import org.kodein.di.generic.instance
 
 class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
@@ -140,7 +140,7 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
             val message = getString(R.string.question_save_copied_url, text)
             Snackbar.make(coordinator, message, Snackbar.LENGTH_LONG)
                 .setAction(R.string.action_save) {
-                    SaveWebmarkService.start(requireContext(), uri)
+                    SaveWebmarkWorker.enqueue(uri)
                 }
                 .show()
 

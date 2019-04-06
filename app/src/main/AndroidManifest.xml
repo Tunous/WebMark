@@ -25,11 +25,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <activity
-            android:name=".saveaction.SaveWebmarkActivity"
+            android:name=".work.SaveWebmarkActivity"
             android:label="Save page"
             android:theme="@android:style/Theme.NoDisplay">
 
@@ -40,11 +39,6 @@
 
                 <data android:mimeType="text/plain" />
             </intent-filter>
-
         </activity>
-
-        <service android:name=".saveaction.SaveWebmarkService" />
-
     </application>
-
 </manifest>

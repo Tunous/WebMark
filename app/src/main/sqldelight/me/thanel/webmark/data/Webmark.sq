@@ -76,6 +76,12 @@ FROM webmark
 WHERE url = ?
 LIMIT 1;
 
+selectUrlForId:
+SELECT url
+FROM webmark
+WHERE id = ?
+LIMIT 1;
+
 markAsNewById:
 UPDATE webmark
 SET
