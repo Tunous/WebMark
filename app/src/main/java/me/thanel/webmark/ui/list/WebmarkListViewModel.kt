@@ -6,11 +6,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import me.thanel.webmark.Database
+import me.thanel.webmark.data.Database
 import me.thanel.webmark.data.Webmark
-import me.thanel.webmark.ext.asLiveData
+import me.thanel.webmark.data.ext.asLiveData
+import me.thanel.webmark.data.ext.mapToList
 import me.thanel.webmark.ext.combineWith
-import me.thanel.webmark.ext.mapToList
 import me.thanel.webmark.ext.mutableLiveDataOf
 import me.thanel.webmark.ext.nullIfBlank
 import me.thanel.webmark.ext.switchMap

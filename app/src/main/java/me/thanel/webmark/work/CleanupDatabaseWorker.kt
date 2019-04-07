@@ -9,7 +9,7 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import kotlinx.coroutines.coroutineScope
-import me.thanel.webmark.Database
+import me.thanel.webmark.data.Database
 import org.kodein.di.generic.instance
 import java.util.concurrent.TimeUnit
 

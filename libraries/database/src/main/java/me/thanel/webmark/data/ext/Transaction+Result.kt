@@ -1,4 +1,4 @@
-package me.thanel.webmark.ext
+package me.thanel.webmark.data.ext
 
 import com.squareup.sqldelight.Transacter
 import kotlinx.coroutines.CompletableDeferred

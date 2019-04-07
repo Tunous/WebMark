@@ -4,9 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 
-fun <X, Y> LiveData<X>.map(mapFunction: (X) -> Y) = Transformations.map(this, mapFunction)
+fun <X, Y> LiveData<X>.map(mapFunction: (X) -> Y): LiveData<Y> =
+    Transformations.map(this, mapFunction)
 
-fun <X, Y> LiveData<X>.switchMap(switchMapFunction: (X) -> LiveData<Y>) =
+fun <X, Y> LiveData<X>.switchMap(switchMapFunction: (X) -> LiveData<Y>): LiveData<Y> =
     Transformations.switchMap(this, switchMapFunction)
 
 fun <X, Y> LiveData<X>.combineWith(other: LiveData<Y>): LiveData<Pair<X, Y>> {

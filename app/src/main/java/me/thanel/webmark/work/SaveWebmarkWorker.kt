@@ -12,9 +12,9 @@ import androidx.work.workDataOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
-import me.thanel.webmark.Database
 import me.thanel.webmark.R
-import me.thanel.webmark.ext.transactionWithResult
+import me.thanel.webmark.data.Database
+import me.thanel.webmark.data.ext.transactionWithResult
 import org.kodein.di.generic.instance
 
 class SaveWebmarkWorker(

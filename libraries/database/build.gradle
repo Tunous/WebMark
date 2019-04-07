@@ -1,0 +1,11 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.squareup.sqldelight'
+
+dependencies {
+    implementation Deps.coroutinesCore
+    implementation Deps.coroutinesAndroid
+    implementation Deps.kodein
+    implementation Deps.kodeinAndroid
+    implementation Deps.sqlDelight
+}

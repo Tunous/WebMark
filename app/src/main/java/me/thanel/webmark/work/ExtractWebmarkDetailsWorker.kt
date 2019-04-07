@@ -11,7 +11,7 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.chimbori.crux.articles.ArticleExtractor
 import kotlinx.coroutines.coroutineScope
-import me.thanel.webmark.Database
+import me.thanel.webmark.data.Database
 import org.jsoup.Jsoup
 import org.kodein.di.generic.instance
 
