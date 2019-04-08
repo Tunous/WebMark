@@ -59,10 +59,16 @@ class WebmarkViewHolder(containerView: View) :
     }
 
     private fun updateBackgroundColor(boundItem: Webmark, isSwipingRight: Boolean) {
-        val color = when {
-            isSwipingRight -> if (boundItem.isRead) Color.RED else Color.GREEN
-            else -> if (boundItem.isRead) Color.GREEN else Color.BLACK
+        val colorAttrId = when {
+            boundItem.isRead -> when {
+                isSwipingRight -> R.attr.colorActionDelete
+                else -> R.attr.colorActionUnarchive
+            }
+            else -> when {
+                isSwipingRight -> R.attr.colorActionArchive
+                else -> R.attr.colorActionUnavailable
+            }
         }
-        containerView.setBackgroundColor(color)
+        containerView.setBackgroundColor(context.getColorFromAttr(colorAttrId))
     }
 }

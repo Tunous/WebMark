@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="colorActionArchive" format="color" />
+    <attr name="colorActionDelete" format="color" />
+    <attr name="colorActionUnarchive" format="color" />
+    <attr name="colorActionUnavailable" format="color" />
+</resources>

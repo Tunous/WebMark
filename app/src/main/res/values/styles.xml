@@ -6,6 +6,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="colorActionArchive">@color/actionArchive</item>
+        <item name="colorActionDelete">@color/actionDelete</item>
+        <item name="colorActionUnarchive">@color/actionUnarchive</item>
+        <item name="colorActionUnavailable">@color/actionUnavailable</item>
     </style>
 
 </resources>
