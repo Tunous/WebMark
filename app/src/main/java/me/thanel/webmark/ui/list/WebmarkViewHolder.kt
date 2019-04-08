@@ -1,6 +1,5 @@
 package me.thanel.webmark.ui.list
 
-import android.graphics.Color
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
@@ -12,6 +11,7 @@ import me.thanel.recyclerviewutils.viewholder.ContainerViewHolder
 import me.thanel.webmark.R
 import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.data.ext.isRead
+import me.thanel.webmark.ext.getColorFromAttr
 import me.thanel.webmark.ui.touchhelper.SwipeableViewHolder
 
 class WebmarkViewHolder(containerView: View) :
@@ -43,11 +43,21 @@ class WebmarkViewHolder(containerView: View) :
     }
 
     private fun updateActionIcon(boundItem: Webmark, isSwipingRight: Boolean) {
-        val icon = when {
-            isSwipingRight -> if (boundItem.isRead) R.drawable.ic_delete else R.drawable.ic_archive
-            else -> if (boundItem.isRead) R.drawable.ic_archive else null
+        val iconResId = when {
+            boundItem.isRead -> when {
+                isSwipingRight -> R.drawable.ic_delete
+                else -> R.drawable.ic_unarchive
+            }
+            else -> when {
+                isSwipingRight -> R.drawable.ic_archive
+                else -> null
+            }
         }
-        icon?.let(swipeActionIconView::setImageResource)
+        if (iconResId != null) {
+            swipeActionIconView.setImageResource(iconResId)
+        } else {
+            swipeActionIconView.setImageDrawable(null)
+        }
 
         swipeActionIconView.updateLayoutParams<FrameLayout.LayoutParams> {
             gravity = if (isSwipingRight) {
