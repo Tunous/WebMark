@@ -11,9 +11,12 @@ object Config {
 }
 
 object Versions {
+    const val androidxTesting = "1.1.1"
     const val coroutines = "1.1.1"
+    const val espresso = "3.1.0"
     const val glide = "4.9.0"
     const val gradleAndroid = "3.3.2"
+    const val junit = "4.12"
     const val kodein = "6.1.0"
     const val kotlin = "1.3.21"
     const val sqlDelight = "1.1.1"
@@ -32,4 +35,8 @@ object Deps {
     const val tools_gradleAndroid = "com.android.tools.build:gradle:${Versions.gradleAndroid}"
     const val tools_kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
     const val tools_sqlDelight = "com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}"
+
+    const val test_androidxRunner = "androidx.test:runner:${Versions.androidxTesting}"
+    const val test_espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
+    const val test_junit = "junit:junit:${Versions.junit}"
 }

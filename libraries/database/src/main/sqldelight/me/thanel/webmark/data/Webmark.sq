@@ -16,7 +16,6 @@ CREATE TABLE webmark (
 selectAll:
 SELECT *
 FROM webmark
-WHERE markedForDeletion = 0
 ORDER BY savedAt DESC;
 
 selectUnread:
@@ -60,7 +59,7 @@ SET
   estimatedReadingTimeMinutes = ?
 WHERE id = ?;
 
-marAsReadById:
+markAsReadById:
 UPDATE webmark
 SET readAt = CURRENT_TIMESTAMP
 WHERE id = ?;

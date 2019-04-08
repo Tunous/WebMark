@@ -52,7 +52,7 @@ class WebmarkListViewModel(app: Application) : BaseViewModel(app) {
     }
 
     fun markWebmarkAsRead(id: Long) = runInBackground {
-        database.webmarkQueries.marAsReadById(id)
+        database.webmarkQueries.markAsReadById(id)
     }
 
     fun markWebmarkAsUnread(id: Long) = runInBackground {
