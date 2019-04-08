@@ -13,6 +13,7 @@ import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.data.ext.isRead
 import me.thanel.webmark.ext.getColorFromAttr
 import me.thanel.webmark.ui.touchhelper.SwipeableViewHolder
+import me.thanel.webmark.ui.touchhelper.WebmarkAction
 
 class WebmarkViewHolder(containerView: View) :
     ContainerViewHolder(containerView),
@@ -42,17 +43,12 @@ class WebmarkViewHolder(containerView: View) :
         onSwipe(0f)
     }
 
-    private fun updateActionIcon(boundItem: Webmark, isSwipingRight: Boolean) {
-        val iconResId = when {
-            boundItem.isRead -> when {
-                isSwipingRight -> R.drawable.ic_delete
-                else -> R.drawable.ic_unarchive
-            }
-            else -> when {
-                isSwipingRight -> R.drawable.ic_archive
-                else -> null
-            }
+    private fun updateActionIcon(item: Webmark, isSwipingRight: Boolean) {
+        val action = when {
+            isSwipingRight -> WebmarkAction.rightSwipeFor(item)
+            else -> WebmarkAction.leftSwipeFor(item)
         }
+        val iconResId = action?.iconResId
         if (iconResId != null) {
             swipeActionIconView.setImageResource(iconResId)
         } else {
@@ -68,17 +64,12 @@ class WebmarkViewHolder(containerView: View) :
         }
     }
 
-    private fun updateBackgroundColor(boundItem: Webmark, isSwipingRight: Boolean) {
-        val colorAttrId = when {
-            boundItem.isRead -> when {
-                isSwipingRight -> R.attr.colorActionDelete
-                else -> R.attr.colorActionUnarchive
-            }
-            else -> when {
-                isSwipingRight -> R.attr.colorActionArchive
-                else -> R.attr.colorActionUnavailable
-            }
+    private fun updateBackgroundColor(item: Webmark, isSwipingRight: Boolean) {
+        val action = when {
+            isSwipingRight -> WebmarkAction.rightSwipeFor(item)
+            else -> WebmarkAction.leftSwipeFor(item)
         }
+        val colorAttrId = action?.colorAttrId ?: R.attr.colorActionUnarchive
         containerView.setBackgroundColor(context.getColorFromAttr(colorAttrId))
     }
 }
