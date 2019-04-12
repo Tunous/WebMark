@@ -1,16 +1,16 @@
 <resources>
 
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorAccent">@color/accent</item>
 
         <item name="colorActionArchive">@color/actionArchive</item>
         <item name="colorActionDelete">@color/actionDelete</item>
         <item name="colorActionUnarchive">@color/actionUnarchive</item>
         <item name="colorActionUnavailable">@color/actionUnavailable</item>
+
+        <item name="android:navigationBarColor">?colorPrimaryDark</item>
     </style>
 
 </resources>
