@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="webmark_favicon_corner_radius">2dp</dimen>
     <dimen name="webmark_image_corner_radius">8dp</dimen>
     <dimen name="swipe_elevation">8dp</dimen>
 </resources>

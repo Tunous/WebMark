@@ -16,7 +16,8 @@ import me.thanel.webmark.ext.share
 
 class WebmarkViewBinder : BaseItemViewBinder<Webmark, WebmarkViewHolder>(R.layout.item_webmark) {
 
-    private var imageCornerRadius: Int = 0
+    private var imageCornerRadius = 0
+    private var faviconCornerRadius = 0
 
     var onLongClickListener: (View, Webmark) -> Unit = { view, item ->
         view.context.share(item.url)
@@ -32,8 +33,8 @@ class WebmarkViewBinder : BaseItemViewBinder<Webmark, WebmarkViewHolder>(R.layou
 
     override fun onInflateViewHolder(holder: WebmarkViewHolder) {
         super.onInflateViewHolder(holder)
-        imageCornerRadius =
-            holder.context.resources.getDimensionPixelOffset(R.dimen.webmark_image_corner_radius)
+        imageCornerRadius = holder.context.resources.getDimensionPixelOffset(R.dimen.webmark_image_corner_radius)
+        faviconCornerRadius = holder.context.resources.getDimensionPixelOffset(R.dimen.webmark_favicon_corner_radius)
         holder.itemView.setOnLongClickListener {
             onLongClickListener(it, it.getTag(R.id.bound_item) as Webmark)
             return@setOnLongClickListener true
@@ -79,7 +80,7 @@ class WebmarkViewBinder : BaseItemViewBinder<Webmark, WebmarkViewHolder>(R.layou
         webmarkFaviconView.isVisible = false
         Glide.with(webmarkFaviconView)
             .load(item.faviconUrl)
-            .roundedCorners(imageCornerRadius)
+            .roundedCorners(faviconCornerRadius)
             .listener(webmarkFaviconView.getGlideVisibilityListener())
             .into(webmarkFaviconView)
     }
