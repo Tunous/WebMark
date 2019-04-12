@@ -12,10 +12,15 @@ import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.ext.getGlideVisibilityListener
 import me.thanel.webmark.ext.openInBrowser
 import me.thanel.webmark.ext.roundedCorners
+import me.thanel.webmark.ext.share
 
 class WebmarkViewBinder : BaseItemViewBinder<Webmark, WebmarkViewHolder>(R.layout.item_webmark) {
 
     private var imageCornerRadius: Int = 0
+
+    var onLongClickListener: (View, Webmark) -> Unit = { view, item ->
+        view.context.share(item.url)
+    }
 
     init {
         onItemClickListener = { view, item ->
@@ -29,6 +34,10 @@ class WebmarkViewBinder : BaseItemViewBinder<Webmark, WebmarkViewHolder>(R.layou
         super.onInflateViewHolder(holder)
         imageCornerRadius =
             holder.context.resources.getDimensionPixelOffset(R.dimen.webmark_image_corner_radius)
+        holder.itemView.setOnLongClickListener {
+            onLongClickListener(it, it.getTag(R.id.bound_item) as Webmark)
+            return@setOnLongClickListener true
+        }
     }
 
     override fun onBindViewHolder(holder: WebmarkViewHolder, item: Webmark) {
