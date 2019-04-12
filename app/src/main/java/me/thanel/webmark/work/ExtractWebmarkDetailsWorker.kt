@@ -1,8 +1,8 @@
 package me.thanel.webmark.work
 
 import android.content.Context
-import android.net.Uri
 import android.util.Log
+import androidx.core.net.toUri
 import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
@@ -10,6 +10,8 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import com.chimbori.crux.articles.ArticleExtractor
+import com.chimbori.crux.images.ImageUrlExtractor
+import com.chimbori.crux.urls.CruxURL
 import kotlinx.coroutines.coroutineScope
 import me.thanel.webmark.data.Database
 import org.jsoup.Jsoup
@@ -33,18 +35,40 @@ class ExtractWebmarkDetailsWorker(
 
         try {
             val url = uri.toString()
-            val document = Jsoup.connect(url).get()
-            val article = ArticleExtractor.with(url, document.html())
-                .extractMetadata()
-                .extractContent()
-                .estimateReadingTime()
-                .article()
+            val document = try { Jsoup.connect(url).get() } catch (e: Exception) { null }
+            val article = try {
+                document?.let {
+                    ArticleExtractor.with(url, it.html())
+                        .extractMetadata()
+                        .extractContent()
+                        .estimateReadingTime()
+                        .article()
+                }
+            } catch (e: Exception) {
+                Log.e("ExtractWebmarkDetails", "Failed extracting content: ${e.localizedMessage}")
+                null
+            }
+
+            val imageUrl = try {
+                document?.let {
+                    ImageUrlExtractor.with(url, document)
+                        .findImage()
+                        .imageUrl()
+                }
+            } catch (e: Exception) {
+                Log.e("ExtractWebmarkDetails", "Failed extracting image: ${e.localizedMessage}")
+                null
+            }
+
+            val alternativeImageUrl = if (CruxURL.parse(url).isLikelyImage) uri else null
+            Log.e("ExtractWebmarkDetails", "Extracted image: $imageUrl - $alternativeImageUrl")
 
             database.webmarkQueries.updateById(
                 id = id,
-                title = article.title,
-                faviconUrl = article.faviconUrl?.let(Uri::parse),
-                estimatedReadingTimeMinutes = article.estimatedReadingTimeMinutes
+                title = article?.title,
+                faviconUrl = article?.faviconUrl?.toUri(),
+                estimatedReadingTimeMinutes = article?.estimatedReadingTimeMinutes ?: 0,
+                imageUrl = imageUrl?.toUri() ?: alternativeImageUrl
             )
 
         } catch (e: Exception) {

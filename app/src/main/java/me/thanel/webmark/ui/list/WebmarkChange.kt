@@ -3,5 +3,6 @@ package me.thanel.webmark.ui.list
 enum class WebmarkChange {
     Title,
     Favicon,
-    Details
+    Details,
+    Image
 }

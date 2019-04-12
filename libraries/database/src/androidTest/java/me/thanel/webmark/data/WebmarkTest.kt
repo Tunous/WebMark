@@ -185,7 +185,13 @@ class WebmarkTest : DatabaseTest<WebmarkQueries>({ it.webmarkQueries }) {
         db.insert(id, Uri.parse(url))
         if (title != null) {
             val insertedId = db.lastInsertId().executeAsOne()
-            db.updateById(id = insertedId, title = title, faviconUrl = null, estimatedReadingTimeMinutes = 0)
+            db.updateById(
+                id = insertedId,
+                title = title,
+                faviconUrl = null,
+                estimatedReadingTimeMinutes = 0,
+                imageUrl = null
+            )
         }
     }
 }

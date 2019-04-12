@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:background="?colorActionArchive"
     android:outlineProvider="none"
-    android:stateListAnimator="@animator/raise">
+    android:stateListAnimator="@animator/raise"
+    tools:background="?colorActionArchive">
 
     <ImageView
         android:id="@+id/swipeActionIconView"
@@ -24,8 +24,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/background_selectable"
         android:stateListAnimator="@animator/raise"
-        tools:elevation="8dp"
-        tools:translationX="56dp">
+        tools:elevation="8dp">
 
         <TextView
             android:id="@+id/webmarkTitleTextView"
@@ -35,7 +34,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="8dp"
             android:textAppearance="@android:style/TextAppearance.Material.Body1"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/webmarkImageView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Interesting article to read" />
@@ -50,15 +49,15 @@
             android:layout_marginBottom="16dp"
             android:textAppearance="@android:style/TextAppearance.Material.Caption"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/webmarkImageView"
+            app:layout_constraintEnd_toStartOf="@+id/webmarkImageView"
+            app:layout_constraintStart_toEndOf="@+id/webmarkFaviconView"
             app:layout_constraintTop_toBottomOf="@+id/webmarkTitleTextView"
             app:layout_constraintVertical_bias="0.0"
             app:layout_goneMarginStart="0dp"
             tools:text="https://google.com" />
 
         <ImageView
-            android:id="@+id/webmarkImageView"
+            android:id="@+id/webmarkFaviconView"
             android:layout_width="16dp"
             android:layout_height="16dp"
             app:layout_constraintBottom_toBottomOf="@+id/webmarkLinkTextView"
@@ -75,6 +74,18 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/webmarkImageView"
+            android:layout_width="88dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

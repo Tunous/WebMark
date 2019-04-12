@@ -1,6 +1,5 @@
 package me.thanel.webmark.ext
 
-import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.core.view.isVisible
 import com.bumptech.glide.load.DataSource
@@ -19,22 +18,22 @@ fun <T> View.getTagProperty(id: Int, initializer: View.() -> T): T {
     return property
 }
 
-val View.glideVisibilityListener: RequestListener<Drawable?>
-    get() = getTagProperty(R.id.glide_load_visibility_listener) {
-        object : RequestListener<Drawable?> {
+fun <T> View.getGlideVisibilityListener(): RequestListener<T> {
+    return getTagProperty(R.id.glide_load_visibility_listener) {
+        object : RequestListener<T> {
             override fun onLoadFailed(
                 e: GlideException?,
                 model: Any?,
-                target: Target<Drawable?>?,
+                target: Target<T>?,
                 isFirstResource: Boolean
             ): Boolean {
                 return false
             }
 
             override fun onResourceReady(
-                resource: Drawable?,
+                resource: T,
                 model: Any?,
-                target: Target<Drawable?>?,
+                target: Target<T>?,
                 dataSource: DataSource?,
                 isFirstResource: Boolean
             ): Boolean {
@@ -43,3 +42,4 @@ val View.glideVisibilityListener: RequestListener<Drawable?>
             }
         }
     }
+}

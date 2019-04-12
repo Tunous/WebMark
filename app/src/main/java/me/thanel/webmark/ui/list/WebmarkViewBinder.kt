@@ -3,11 +3,13 @@ package me.thanel.webmark.ui.list
 import android.view.View
 import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import kotlinx.android.synthetic.main.item_webmark.*
 import me.thanel.recyclerviewutils.viewholder.BaseItemViewBinder
 import me.thanel.webmark.R
 import me.thanel.webmark.data.Webmark
-import me.thanel.webmark.ext.glideVisibilityListener
+import me.thanel.webmark.ext.getGlideVisibilityListener
 import me.thanel.webmark.ext.openInBrowser
 import me.thanel.webmark.ext.roundedCorners
 
@@ -34,6 +36,7 @@ class WebmarkViewBinder : BaseItemViewBinder<Webmark, WebmarkViewHolder>(R.layou
         holder.bindTitle(item)
         holder.bindDetails(item)
         holder.bindFavicon(item)
+        holder.bindImage(item)
     }
 
     override fun onBindViewHolder(holder: WebmarkViewHolder, item: Webmark, payloads: List<Any>) {
@@ -43,6 +46,7 @@ class WebmarkViewBinder : BaseItemViewBinder<Webmark, WebmarkViewHolder>(R.layou
                 WebmarkChange.Title -> holder.bindTitle(item)
                 WebmarkChange.Favicon -> holder.bindFavicon(item)
                 WebmarkChange.Details -> holder.bindDetails(item)
+                WebmarkChange.Image -> holder.bindImage(item)
             }
         }
     }
@@ -63,12 +67,20 @@ class WebmarkViewBinder : BaseItemViewBinder<Webmark, WebmarkViewHolder>(R.layou
     }
 
     private fun WebmarkViewHolder.bindFavicon(item: Webmark) {
-        val faviconUrl = item.faviconUrl
+        webmarkFaviconView.isVisible = false
+        Glide.with(webmarkFaviconView)
+            .load(item.faviconUrl)
+            .roundedCorners(imageCornerRadius)
+            .listener(webmarkFaviconView.getGlideVisibilityListener())
+            .into(webmarkFaviconView)
+    }
+
+    private fun WebmarkViewHolder.bindImage(item: Webmark) {
         webmarkImageView.isVisible = false
         Glide.with(webmarkImageView)
-            .load(faviconUrl)
-            .roundedCorners(imageCornerRadius)
-            .listener(webmarkImageView.glideVisibilityListener)
+            .load(item.imageUrl)
+            .transform(CenterCrop(), RoundedCorners(imageCornerRadius))
+            .listener(webmarkImageView.getGlideVisibilityListener())
             .into(webmarkImageView)
     }
 }

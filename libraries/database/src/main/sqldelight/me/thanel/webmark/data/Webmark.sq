@@ -10,7 +10,8 @@ CREATE TABLE webmark (
   estimatedReadingTimeMinutes INTEGER AS Int DEFAULT 0 NOT NULL,
   readAt INTEGER AS Date,
   savedAt INTEGER AS Date DEFAULT CURRENT_TIMESTAMP,
-  markedForDeletion INTEGER AS Boolean NOT NULL DEFAULT 0
+  markedForDeletion INTEGER AS Boolean NOT NULL DEFAULT 0,
+  imageUrl TEXT AS Uri
 );
 
 selectAll:
@@ -56,7 +57,8 @@ UPDATE webmark
 SET
   title = ?,
   faviconUrl = ?,
-  estimatedReadingTimeMinutes = ?
+  estimatedReadingTimeMinutes = ?,
+  imageUrl = ?
 WHERE id = ?;
 
 markAsReadById:

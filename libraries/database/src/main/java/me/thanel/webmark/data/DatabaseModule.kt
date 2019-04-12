@@ -22,7 +22,8 @@ fun databaseModule(appContext: Context) = Kodein.Module("database") {
             urlAdapter = UriColumnAdapter,
             faviconUrlAdapter = UriColumnAdapter,
             readAtAdapter = DateColumnAdapter,
-            savedAtAdapter = DateColumnAdapter
+            savedAtAdapter = DateColumnAdapter,
+            imageUrlAdapter = UriColumnAdapter
         )
     }
 }
