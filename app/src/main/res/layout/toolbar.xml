@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:alpha="0"
-        android:background="@drawable/filled_background"
+        android:background="@drawable/background_filled"
         android:hint="@string/hint_search"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"

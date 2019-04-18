@@ -35,6 +35,7 @@ dependencies {
     implementation Deps.kodein
     implementation Deps.kodeinAndroid
     implementation Deps.kotlin
+    implementation Deps.materialPopupMenu
 
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.core:core-ktx:1.1.0-alpha05'

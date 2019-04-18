@@ -4,4 +4,7 @@
     <attr name="colorActionDelete" format="color" />
     <attr name="colorActionUnarchive" format="color" />
     <attr name="colorActionUnavailable" format="color" />
+
+    <attr name="colorOnPrimary" format="color|reference" />
+    <attr name="colorOnPrimaryDark" format="color|reference" />
 </resources>

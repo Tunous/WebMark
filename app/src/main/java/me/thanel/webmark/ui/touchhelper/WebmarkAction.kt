@@ -2,6 +2,7 @@ package me.thanel.webmark.ui.touchhelper
 
 import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes
+import androidx.recyclerview.widget.ItemTouchHelper
 import me.thanel.webmark.R
 import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.data.ext.isRead
@@ -23,6 +24,11 @@ enum class WebmarkAction(
         fun rightSwipeFor(item: Webmark) = when {
             item.isRead -> Delete
             else -> Archive
+        }
+
+        fun swipeInDirectionFor(direction: Int, item: Webmark) = when (direction) {
+            ItemTouchHelper.RIGHT -> rightSwipeFor(item)
+            else -> leftSwipeFor(item)
         }
     }
 }

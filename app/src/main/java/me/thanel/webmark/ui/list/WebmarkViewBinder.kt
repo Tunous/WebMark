@@ -8,19 +8,22 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import kotlinx.android.synthetic.main.item_webmark.*
 import me.thanel.recyclerviewutils.viewholder.BaseItemViewBinder
 import me.thanel.webmark.R
+import me.thanel.webmark.action.WebmarkActionHandler
 import me.thanel.webmark.data.Webmark
-import me.thanel.webmark.ext.getGlideVisibilityListener
 import me.thanel.webmark.ext.openInBrowser
 import me.thanel.webmark.ext.roundedCorners
-import me.thanel.webmark.ext.share
+import me.thanel.webmark.ui.ext.getGlideVisibilityListener
+import me.thanel.webmark.ui.popup.createPopupMenu
 
-class WebmarkViewBinder : BaseItemViewBinder<Webmark, WebmarkViewHolder>(R.layout.item_webmark) {
+class WebmarkViewBinder(
+    private val actionHandler: WebmarkActionHandler
+) : BaseItemViewBinder<Webmark, WebmarkViewHolder>(R.layout.item_webmark) {
 
     private var imageCornerRadius = 0
     private var faviconCornerRadius = 0
 
     var onLongClickListener: (View, Webmark) -> Unit = { view, item ->
-        view.context.share(item.url)
+        createPopupMenu(item, actionHandler).show(view.context, view)
     }
 
     init {

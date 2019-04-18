@@ -23,16 +23,19 @@ import kotlinx.coroutines.launch
 import me.thanel.recyclerviewutils.adapter.lazyAdapterWrapper
 import me.thanel.webmark.R
 import me.thanel.webmark.data.Webmark
-import me.thanel.webmark.data.ext.isRead
+import me.thanel.webmark.ext.share
 import me.thanel.webmark.ext.viewModel
 import me.thanel.webmark.preference.Preference
 import me.thanel.webmark.preference.PreferenceKey
 import me.thanel.webmark.ui.base.BaseFragment
+import me.thanel.webmark.action.WebmarkActionHandler
 import me.thanel.webmark.ui.touchhelper.ItemTouchCallback
+import me.thanel.webmark.ui.touchhelper.WebmarkAction
 import me.thanel.webmark.work.SaveWebmarkWorker
 import org.kodein.di.generic.instance
 
-class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
+class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list),
+    WebmarkActionHandler {
 
     private val viewModel: WebmarkListViewModel by viewModel()
     private val clipboard: ClipboardManager by instance()
@@ -40,7 +43,7 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
     private val latestSuggestedUrlPreference: Preference<String> by instance(tag = PreferenceKey.LatestSuggestedUrl)
 
     private val adapterWrapper by lazyAdapterWrapper {
-        register(WebmarkViewBinder(), WebmarkItemCallback)
+        register(WebmarkViewBinder(this@WebmarkListFragment), WebmarkItemCallback)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -149,25 +152,26 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
     }
 
     private fun onSwiped(direction: Int, item: Webmark) {
-        if (item.isRead) {
-            if (direction == ItemTouchHelper.RIGHT) {
-                delete(item.id)
-            } else {
-                viewModel.markWebmarkAsUnread(item.id)
-            }
-            return
-        }
-
-        if (direction == ItemTouchHelper.RIGHT) {
-            markAsRead(item.id)
+        when (WebmarkAction.swipeInDirectionFor(direction, item)) {
+            WebmarkAction.Archive -> archive(item.id)
+            WebmarkAction.Delete -> delete(item.id)
+            WebmarkAction.Unarchive -> unarchive(item.id)
         }
     }
 
-    private fun markAsRead(id: Long) {
+    private fun archive(id: Long) {
         viewModel.markWebmarkAsRead(id)
 
-        Snackbar.make(coordinator, R.string.info_marked_read, Snackbar.LENGTH_LONG)
+        Snackbar.make(coordinator, R.string.info_archived, Snackbar.LENGTH_LONG)
             .setAction(R.string.action_undo) { viewModel.markWebmarkAsUnread(id) }
+            .show()
+    }
+
+    private fun unarchive(id: Long) {
+        viewModel.markWebmarkAsUnread(id)
+
+        Snackbar.make(coordinator, R.string.info_unarchived, Snackbar.LENGTH_SHORT)
+            .setAction(R.string.action_undo) { viewModel.markWebmarkAsRead(id) }
             .show()
     }
 
@@ -176,6 +180,22 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list) {
         Snackbar.make(coordinator, R.string.info_deleted, Snackbar.LENGTH_LONG)
             .setAction(R.string.action_undo) { viewModel.undoDeleteWebmark(id) }
             .show()
+    }
+
+    override fun archive(webmark: Webmark) {
+        archive(webmark.id)
+    }
+
+    override fun unarchive(webmark: Webmark) {
+        unarchive(webmark.id)
+    }
+
+    override fun delete(webmark: Webmark) {
+        delete(webmark.id)
+    }
+
+    override fun share(webmark: Webmark) {
+        requireContext().share(webmark.url)
     }
 
 }

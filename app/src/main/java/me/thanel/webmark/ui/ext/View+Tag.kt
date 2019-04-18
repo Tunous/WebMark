@@ -1,4 +1,4 @@
-package me.thanel.webmark.ext
+package me.thanel.webmark.ui.ext
 
 import android.view.View
 import androidx.core.view.isVisible

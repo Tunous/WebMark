@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
+    <string name="action_archive">Archive</string>
+    <string name="action_delete">Delete</string>
     <string name="action_save">Save</string>
+    <string name="action_share_link">Share link</string>
+    <string name="action_unarchive">Unarchive</string>
     <string name="action_undo">Undo</string>
 
     <string name="app_name">WebMark</string>
@@ -9,11 +13,12 @@
 
     <string name="hint_search">Search</string>
 
+    <string name="info_archived">Archived</string>
     <string name="info_deleted">Deleted</string>
     <string name="info_duplicate_url">Link is already in your list</string>
     <string name="info_invalid_url">Invalid URL</string>
-    <string name="info_marked_read">Marked as read</string>
     <string name="info_saved">Saved page</string>
+    <string name="info_unarchived">Unarchived</string>
 
     <string name="question_save_copied_url">Save copied URL?\n%1$s</string>
 
