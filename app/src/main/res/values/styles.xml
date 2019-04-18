@@ -8,6 +8,7 @@
         <item name="colorOnPrimaryDark">?colorOnPrimary</item>
 
         <item name="android:navigationBarColor">?colorPrimaryDark</item>
+        <item name="transparentBackgroundColor">@color/transparentBackgroundWhite</item>
 
         <item name="colorActionArchive">@color/actionArchive</item>
         <item name="colorActionDelete">@color/actionDelete</item>

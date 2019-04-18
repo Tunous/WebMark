@@ -7,4 +7,6 @@
 
     <attr name="colorOnPrimary" format="color|reference" />
     <attr name="colorOnPrimaryDark" format="color|reference" />
+
+    <attr name="transparentBackgroundColor" format="color" />
 </resources>

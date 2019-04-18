@@ -10,4 +10,6 @@
     <color name="actionDelete">#D32F2F</color>
     <color name="actionUnarchive">#F57C00</color>
     <color name="actionUnavailable">@android:color/black</color>
+
+    <color name="transparentBackgroundWhite">#EEFFFFFF</color>
 </resources>
