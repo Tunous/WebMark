@@ -5,4 +5,6 @@ import com.chibatching.kotpref.KotprefModel
 object WebMarkPreferences : KotprefModel() {
 
     var latestSuggestedUrl by nullableStringPref(default = null)
+
+    var useDarkTheme by booleanPref(default = false)
 }

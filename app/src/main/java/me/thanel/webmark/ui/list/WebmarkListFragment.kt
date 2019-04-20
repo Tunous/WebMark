@@ -16,8 +16,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_webmark_list.*
-import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_empty.*
+import kotlinx.android.synthetic.main.view_toolbar.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import me.thanel.recyclerviewutils.adapter.lazyAdapterWrapper
@@ -67,8 +67,15 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
             viewModel.filterText = it?.toString() ?: ""
         }
 
+        archiveCheckBox.isChecked = viewModel.showArchive
         archiveCheckBox.onCheckedChanged = { isChecked ->
             viewModel.showArchive = isChecked
+        }
+
+        themeIcon.isChecked = WebMarkPreferences.useDarkTheme
+        themeIcon.onCheckedChanged = { useDarkTheme ->
+            WebMarkPreferences.useDarkTheme = useDarkTheme
+            requireActivity().recreate()
         }
 
         view.findViewById<MotionLayout>(R.id.toolbar)

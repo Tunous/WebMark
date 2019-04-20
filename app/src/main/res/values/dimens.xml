@@ -7,6 +7,9 @@
 
     <dimen name="swipe_elevation">8dp</dimen>
 
+    <dimen name="toolbar_button_size">@dimen/toolbar_height</dimen>
+    <dimen name="toolbar_height">56dp</dimen>
+
     <dimen name="webmark_favicon_corner_radius">2dp</dimen>
     <dimen name="webmark_image_corner_radius">8dp</dimen>
 </resources>
