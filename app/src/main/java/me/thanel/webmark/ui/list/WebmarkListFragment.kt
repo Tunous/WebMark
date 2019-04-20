@@ -155,12 +155,9 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list),
         }
     }
 
-    private fun onSwiped(direction: Int, item: Webmark) {
-        when (WebmarkAction.swipeInDirectionFor(direction, item)) {
-            WebmarkAction.Archive -> archive(item.id)
-            WebmarkAction.Delete -> delete(item.id)
-            WebmarkAction.Unarchive -> unarchive(item.id)
-        }
+    private fun onSwiped(direction: Int, webmark: Webmark) {
+        val action = WebmarkAction.swipeInDirectionFor(direction, webmark) ?: return
+        performAction(action, webmark)
     }
 
     private fun archive(id: Long) {
@@ -186,20 +183,13 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list),
             .show()
     }
 
-    override fun archive(webmark: Webmark) {
-        archive(webmark.id)
-    }
-
-    override fun unarchive(webmark: Webmark) {
-        unarchive(webmark.id)
-    }
-
-    override fun delete(webmark: Webmark) {
-        delete(webmark.id)
-    }
-
-    override fun share(webmark: Webmark) {
-        requireContext().share(webmark.url)
+    override fun performAction(action: WebmarkAction, webmark: Webmark) {
+        when (action) {
+            WebmarkAction.Archive -> archive(webmark.id)
+            WebmarkAction.Delete -> delete(webmark.id)
+            WebmarkAction.ShareLink -> requireContext().share(webmark.url)
+            WebmarkAction.Unarchive -> unarchive(webmark.id)
+        }
     }
 
 }
