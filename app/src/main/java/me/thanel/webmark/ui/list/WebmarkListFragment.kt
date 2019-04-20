@@ -26,8 +26,7 @@ import me.thanel.webmark.action.WebmarkActionHandler
 import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.ext.share
 import me.thanel.webmark.ext.viewModel
-import me.thanel.webmark.preference.Preference
-import me.thanel.webmark.preference.PreferenceKey
+import me.thanel.webmark.preferences.WebMarkPreferences
 import me.thanel.webmark.ui.base.BaseFragment
 import me.thanel.webmark.ui.touchhelper.CollapseItemAnimator
 import me.thanel.webmark.ui.touchhelper.ItemTouchCallback
@@ -37,13 +36,11 @@ import me.thanel.webmark.work.ExtractWebmarkDetailsWorker
 import me.thanel.webmark.work.SaveWebmarkWorker
 import org.kodein.di.generic.instance
 
-class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list),
-    WebmarkActionHandler {
+class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), WebmarkActionHandler {
 
     private val viewModel: WebmarkListViewModel by viewModel()
     private val clipboard: ClipboardManager by instance()
     private val inputMethodManager: InputMethodManager by instance()
-    private val latestSuggestedUrlPreference: Preference<String> by instance(tag = PreferenceKey.LatestSuggestedUrl)
 
     private val adapterWrapper by lazyAdapterWrapper {
         register(WebmarkViewBinder(this@WebmarkListFragment), WebmarkItemCallback)
@@ -138,8 +135,7 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list),
         val text = item.text.toString()
         if (!Patterns.WEB_URL.matcher(text).matches()) return
 
-        val latestSuggestedUrl = latestSuggestedUrlPreference.value
-        if (latestSuggestedUrl == text) return
+        if (WebMarkPreferences.latestSuggestedUrl == text) return
 
         launch {
             val uri = Uri.parse(text)
@@ -152,7 +148,7 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list),
                 }
                 .show()
 
-            latestSuggestedUrlPreference.value = text
+            WebMarkPreferences.latestSuggestedUrl = text
         }
     }
 
