@@ -4,11 +4,11 @@
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primaryDark</item>
         <item name="colorAccent">@color/accent</item>
-        <item name="colorOnPrimary">?android:textColorPrimaryInverse</item>
+        <item name="colorOnPrimary">@android:color/white</item>
         <item name="colorOnPrimaryDark">?colorOnPrimary</item>
 
         <item name="android:navigationBarColor">?colorPrimaryDark</item>
-        <item name="transparentBackgroundColor">@color/transparentBackgroundWhite</item>
+        <item name="transparentBackgroundColor">@color/transparentBackgroundLight</item>
 
         <item name="colorActionArchive">@color/actionArchive</item>
         <item name="colorActionDelete">@color/actionDelete</item>
@@ -20,6 +20,39 @@
 
     <style name="RoundedPopup" parent="Widget.MPM.Menu">
         <item name="android:theme">@style/AppTheme</item>
+        <item name="android:popupBackground">@drawable/background_popup_menu</item>
+        <item name="android:dropDownVerticalOffset">16dp</item>
+        <item name="android:dropDownHorizontalOffset">16dp</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.2</item>
+        <item name="mpm_paddingBottom">0dp</item>
+        <item name="mpm_paddingLeft">0dp</item>
+        <item name="mpm_paddingRight">0dp</item>
+        <item name="mpm_paddingTop">0dp</item>
+    </style>
+
+    <!-- Dark -->
+
+    <style name="AppTheme.Dark" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorOnPrimaryDark">?colorOnPrimary</item>
+
+        <item name="android:navigationBarColor">?colorPrimaryDark</item>
+        <item name="transparentBackgroundColor">@color/transparentBackgroundDark</item>
+
+        <item name="colorActionArchive">@color/actionArchive</item>
+        <item name="colorActionDelete">@color/actionDelete</item>
+        <item name="colorActionUnarchive">@color/actionUnarchive</item>
+        <item name="colorActionUnavailable">@color/actionUnavailable</item>
+
+        <item name="materialPopupMenuStyle">@style/RoundedPopup.Dark</item>
+    </style>
+
+    <style name="RoundedPopup.Dark" parent="Widget.MPM.Menu.Dark">
+        <item name="android:theme">@style/AppTheme.Dark</item>
         <item name="android:popupBackground">@drawable/background_popup_menu</item>
         <item name="android:dropDownVerticalOffset">16dp</item>
         <item name="android:dropDownHorizontalOffset">16dp</item>

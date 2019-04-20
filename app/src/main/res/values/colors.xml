@@ -11,5 +11,6 @@
     <color name="actionUnarchive">#F57C00</color>
     <color name="actionUnavailable">@android:color/black</color>
 
-    <color name="transparentBackgroundWhite">#EEFFFFFF</color>
+    <color name="transparentBackgroundLight">#EEFFFFFF</color>
+    <color name="transparentBackgroundDark">#DD303030</color>
 </resources>
