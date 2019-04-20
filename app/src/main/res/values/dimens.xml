@@ -1,9 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-    <dimen name="webmark_favicon_corner_radius">2dp</dimen>
-    <dimen name="webmark_image_corner_radius">8dp</dimen>
-    <dimen name="swipe_elevation">8dp</dimen>
-
     <!-- Override the default min width of material popup menu -->
     <dimen name="mpm_popup_menu_min_width">280dp</dimen>
+
+    <dimen name="snackbar_bottom_margin">8dp</dimen>
+
+    <dimen name="swipe_elevation">8dp</dimen>
+
+    <dimen name="webmark_favicon_corner_radius">2dp</dimen>
+    <dimen name="webmark_image_corner_radius">8dp</dimen>
 </resources>
