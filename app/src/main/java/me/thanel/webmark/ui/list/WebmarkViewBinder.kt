@@ -46,6 +46,7 @@ class WebmarkViewBinder(
 
     override fun onBindViewHolder(holder: WebmarkViewHolder, item: Webmark) {
         super.onBindViewHolder(holder, item)
+        holder.shouldAnimateCollapsing = false
         holder.bindTitle(item)
         holder.bindDetails(item)
         holder.bindFavicon(item)
@@ -54,6 +55,7 @@ class WebmarkViewBinder(
 
     override fun onBindViewHolder(holder: WebmarkViewHolder, item: Webmark, payloads: List<Any>) {
         super.onBindViewHolder(holder, item, payloads)
+        holder.shouldAnimateCollapsing = false
         handleEnumPayloadChanges<WebmarkChange>(payloads) {
             when (it) {
                 WebmarkChange.Title -> holder.bindTitle(item)

@@ -27,7 +27,7 @@ enum class WebmarkAction(
         }
 
         fun swipeInDirectionFor(direction: Int, item: Webmark) = when (direction) {
-            ItemTouchHelper.RIGHT -> rightSwipeFor(item)
+            ItemTouchHelper.END -> rightSwipeFor(item)
             else -> leftSwipeFor(item)
         }
     }

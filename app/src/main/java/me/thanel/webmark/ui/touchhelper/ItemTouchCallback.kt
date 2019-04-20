@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 abstract class ItemTouchCallback :
     ItemTouchHelper.SimpleCallback(0, 0) {
 
-    abstract fun onSwiped(position: Int, direction: Int)
+    abstract fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int, direction: Int)
 
     override fun getSwipeDirs(
         recyclerView: RecyclerView,
@@ -25,7 +25,7 @@ abstract class ItemTouchCallback :
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         val position = viewHolder.adapterPosition
-        onSwiped(position, direction)
+        onSwiped(viewHolder, position, direction)
     }
 
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
@@ -70,9 +70,9 @@ abstract class ItemTouchCallback :
     }
 
     companion object {
-        fun create(onSwiped: (Int, Int) -> Unit) = object : ItemTouchCallback() {
-            override fun onSwiped(position: Int, direction: Int) =
-                onSwiped(position, direction)
+        fun create(onSwiped: (RecyclerView.ViewHolder, Int, Int) -> Unit) = object : ItemTouchCallback() {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, position: Int, direction: Int) =
+                onSwiped(viewHolder, position, direction)
         }
     }
 }

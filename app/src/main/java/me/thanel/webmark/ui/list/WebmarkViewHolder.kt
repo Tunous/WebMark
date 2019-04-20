@@ -22,9 +22,11 @@ class WebmarkViewHolder(containerView: View) :
     private val swipeElevation = context.resources.getDimension(R.dimen.swipe_elevation)
     private val boundItem get() = containerView.getTag(R.id.bound_item) as Webmark
 
+    override var shouldAnimateCollapsing: Boolean = false
+
     override fun getSwipeDirs() = when {
-        boundItem.isRead -> ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-        else -> ItemTouchHelper.RIGHT
+        boundItem.isRead -> ItemTouchHelper.START or ItemTouchHelper.END
+        else -> ItemTouchHelper.END
     }
 
     override fun onSwipe(distance: Float) {

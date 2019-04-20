@@ -4,4 +4,6 @@ interface SwipeableViewHolder {
     fun onSwipe(distance: Float)
     fun onClearSwipe()
     fun getSwipeDirs(): Int
+
+    var shouldAnimateCollapsing: Boolean
 }

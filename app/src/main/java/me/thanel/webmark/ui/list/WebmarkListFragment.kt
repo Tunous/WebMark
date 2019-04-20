@@ -22,14 +22,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import me.thanel.recyclerviewutils.adapter.lazyAdapterWrapper
 import me.thanel.webmark.R
+import me.thanel.webmark.action.WebmarkActionHandler
 import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.ext.share
 import me.thanel.webmark.ext.viewModel
 import me.thanel.webmark.preference.Preference
 import me.thanel.webmark.preference.PreferenceKey
 import me.thanel.webmark.ui.base.BaseFragment
-import me.thanel.webmark.action.WebmarkActionHandler
+import me.thanel.webmark.ui.touchhelper.CollapseItemAnimator
 import me.thanel.webmark.ui.touchhelper.ItemTouchCallback
+import me.thanel.webmark.ui.touchhelper.SwipeableViewHolder
 import me.thanel.webmark.ui.touchhelper.WebmarkAction
 import me.thanel.webmark.work.SaveWebmarkWorker
 import org.kodein.di.generic.instance
@@ -52,14 +54,16 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list),
         webmarkRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         webmarkRecyclerView.adapter = adapterWrapper.adapter
 
-        val itemTouchCallback = ItemTouchCallback.create { position, direction ->
-            val item = adapterWrapper.adapter.items.getOrNull(position)
-            when (item) {
+        val itemTouchCallback = ItemTouchCallback.create { viewHolder, position, direction ->
+            (viewHolder as? SwipeableViewHolder)?.shouldAnimateCollapsing = true
+            when (val item = adapterWrapper.adapter.items.getOrNull(position)) {
                 is Webmark -> onSwiped(direction, item)
             }
         }
         val itemTouchHelper = ItemTouchHelper(itemTouchCallback)
         itemTouchHelper.attachToRecyclerView(webmarkRecyclerView)
+
+        webmarkRecyclerView.itemAnimator = CollapseItemAnimator()
 
         filterInput.doAfterTextChanged {
             viewModel.filterText = it?.toString() ?: ""
