@@ -12,5 +12,5 @@
     <color name="actionUnavailable">@android:color/black</color>
 
     <color name="transparentBackgroundLight">#EEFFFFFF</color>
-    <color name="transparentBackgroundDark">#DD303030</color>
+    <color name="transparentBackgroundDark">#DD111111</color>
 </resources>

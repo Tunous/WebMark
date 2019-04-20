@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.WebMark.Light" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="transparentBackgroundColor">@color/transparentBackgroundLight</item>
+        <item name="materialPopupMenuStyle">@style/RoundedPopup</item>
+    </style>
+
+    <style name="Theme.WebMark.Dark" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="transparentBackgroundColor">@color/transparentBackgroundDark</item>
+        <item name="materialPopupMenuStyle">@style/RoundedPopup.Dark</item>
+    </style>
+
+    <style name="Base.Theme.WebMark.DayNight" parent="Theme.WebMark.Light" />
+
+    <style name="Theme.WebMark.DayNight" parent="Base.Theme.WebMark.DayNight">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorOnPrimaryDark">?colorOnPrimary</item>
+
+        <item name="android:navigationBarColor">?colorPrimaryDark</item>
+
+        <item name="colorActionArchive">@color/actionArchive</item>
+        <item name="colorActionDelete">@color/actionDelete</item>
+        <item name="colorActionUnarchive">@color/actionUnarchive</item>
+        <item name="colorActionUnavailable">@color/actionUnavailable</item>
+    </style>
+</resources>

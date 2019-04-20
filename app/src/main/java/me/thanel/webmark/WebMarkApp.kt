@@ -1,8 +1,10 @@
 package me.thanel.webmark
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import com.chibatching.kotpref.Kotpref
 import me.thanel.webmark.data.databaseModule
+import me.thanel.webmark.preferences.WebMarkPreferences
 import me.thanel.webmark.work.CleanupDatabaseWorker
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -18,6 +20,11 @@ class WebMarkApp : Application(), KodeinAware {
     override fun onCreate() {
         super.onCreate()
         Kotpref.init(this)
+        val nightMode = when {
+            WebMarkPreferences.useDarkTheme -> AppCompatDelegate.MODE_NIGHT_YES
+            else -> AppCompatDelegate.MODE_NIGHT_NO
+        }
+        AppCompatDelegate.setDefaultNightMode(nightMode)
         CleanupDatabaseWorker.enqueuePeriodic()
     }
 }
