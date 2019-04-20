@@ -2,6 +2,7 @@
 <resources>
     <string name="action_archive">Archive</string>
     <string name="action_delete">Delete</string>
+    <string name="action_extract_details">Extract details</string>
     <string name="action_save">Save</string>
     <string name="action_share_link">Share link</string>
     <string name="action_unarchive">Unarchive</string>

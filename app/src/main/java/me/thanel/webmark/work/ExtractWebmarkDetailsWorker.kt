@@ -61,7 +61,7 @@ class ExtractWebmarkDetailsWorker(
             }
 
             val alternativeImageUrl = if (CruxURL.parse(url).isLikelyImage) uri else null
-            Log.e("ExtractWebmarkDetails", "Extracted image: $imageUrl - $alternativeImageUrl")
+            Log.d("ExtractWebmarkDetails", "Extracted image: $imageUrl - $alternativeImageUrl")
 
             database.webmarkQueries.updateById(
                 id = id,

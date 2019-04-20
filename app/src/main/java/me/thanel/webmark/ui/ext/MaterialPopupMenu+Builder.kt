@@ -8,7 +8,7 @@ import androidx.annotation.StringRes
 import com.github.zawadz88.materialpopupmenu.MaterialPopupMenuBuilder
 import me.thanel.webmark.R
 
-fun MaterialPopupMenuBuilder.SectionHolder.header(title: String) =
+fun MaterialPopupMenuBuilder.SectionHolder.coloredHeader(title: String) =
     customItem(R.layout.view_popup_header) { view ->
         val headerView = view.findViewById<TextView>(R.id.popupMenuHeaderTextView)
         headerView.text = title

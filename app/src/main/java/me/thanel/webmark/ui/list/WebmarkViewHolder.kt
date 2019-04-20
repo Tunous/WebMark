@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.item_webmark.*
 import me.thanel.recyclerviewutils.viewholder.ContainerViewHolder
 import me.thanel.webmark.R
 import me.thanel.webmark.data.Webmark
-import me.thanel.webmark.data.ext.isRead
+import me.thanel.webmark.data.ext.isArchived
 import me.thanel.webmark.ext.getColorFromAttr
 import me.thanel.webmark.ui.touchhelper.SwipeableViewHolder
 import me.thanel.webmark.ui.touchhelper.WebmarkAction
@@ -25,7 +25,7 @@ class WebmarkViewHolder(containerView: View) :
     override var shouldAnimateCollapsing: Boolean = false
 
     override fun getSwipeDirs() = when {
-        boundItem.isRead -> ItemTouchHelper.START or ItemTouchHelper.END
+        boundItem.isArchived -> ItemTouchHelper.START or ItemTouchHelper.END
         else -> ItemTouchHelper.END
     }
 

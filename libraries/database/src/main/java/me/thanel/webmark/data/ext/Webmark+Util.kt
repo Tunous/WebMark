@@ -2,5 +2,5 @@ package me.thanel.webmark.data.ext
 
 import me.thanel.webmark.data.Webmark
 
-val Webmark.isRead: Boolean
+val Webmark.isArchived: Boolean
     get() = readAt != null

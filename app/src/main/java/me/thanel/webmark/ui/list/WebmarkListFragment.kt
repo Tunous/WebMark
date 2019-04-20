@@ -33,6 +33,7 @@ import me.thanel.webmark.ui.touchhelper.CollapseItemAnimator
 import me.thanel.webmark.ui.touchhelper.ItemTouchCallback
 import me.thanel.webmark.ui.touchhelper.SwipeableViewHolder
 import me.thanel.webmark.ui.touchhelper.WebmarkAction
+import me.thanel.webmark.work.ExtractWebmarkDetailsWorker
 import me.thanel.webmark.work.SaveWebmarkWorker
 import org.kodein.di.generic.instance
 
@@ -189,6 +190,7 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list),
             WebmarkAction.Delete -> delete(webmark.id)
             WebmarkAction.ShareLink -> requireContext().share(webmark.url)
             WebmarkAction.Unarchive -> unarchive(webmark.id)
+            WebmarkAction.ExtractDetails -> ExtractWebmarkDetailsWorker.enqueue(webmark.id)
         }
     }
 
