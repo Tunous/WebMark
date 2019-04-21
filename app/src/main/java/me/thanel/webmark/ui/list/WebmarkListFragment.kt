@@ -7,8 +7,6 @@ import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.TransitionAdapter
 import androidx.core.view.isVisible
@@ -27,6 +25,7 @@ import me.thanel.webmark.R
 import me.thanel.webmark.action.WebmarkActionHandler
 import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.ext.share
+import me.thanel.webmark.ext.updateTheme
 import me.thanel.webmark.ext.viewModel
 import me.thanel.webmark.preferences.WebMarkPreferences
 import me.thanel.webmark.ui.base.BaseFragment
@@ -77,11 +76,7 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
         themeIcon.isChecked = WebMarkPreferences.useDarkTheme
         themeIcon.onCheckedChanged = { useDarkTheme ->
             WebMarkPreferences.useDarkTheme = useDarkTheme
-            val nightMode = when {
-                useDarkTheme -> AppCompatDelegate.MODE_NIGHT_YES
-                else -> AppCompatDelegate.MODE_NIGHT_NO
-            }
-            (requireActivity() as AppCompatActivity).delegate.setLocalNightMode(nightMode)
+            updateTheme(useDarkTheme)
         }
 
         view.findViewById<MotionLayout>(R.id.toolbar)
