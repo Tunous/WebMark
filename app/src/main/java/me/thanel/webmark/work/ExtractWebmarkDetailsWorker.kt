@@ -14,8 +14,12 @@ import com.chimbori.crux.images.ImageUrlExtractor
 import com.chimbori.crux.urls.CruxURL
 import kotlinx.coroutines.coroutineScope
 import me.thanel.webmark.data.Database
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
 import org.kodein.di.generic.instance
+import java.io.IOException
 
 class ExtractWebmarkDetailsWorker(
     appContext: Context,
@@ -35,7 +39,7 @@ class ExtractWebmarkDetailsWorker(
 
         try {
             val url = uri.toString()
-            val document = try { Jsoup.connect(url).get() } catch (e: Exception) { null }
+            val document = downloadPageContent(url)
             val article = try {
                 document?.let {
                     ArticleExtractor.with(url, it.html())
@@ -76,6 +80,25 @@ class ExtractWebmarkDetailsWorker(
         }
 
         return@coroutineScope Result.success()
+    }
+
+    private fun downloadPageContent(url: String): Document? {
+        val request = Request.Builder()
+            .url(url)
+            .build()
+
+        val response = try {
+            OkHttpClient().newCall(request).execute()
+        } catch (e: IOException) {
+            return null
+        }
+
+        response.use {
+            val inputStream = it.body()?.byteStream() ?: return null
+            val document = Jsoup.parse(inputStream, null, url)
+            inputStream.close()
+            return document
+        }
     }
 
     companion object {

@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity(), KodeinAware {
         if (savedInstanceState == null) {
             updateTheme()
         }
-        
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }

@@ -21,6 +21,7 @@ object Versions {
     const val kotlin = "1.3.21"
     const val kotpref = "2.7.0"
     const val materialPopupMenu = "a6f06e29de"
+    const val okhttp = "3.14.1"
     const val sqlDelight = "1.1.1"
 }
 
@@ -34,6 +35,7 @@ object Deps {
     const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
     const val kotpref = "com.chibatching.kotpref:kotpref:${Versions.kotpref}"
     const val materialPopupMenu = "com.github.zawadz88:MaterialPopupMenu:${Versions.materialPopupMenu}"
+    const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
     const val sqlDelight = "com.squareup.sqldelight:android-driver:${Versions.sqlDelight}"
 
     const val tools_gradleAndroid = "com.android.tools.build:gradle:${Versions.gradleAndroid}"
