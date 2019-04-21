@@ -1,7 +1,6 @@
 package me.thanel.webmark.work
 
 import android.content.Context
-import android.util.Log
 import androidx.core.net.toUri
 import androidx.work.Constraints
 import androidx.work.NetworkType
@@ -9,16 +8,19 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
+import com.chimbori.crux.articles.Article
 import com.chimbori.crux.articles.ArticleExtractor
 import com.chimbori.crux.images.ImageUrlExtractor
 import com.chimbori.crux.urls.CruxURL
 import kotlinx.coroutines.coroutineScope
 import me.thanel.webmark.data.Database
+import me.thanel.webmark.ext.nullIfBlank
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.kodein.di.generic.instance
+import timber.log.Timber
 import java.io.IOException
 
 class ExtractWebmarkDetailsWorker(
@@ -29,57 +31,85 @@ class ExtractWebmarkDetailsWorker(
     private val database: Database by instance()
 
     override suspend fun doWork(): Result = coroutineScope {
-        val id = inputData.getLong(KEY_ID, -1)
-        if (id == -1L) {
+        val id = inputData.getLong(KEY_ID, -1L)
+        check(id != -1L) { "Tried to start webmark details extraction task without valid id" }
+
+        val uri = database.webmarkQueries.selectUrlForId(id).executeAsOneOrNull()
+        if (uri == null) {
+            Timber.w("Didn't find webmark for requested id: $id")
             return@coroutineScope Result.failure()
         }
 
-        val uri = database.webmarkQueries.selectUrlForId(id).executeAsOneOrNull()
-            ?: return@coroutineScope Result.failure()
-
-        try {
-            val url = uri.toString()
-            val document = downloadPageContent(url)
-            val article = try {
-                document?.let {
-                    ArticleExtractor.with(url, it.html())
-                        .extractMetadata()
-                        .extractContent()
-                        .estimateReadingTime()
-                        .article()
-                }
-            } catch (e: Exception) {
-                Log.e("ExtractWebmarkDetails", "Failed extracting content: ${e.localizedMessage}")
-                null
-            }
-
-            val imageUrl = try {
-                document?.let {
-                    ImageUrlExtractor.with(url, document)
-                        .findImage()
-                        .imageUrl()
-                }
-            } catch (e: Exception) {
-                Log.e("ExtractWebmarkDetails", "Failed extracting image: ${e.localizedMessage}")
-                null
-            }
-
-            val alternativeImageUrl = if (CruxURL.parse(url).isLikelyImage) uri else null
-            Log.d("ExtractWebmarkDetails", "Extracted image: $imageUrl - $alternativeImageUrl")
-
-            database.webmarkQueries.updateById(
-                id = id,
-                title = article?.title,
-                faviconUrl = article?.faviconUrl?.toUri(),
-                estimatedReadingTimeMinutes = article?.estimatedReadingTimeMinutes ?: 0,
-                imageUrl = imageUrl?.toUri() ?: alternativeImageUrl
-            )
-
-        } catch (e: Exception) {
-            Log.e("ExtractWebmarkDetails", "Failed extracting details: ${e.localizedMessage}")
+        val url = uri.toString()
+        val document = try {
+            downloadPageContent(url)
+        } catch (e: IOException) {
+            Timber.e(e, "Error while downloading webmark page")
+            return@coroutineScope Result.retry()
         }
 
+        val article = document?.let {
+            extractDetails(url, it)
+        }
+        val imageUrl = extractImage(url, document, article)
+        val title = article?.title?.nullIfBlank()
+        val faviconUrl = article?.faviconUrl?.toUri()
+        val estimatedReadingTimeMinutes = article?.estimatedReadingTimeMinutes ?: 0
+        Timber.d(
+            "Extracted webmark details: title=%s, faviconUrl=%s, estimatedReadingTimeMinutes=%d, imageUrl=%s",
+            title,
+            faviconUrl,
+            estimatedReadingTimeMinutes,
+            imageUrl
+        )
+
+        database.webmarkQueries.updateById(
+            id = id,
+            title = title,
+            faviconUrl = faviconUrl,
+            estimatedReadingTimeMinutes = estimatedReadingTimeMinutes,
+            imageUrl = imageUrl?.toUri()
+        )
+
         return@coroutineScope Result.success()
+    }
+
+    private fun extractDetails(url: String, document: Document): Article? {
+        return try {
+            ArticleExtractor.with(url, document.html())
+                .extractMetadata()
+                .extractContent()
+                .estimateReadingTime()
+                .article()
+        } catch (e: Exception) {
+            Timber.e(e, "Failed extracting webmark content")
+            null
+        }
+    }
+
+    private fun extractImage(url: String, document: Document?, article: Article?): String? {
+        // First return url if it by itself is an image. That's the best candidate possible.
+        if (CruxURL.parse(url).isLikelyImage) {
+            return url
+        }
+
+        // Then try to return image parsed by article content extractor.
+        val imageUrlFromArticle = article?.imageUrl
+        if (imageUrlFromArticle != null) {
+            return imageUrlFromArticle
+        }
+
+        // Finally try to extract image from document body.
+        return document?.let {
+            try {
+                ImageUrlExtractor.with(url, it.body())
+                    .findImage()
+                    .imageUrl()
+            } catch (e: Exception) {
+                Timber.e(e, "Failed extracting webmark image")
+                null
+            }
+        }
     }
 
     private fun downloadPageContent(url: String): Document? {
@@ -87,18 +117,14 @@ class ExtractWebmarkDetailsWorker(
             .url(url)
             .build()
 
-        val response = try {
-            OkHttpClient().newCall(request).execute()
-        } catch (e: IOException) {
-            return null
-        }
-
-        response.use {
-            val inputStream = it.body()?.byteStream() ?: return null
-            val document = Jsoup.parse(inputStream, null, url)
-            inputStream.close()
-            return document
-        }
+        OkHttpClient()
+            .newCall(request)
+            .execute()
+            .use { response ->
+                return response.body()?.byteStream()?.use { inputStream ->
+                    Jsoup.parse(inputStream, null, url)
+                }
+            }
     }
 
     companion object {

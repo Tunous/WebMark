@@ -38,6 +38,7 @@ dependencies {
     implementation Deps.kotpref
     implementation Deps.materialPopupMenu
     implementation Deps.okhttp
+    implementation Deps.timber
 
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.core:core-ktx:1.1.0-alpha05'

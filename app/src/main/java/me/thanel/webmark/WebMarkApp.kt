@@ -9,6 +9,7 @@ import me.thanel.webmark.work.CleanupDatabaseWorker
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule
+import timber.log.Timber
 
 @Suppress("unused")
 class WebMarkApp : Application(), KodeinAware {
@@ -19,6 +20,9 @@ class WebMarkApp : Application(), KodeinAware {
 
     override fun onCreate() {
         super.onCreate()
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
         Kotpref.init(this)
         val nightMode = when {
             WebMarkPreferences.useDarkTheme -> AppCompatDelegate.MODE_NIGHT_YES
