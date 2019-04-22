@@ -10,14 +10,21 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isNotChecked
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import me.thanel.webmark.base.BaseTest
 import me.thanel.webmark.preferences.WebMarkPreferences
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.core.AllOf.allOf
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Test
 
-class EmptyWebmarkListTest : BaseTest() {
+class WebmarkListEmptyStateTest : BaseTest() {
+
+    @Before
+    fun setupActivity() {
+        startActivity()
+    }
 
     @Test
     fun initially_app_displays_info_view() {
@@ -62,11 +69,6 @@ class EmptyWebmarkListTest : BaseTest() {
 
         assertTrue("Theme should change to dark", WebMarkPreferences.useDarkTheme)
         onView(withId(R.id.themeToggleButton)).check(matches(isChecked()))
-
-        onView(withId(R.id.themeToggleButton)).perform(click())
-
-        assertFalse("Theme should switch back to light", WebMarkPreferences.useDarkTheme)
-        onView(withId(R.id.themeToggleButton)).check(matches(isNotChecked()))
     }
 
     @Test
