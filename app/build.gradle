@@ -34,6 +34,7 @@ dependencies {
     implementation Deps.glide
     implementation Deps.kodein
     implementation Deps.kodeinAndroid
+    implementation Deps.kodeinConfigurable
     implementation Deps.kotlin
     implementation Deps.kotpref
     implementation Deps.materialPopupMenu
@@ -52,4 +53,9 @@ dependencies {
     implementation 'com.github.Tunous:RecyclerViewUtils:c6e595ab0f'
     implementation 'com.google.android.material:material:1.1.0-alpha05'
     implementation 'androidx.work:work-runtime-ktx:2.0.0'
+
+    androidTestImplementation Deps.testRunner
+    androidTestImplementation Deps.testRules
+    androidTestImplementation Deps.espresso
+    androidTestImplementation Deps.sqlDelight
 }

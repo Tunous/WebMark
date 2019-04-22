@@ -18,6 +18,7 @@
     <string name="info_deleted">Deleted</string>
     <string name="info_duplicate_url">Link is already in your list</string>
     <string name="info_invalid_url">Invalid URL</string>
+    <string name="info_save_instructions">You can save link to any webpage from other apps by using standard share action.</string>
     <string name="info_saved">Saved page</string>
     <string name="info_unarchived">Unarchived</string>
 

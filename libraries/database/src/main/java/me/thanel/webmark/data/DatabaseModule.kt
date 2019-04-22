@@ -27,3 +27,9 @@ fun databaseModule(appContext: Context) = Kodein.Module("database") {
         )
     }
 }
+
+fun testDatabaseModule(appContext: Context) = Kodein.Module("testDatabase") {
+    bind<SqlDriver>(overrides = true) with singleton {
+        AndroidSqliteDriver(Database.Schema, appContext)
+    }
+}

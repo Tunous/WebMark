@@ -33,6 +33,7 @@ object Deps {
     const val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
     const val kodein = "org.kodein.di:kodein-di-generic-jvm:${Versions.kodein}"
     const val kodeinAndroid = "org.kodein.di:kodein-di-framework-android-x:${Versions.kodein}"
+    const val kodeinConfigurable = "org.kodein.di:kodein-di-conf-jvm:${Versions.kodein}"
     const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
     const val kotpref = "com.chibatching.kotpref:kotpref:${Versions.kotpref}"
     const val materialPopupMenu = "com.github.zawadz88:MaterialPopupMenu:${Versions.materialPopupMenu}"
@@ -44,7 +45,8 @@ object Deps {
     const val tools_kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
     const val tools_sqlDelight = "com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}"
 
-    const val test_androidxRunner = "androidx.test:runner:${Versions.androidxTesting}"
-    const val test_espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
-    const val test_junit = "junit:junit:${Versions.junit}"
+    const val testRunner = "androidx.test:runner:${Versions.androidxTesting}"
+    const val testRules = "androidx.test:rules:${Versions.androidxTesting}"
+    const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
+    const val junit = "junit:junit:${Versions.junit}"
 }

@@ -9,8 +9,9 @@ dependencies {
     implementation Deps.kodeinAndroid
     implementation Deps.sqlDelight
 
-    testImplementation Deps.test_junit
+    testImplementation Deps.junit
 
-    androidTestImplementation Deps.test_androidxRunner
-    androidTestImplementation Deps.test_espresso
+    androidTestImplementation Deps.testRunner
+    androidTestImplementation Deps.testRules
+    androidTestImplementation Deps.espresso
 }
