@@ -55,6 +55,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_theme" />
+        app:srcCompat="@drawable/ic_moon_checkable" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>
