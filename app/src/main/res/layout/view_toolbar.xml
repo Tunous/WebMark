@@ -11,7 +11,7 @@
     tools:ignore="KeyboardInaccessibleWidget">
 
     <ImageView
-        android:id="@+id/searchIcon"
+        android:id="@+id/searchToggleButton"
         android:layout_width="@dimen/toolbar_button_size"
         android:layout_height="@dimen/toolbar_button_size"
         android:background="?selectableItemBackgroundBorderless"
@@ -23,7 +23,7 @@
         app:tint="?colorControlNormal" />
 
     <EditText
-        android:id="@+id/filterInput"
+        android:id="@+id/searchInputView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:alpha="0"
@@ -35,19 +35,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <me.thanel.webmark.ui.CheckableImageView
-        android:id="@+id/archiveCheckBox"
+        android:id="@+id/archiveToggleButton"
         android:layout_width="@dimen/toolbar_button_size"
         android:layout_height="@dimen/toolbar_button_size"
         android:background="?selectableItemBackgroundBorderless"
         android:padding="16dp"
         android:src="@drawable/ic_archive"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/themeIcon"
+        app:layout_constraintEnd_toStartOf="@+id/themeToggleButton"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/checkable_color" />
 
     <me.thanel.webmark.ui.CheckableImageView
-        android:id="@+id/themeIcon"
+        android:id="@+id/themeToggleButton"
         android:layout_width="@dimen/toolbar_button_size"
         android:layout_height="@dimen/toolbar_button_size"
         android:background="?selectableItemBackgroundBorderless"

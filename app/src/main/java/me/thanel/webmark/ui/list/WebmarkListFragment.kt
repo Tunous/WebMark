@@ -64,17 +64,17 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
 
         webmarkRecyclerView.itemAnimator = CollapseItemAnimator()
 
-        filterInput.doAfterTextChanged {
+        searchInputView.doAfterTextChanged {
             viewModel.filterText = it?.toString() ?: ""
         }
 
-        archiveCheckBox.isChecked = viewModel.showArchive
-        archiveCheckBox.onCheckedChanged = { isChecked ->
+        archiveToggleButton.isChecked = viewModel.showArchive
+        archiveToggleButton.onCheckedChanged = { isChecked ->
             viewModel.showArchive = isChecked
         }
 
-        themeIcon.isChecked = WebMarkPreferences.useDarkTheme
-        themeIcon.onCheckedChanged = { useDarkTheme ->
+        themeToggleButton.isChecked = WebMarkPreferences.useDarkTheme
+        themeToggleButton.onCheckedChanged = { useDarkTheme ->
             WebMarkPreferences.useDarkTheme = useDarkTheme
             updateTheme(useDarkTheme)
         }
@@ -83,17 +83,17 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
             .setTransitionListener(object : TransitionAdapter() {
                 override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
                     if (currentId == R.id.start) {
-                        searchIcon.setImageResource(R.drawable.ic_search)
-                        filterInput.clearFocus()
-                        filterInput.text.clear()
+                        searchToggleButton.setImageResource(R.drawable.ic_search)
+                        searchInputView.clearFocus()
+                        searchInputView.text.clear()
                     } else {
-                        searchIcon.setImageResource(R.drawable.ic_close)
-                        filterInput.requestFocus()
+                        searchToggleButton.setImageResource(R.drawable.ic_close)
+                        searchInputView.requestFocus()
                     }
                 }
             })
 
-        filterInput.onFocusChangeListener = View.OnFocusChangeListener { focusView, hasFocus ->
+        searchInputView.onFocusChangeListener = View.OnFocusChangeListener { focusView, hasFocus ->
             if (hasFocus) {
                 inputMethodManager.showSoftInput(focusView, InputMethodManager.SHOW_IMPLICIT)
             } else {
@@ -121,8 +121,8 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
         if (!shouldShow) return
 
         emptyViewTitleView.setText(
-            if (filterInput.text.isNullOrBlank()) {
-                if (archiveCheckBox.isChecked) {
+            if (searchInputView.text.isNullOrBlank()) {
+                if (archiveToggleButton.isChecked) {
                     R.string.title_nothing_archived
                 } else {
                     R.string.title_nothing_saved

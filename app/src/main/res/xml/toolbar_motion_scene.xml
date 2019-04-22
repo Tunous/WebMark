@@ -8,7 +8,7 @@
 
         <OnClick
             app:clickAction="toggle"
-            app:target="@+id/searchIcon" />
+            app:target="@+id/searchToggleButton" />
 
     </Transition>
 
@@ -17,18 +17,18 @@
     <ConstraintSet android:id="@+id/end">
 
         <Constraint
-            android:id="@+id/filterInput"
+            android:id="@+id/searchInputView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/archiveCheckBox"
-            app:layout_constraintStart_toEndOf="@+id/searchIcon"
+            app:layout_constraintEnd_toStartOf="@+id/archiveToggleButton"
+            app:layout_constraintStart_toEndOf="@+id/searchToggleButton"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Constraint
-            android:id="@+id/themeIcon"
+            android:id="@+id/themeToggleButton"
             android:layout_width="@dimen/toolbar_button_size"
             android:layout_height="@dimen/toolbar_button_size"
             app:layout_constraintBottom_toBottomOf="parent"
