@@ -3,7 +3,6 @@ package me.thanel.webmark.list
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.hasFocus
 import androidx.test.espresso.matcher.ViewMatchers.isChecked
 import androidx.test.espresso.matcher.ViewMatchers.isClickable
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -13,7 +12,6 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import me.thanel.webmark.R
 import me.thanel.webmark.core.base.BaseTest
 import me.thanel.webmark.preferences.WebMarkPreferences
-import org.hamcrest.CoreMatchers.not
 import org.hamcrest.core.AllOf.allOf
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -50,19 +48,6 @@ class EmptyStateTest : BaseTest() {
     }
 
     @Test
-    fun pressing_on_search_toggle_toggles_visibility_and_focus_of_search_input() {
-        onView(withId(R.id.searchInputView)).check(matches(not(hasFocus())))
-
-        onView(withId(R.id.searchToggleButton)).perform(click())
-
-        onView(withId(R.id.searchInputView)).check(matches(allOf(isDisplayed(), hasFocus())))
-
-        onView(withId(R.id.searchToggleButton)).perform(click())
-
-        onView(withId(R.id.searchInputView)).check(matches(not(hasFocus())))
-    }
-
-    @Test
     fun theme_toggle_works() {
         assertFalse("Theme should be set to light", WebMarkPreferences.useDarkTheme)
         onView(withId(R.id.themeToggleButton)).check(matches(isNotChecked()))
@@ -77,16 +62,6 @@ class EmptyStateTest : BaseTest() {
     fun archive_toggle_changes_its_checked_state() {
         onView(withId(R.id.archiveToggleButton)).check(matches(isNotChecked()))
 
-        onView(withId(R.id.archiveToggleButton)).perform(click())
-
-        onView(withId(R.id.archiveToggleButton)).check(matches(isChecked()))
-    }
-
-    @Test
-    fun it_is_possible_to_toggle_archive_when_search_input_is_visible() {
-        onView(withId(R.id.searchToggleButton)).perform(click())
-
-        onView(withId(R.id.archiveToggleButton)).check(matches(allOf(isDisplayed(), isNotChecked())))
         onView(withId(R.id.archiveToggleButton)).perform(click())
 
         onView(withId(R.id.archiveToggleButton)).check(matches(isChecked()))

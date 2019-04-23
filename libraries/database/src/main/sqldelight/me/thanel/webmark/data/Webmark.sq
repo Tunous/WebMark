@@ -108,3 +108,6 @@ WHERE
     readAt IS NOT NULL
     AND JULIANDAY('now') - JULIANDAY(readAt) >= 30
   );
+
+deleteEverything:
+DELETE FROM webmark;

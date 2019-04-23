@@ -21,7 +21,7 @@ class WebmarkVisibilityTest : SampleDataTest() {
     @Test
     fun displays_saved_webmarks() {
         onView(withId(R.id.webmarkRecyclerView))
-            .check(matches(hasItemCount(3)))
+            .check(matches(hasItemCount(4)))
 
         onView(withRecyclerViewItem(R.id.webmarkRecyclerView, 0))
             .check(matches(hasDescendant(withText(TITLE_WEBMARK))))
