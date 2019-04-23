@@ -6,7 +6,7 @@ import me.thanel.webmark.data.WebmarkQueries
 import org.junit.Before
 import org.kodein.di.generic.instance
 
-abstract class SampleDataTest : BaseTest() {
+abstract class SampleDataTest(private val autoStartActivity: Boolean = true) : BaseTest() {
     protected lateinit var queries: WebmarkQueries
 
     @Before
@@ -16,6 +16,8 @@ abstract class SampleDataTest : BaseTest() {
         val database = dkodein.instance<Database>()
         queries = database.webmarkQueries
         queries.insertSampleData()
-        startActivity()
+        if (autoStartActivity) {
+            startActivity()
+        }
     }
 }

@@ -1,5 +1,7 @@
 package me.thanel.webmark.core.base
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import androidx.test.espresso.intent.rule.IntentsTestRule
 import androidx.test.platform.app.InstrumentationRegistry
@@ -15,9 +17,12 @@ import org.kodein.di.direct
 
 abstract class BaseTest : DKodeinAware {
 
-    private lateinit var appContext: Context
+    protected lateinit var appContext: Context
 
     override lateinit var dkodein: DKodein
+
+    private val clipboardManager: ClipboardManager
+        get() = appContext.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
 
     @get:Rule
     val activityRule = IntentsTestRule<MainActivity>(MainActivity::class.java, false, false)
@@ -26,7 +31,16 @@ abstract class BaseTest : DKodeinAware {
     open fun setup() {
         appContext = InstrumentationRegistry.getInstrumentation().targetContext
         clearPreferences()
+        clearClipboard()
         overrideDependencies()
+    }
+
+    protected fun clearClipboard() {
+        clipboardManager.primaryClip = ClipData.newPlainText("", "")
+    }
+
+    protected fun setClipboardText(text: String) {
+        clipboardManager.primaryClip = ClipData.newPlainText("Copied text", text)
     }
 
     private fun overrideDependencies() {

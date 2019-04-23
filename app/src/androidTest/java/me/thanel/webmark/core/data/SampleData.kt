@@ -18,6 +18,8 @@ const val TITLE_ARCHIVED_WEBMARK =
     "'Avengers: Endgame' Continues To Outpace 'Avengers: Infinity War's Presells"
 const val LINK_ARCHIVED_WEBMARK = "https://mcuexchange.com/avengers-endgame-presells-infinity-war/"
 
+const val LINK_NOT_SAVED = "https://mcucosmic.com/2019/03/13/mcu-phase-4-movies/"
+
 fun WebmarkQueries.insertSampleData() {
     insert(
         url = LINK_WEBMARK,
