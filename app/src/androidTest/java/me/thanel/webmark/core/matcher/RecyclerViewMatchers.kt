@@ -1,4 +1,4 @@
-package me.thanel.webmark.matcher
+package me.thanel.webmark.core.matcher
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

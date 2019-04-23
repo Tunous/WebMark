@@ -1,4 +1,4 @@
-package me.thanel.webmark
+package me.thanel.webmark.list
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -10,7 +10,8 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isNotChecked
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import me.thanel.webmark.base.BaseTest
+import me.thanel.webmark.R
+import me.thanel.webmark.core.base.BaseTest
 import me.thanel.webmark.preferences.WebMarkPreferences
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.core.AllOf.allOf
@@ -19,10 +20,11 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
-class WebmarkListEmptyStateTest : BaseTest() {
+class EmptyStateTest : BaseTest() {
 
     @Before
-    fun setupActivity() {
+    override fun setup() {
+        super.setup()
         startActivity()
     }
 

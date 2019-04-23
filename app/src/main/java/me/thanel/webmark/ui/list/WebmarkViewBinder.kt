@@ -36,8 +36,10 @@ class WebmarkViewBinder(
 
     override fun onInflateViewHolder(holder: WebmarkViewHolder) {
         super.onInflateViewHolder(holder)
-        imageCornerRadius = holder.context.resources.getDimensionPixelOffset(R.dimen.webmark_image_corner_radius)
-        faviconCornerRadius = holder.context.resources.getDimensionPixelOffset(R.dimen.webmark_favicon_corner_radius)
+        imageCornerRadius =
+            holder.context.resources.getDimensionPixelOffset(R.dimen.webmark_image_corner_radius)
+        faviconCornerRadius =
+            holder.context.resources.getDimensionPixelOffset(R.dimen.webmark_favicon_corner_radius)
         holder.itemView.setOnLongClickListener {
             onLongClickListener(it, it.getTag(R.id.bound_item) as Webmark)
             return@setOnLongClickListener true

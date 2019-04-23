@@ -1,4 +1,4 @@
-package me.thanel.webmark.base
+package me.thanel.webmark.core.base
 
 import android.content.Context
 import androidx.test.espresso.intent.rule.IntentsTestRule
@@ -23,7 +23,7 @@ abstract class BaseTest : DKodeinAware {
     val activityRule = IntentsTestRule<MainActivity>(MainActivity::class.java, false, false)
 
     @Before
-    fun setup() {
+    open fun setup() {
         appContext = InstrumentationRegistry.getInstrumentation().targetContext
         clearPreferences()
         overrideDependencies()

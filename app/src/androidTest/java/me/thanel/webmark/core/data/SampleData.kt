@@ -1,21 +1,24 @@
-package me.thanel.webmark.data
+package me.thanel.webmark.core.data
 
 import androidx.core.net.toUri
+import me.thanel.webmark.data.WebmarkQueries
 
-const val TITLE_GUARDIANS =
+const val TITLE_WEBMARK =
     "Humor, Charm, and Creativity Save Guardians of the Galaxy from Stock Storytelling"
 const val TITLE_BLACK_PANTHER = "Black Panther Makes the MCU a Deeper, Richer Place"
 const val TITLE_CAPTAIN_MARVEL =
     "Captain Marvel Is a Throwback to the Earliest MCU Films, Even as It Breaks New Ground"
-const val TITLE_ENDGAME_PRESELLS =
+const val TITLE_ARCHIVED_WEBMARK =
     "'Avengers: Endgame' Continues To Outpace 'Avengers: Infinity War's Presells"
-const val LINK_GUARDIANS = "http://www.theandrewblog.net/2017/05/03/guardians-of-the-galaxy-2014/"
+
+const val LINK_WEBMARK = "http://www.theandrewblog.net/2017/05/03/guardians-of-the-galaxy-2014/"
+const val LINK_ARCHIVED_WEBMARK = "https://mcuexchange.com/avengers-endgame-presells-infinity-war/"
 
 fun WebmarkQueries.insertSampleData() {
     insert(
         id = 1,
-        url = LINK_GUARDIANS,
-        title = TITLE_GUARDIANS,
+        url = LINK_WEBMARK,
+        title = TITLE_WEBMARK,
         imageUrl = "http://www.theandrewblog.net/wp-content/uploads/2017/05/gotg1-1024x682.jpg",
         readingTime = 12
     )
@@ -35,8 +38,8 @@ fun WebmarkQueries.insertSampleData() {
 
     insert(
         id = 4,
-        url = "https://mcuexchange.com/avengers-endgame-presells-infinity-war/",
-        title = TITLE_ENDGAME_PRESELLS,
+        url = LINK_ARCHIVED_WEBMARK,
+        title = TITLE_ARCHIVED_WEBMARK,
         archived = true
     )
 }
