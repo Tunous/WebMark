@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="glide_load_visibility_listener" type="id" />
+    <item name="glide_load_listener" type="id" />
 </resources>

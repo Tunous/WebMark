@@ -29,6 +29,7 @@ import me.thanel.webmark.ext.updateTheme
 import me.thanel.webmark.ext.viewModel
 import me.thanel.webmark.preferences.WebMarkPreferences
 import me.thanel.webmark.ui.base.BaseFragment
+import me.thanel.webmark.ui.imageloader.ImageLoader
 import me.thanel.webmark.ui.touchhelper.CollapseItemAnimator
 import me.thanel.webmark.ui.touchhelper.ItemTouchCallback
 import me.thanel.webmark.ui.touchhelper.SwipeableViewHolder
@@ -42,9 +43,10 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
     private val viewModel: WebmarkListViewModel by viewModel()
     private val clipboard: ClipboardManager by instance()
     private val inputMethodManager: InputMethodManager by instance()
+    private val imageLoader: ImageLoader by instance()
 
     private val adapterWrapper by lazyAdapterWrapper {
-        register(WebmarkViewBinder(this@WebmarkListFragment), WebmarkItemCallback)
+        register(WebmarkViewBinder(this@WebmarkListFragment, imageLoader), WebmarkItemCallback)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

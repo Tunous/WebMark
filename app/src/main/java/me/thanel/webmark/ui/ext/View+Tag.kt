@@ -1,7 +1,6 @@
 package me.thanel.webmark.ui.ext
 
 import android.view.View
-import androidx.core.view.isVisible
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
@@ -18,8 +17,8 @@ fun <T> View.getTagProperty(id: Int, initializer: View.() -> T): T {
     return property
 }
 
-fun <T> View.getGlideVisibilityListener(): RequestListener<T> {
-    return getTagProperty(R.id.glide_load_visibility_listener) {
+fun <T> View.getGlideLoadListener(onSuccess: () -> Unit): RequestListener<T> {
+    return getTagProperty(R.id.glide_load_listener) {
         object : RequestListener<T> {
             override fun onLoadFailed(
                 e: GlideException?,
@@ -37,7 +36,7 @@ fun <T> View.getGlideVisibilityListener(): RequestListener<T> {
                 dataSource: DataSource?,
                 isFirstResource: Boolean
             ): Boolean {
-                isVisible = true
+                onSuccess()
                 return false
             }
         }

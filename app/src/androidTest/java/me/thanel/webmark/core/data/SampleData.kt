@@ -30,12 +30,13 @@ fun WebmarkQueries.insertSampleData() {
     insert(
         url = "http://www.theandrewblog.net/2018/02/19/black-panther/",
         title = TITLE_BLACK_PANTHER,
-        imageUrl = "http://www.theandrewblog.net/wp-content/uploads/2018/02/bp1-1024x583.jpg"
+        faviconUrl = "http://www.theandrewblog.net"
     )
     insert(
         url = "http://www.theandrewblog.net/2019/03/11/captain-marvel-is-a-throwback-to-the-earliest-mcu-films-even-as-it-breaks-new-ground/",
         title = TITLE_CAPTAIN_MARVEL,
         imageUrl = "http://www.theandrewblog.net/wp-content/uploads/2019/03/cm1.jpg",
+        faviconUrl = "http://www.theandrewblog.net",
         readingTime = 360
     )
     insert(
@@ -55,11 +56,12 @@ private fun WebmarkQueries.insert(
     title: String,
     imageUrl: String? = null,
     readingTime: Int = 0,
-    archived: Boolean = false
+    archived: Boolean = false,
+    faviconUrl: String? = null
 ) {
     insert(null, url.toUri())
     val id = lastInsertId().executeAsOne()
-    updateById(title, null, readingTime, imageUrl?.toUri(), id)
+    updateById(title, faviconUrl?.toUri(), readingTime, imageUrl?.toUri(), id)
     if (archived) {
         markAsReadById(id)
     }

@@ -2,21 +2,18 @@ package me.thanel.webmark.ui.list
 
 import android.view.View
 import androidx.core.view.isVisible
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterCrop
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import kotlinx.android.synthetic.main.item_webmark.*
 import me.thanel.recyclerviewutils.viewholder.BaseItemViewBinder
 import me.thanel.webmark.R
 import me.thanel.webmark.action.WebmarkActionHandler
 import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.ext.openInBrowser
-import me.thanel.webmark.ext.roundedCorners
-import me.thanel.webmark.ui.ext.getGlideVisibilityListener
+import me.thanel.webmark.ui.imageloader.ImageLoader
 import me.thanel.webmark.ui.popup.createPopupMenu
 
 class WebmarkViewBinder(
-    private val actionHandler: WebmarkActionHandler
+    private val actionHandler: WebmarkActionHandler,
+    private val imageLoader: ImageLoader
 ) : BaseItemViewBinder<Webmark, WebmarkViewHolder>(R.layout.item_webmark) {
 
     private var imageCornerRadius = 0
@@ -85,19 +82,15 @@ class WebmarkViewBinder(
 
     private fun WebmarkViewHolder.bindFavicon(item: Webmark) {
         webmarkFaviconView.isVisible = false
-        Glide.with(webmarkFaviconView)
-            .load(item.faviconUrl)
-            .roundedCorners(faviconCornerRadius)
-            .listener(webmarkFaviconView.getGlideVisibilityListener())
-            .into(webmarkFaviconView)
+        imageLoader.loadImage(webmarkFaviconView, item.faviconUrl, faviconCornerRadius) {
+            webmarkFaviconView.isVisible = true
+        }
     }
 
     private fun WebmarkViewHolder.bindImage(item: Webmark) {
         webmarkImageView.isVisible = false
-        Glide.with(webmarkImageView)
-            .load(item.imageUrl)
-            .transform(CenterCrop(), RoundedCorners(imageCornerRadius))
-            .listener(webmarkImageView.getGlideVisibilityListener())
-            .into(webmarkImageView)
+        imageLoader.loadImage(webmarkImageView, item.imageUrl, imageCornerRadius) {
+            webmarkImageView.isVisible = true
+        }
     }
 }

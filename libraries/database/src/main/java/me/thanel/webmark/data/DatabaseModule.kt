@@ -1,6 +1,7 @@
 package me.thanel.webmark.data
 
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import com.squareup.sqldelight.android.AndroidSqliteDriver
 import com.squareup.sqldelight.db.SqlDriver
 import me.thanel.webmark.data.columnadapter.DateColumnAdapter
@@ -28,6 +29,7 @@ fun databaseModule(appContext: Context) = Kodein.Module("database") {
     }
 }
 
+@VisibleForTesting
 fun testDatabaseModule(appContext: Context) = Kodein.Module("testDatabase") {
     bind<SqlDriver>(overrides = true) with singleton {
         AndroidSqliteDriver(Database.Schema, appContext)
