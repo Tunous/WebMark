@@ -15,11 +15,11 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import me.thanel.webmark.R
-import me.thanel.webmark.core.base.SampleDataTest
-import me.thanel.webmark.core.data.LINK_WEBMARK
-import me.thanel.webmark.core.data.TITLE_ARCHIVED_WEBMARK
-import me.thanel.webmark.core.data.TITLE_WEBMARK
-import me.thanel.webmark.core.matcher.stubExternalIntents
+import me.thanel.webmark.test.base.SampleDataTest
+import me.thanel.webmark.test.data.LINK_WEBMARK
+import me.thanel.webmark.test.data.TITLE_ARCHIVED_WEBMARK
+import me.thanel.webmark.test.data.TITLE_WEBMARK
+import me.thanel.webmark.test.matcher.stubExternalIntents
 import org.hamcrest.core.AllOf.allOf
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue

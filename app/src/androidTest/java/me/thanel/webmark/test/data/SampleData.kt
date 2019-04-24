@@ -1,4 +1,4 @@
-package me.thanel.webmark.core.data
+package me.thanel.webmark.test.data
 
 import androidx.core.net.toUri
 import me.thanel.webmark.data.WebmarkQueries

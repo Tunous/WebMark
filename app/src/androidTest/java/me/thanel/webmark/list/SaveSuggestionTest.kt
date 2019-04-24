@@ -8,8 +8,8 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import me.thanel.webmark.R
-import me.thanel.webmark.core.base.SampleDataTest
-import me.thanel.webmark.core.data.LINK_NOT_SAVED
+import me.thanel.webmark.test.base.SampleDataTest
+import me.thanel.webmark.test.data.LINK_NOT_SAVED
 import org.hamcrest.CoreMatchers.startsWith
 import org.junit.Assert.assertNotNull
 import org.junit.Test

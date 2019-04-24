@@ -1,4 +1,4 @@
-package me.thanel.webmark.core.base
+package me.thanel.webmark.test.base
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable

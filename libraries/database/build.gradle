@@ -2,6 +2,12 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.squareup.sqldelight'
 
+android {
+    defaultConfig {
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+}
+
 dependencies {
     implementation Deps.coroutinesCore
     implementation Deps.coroutinesAndroid

@@ -31,7 +31,6 @@ subprojects {
                 defaultConfig {
                     minSdkVersion Config.minSdk
                     targetSdkVersion Config.targetSdk
-                    testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
                 }
 
                 compileOptions {

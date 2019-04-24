@@ -1,4 +1,4 @@
-package me.thanel.webmark.core.matcher
+package me.thanel.webmark.test.matcher
 
 import android.app.Activity
 import android.app.Instrumentation.ActivityResult

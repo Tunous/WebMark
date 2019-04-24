@@ -10,7 +10,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isNotChecked
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import me.thanel.webmark.R
-import me.thanel.webmark.core.base.BaseTest
+import me.thanel.webmark.test.base.BaseTest
 import me.thanel.webmark.preferences.WebMarkPreferences
 import org.hamcrest.core.AllOf.allOf
 import org.junit.Assert.assertFalse
