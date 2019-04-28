@@ -20,8 +20,7 @@ abstract class BaseTest : DKodeinAware {
 
     override lateinit var dkodein: DKodein
 
-    private val clipboardManager: ClipboardManager
-        get() = appContext.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    private lateinit var clipboardManager: ClipboardManager
 
     @get:Rule
     val activityRule = IntentsTestRule<MainActivity>(MainActivity::class.java, false, false)
@@ -30,6 +29,11 @@ abstract class BaseTest : DKodeinAware {
     open fun setup() {
         appContext = InstrumentationRegistry.getInstrumentation().targetContext
         dkodein = appContext.asApp().kodein.direct
+
+        activityRule.runOnUiThread {
+            clipboardManager = appContext.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        }
+
         clearPreferences()
         clearClipboard()
     }

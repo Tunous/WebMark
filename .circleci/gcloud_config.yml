@@ -1,0 +1,7 @@
+instrumentation-tests:
+  type: instrumentation
+  app: app/build/outputs/apk/debug/app-debug.apk
+  test: app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+  timeout: 20m
+  device:
+    - {model: sailfish, version: 26, locale: en_US, orientation: portrait}
