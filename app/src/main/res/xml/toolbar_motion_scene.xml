@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Transition
-        app:constraintSetEnd="@id/end"
-        app:constraintSetStart="@id/start">
+        app:constraintSetEnd="@id/expandedSearchToolbarState"
+        app:constraintSetStart="@id/defaultToolbarState">
 
         <OnClick
             app:clickAction="toggle"
@@ -12,9 +12,9 @@
 
     </Transition>
 
-    <ConstraintSet android:id="@+id/start" />
+    <ConstraintSet android:id="@+id/defaultToolbarState" />
 
-    <ConstraintSet android:id="@+id/end">
+    <ConstraintSet android:id="@+id/expandedSearchToolbarState">
 
         <Constraint
             android:id="@+id/searchInputView"

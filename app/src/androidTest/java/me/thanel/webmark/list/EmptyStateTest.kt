@@ -2,6 +2,7 @@ package me.thanel.webmark.list
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.longClick
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isChecked
 import androidx.test.espresso.matcher.ViewMatchers.isClickable
@@ -10,8 +11,9 @@ import androidx.test.espresso.matcher.ViewMatchers.isNotChecked
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import me.thanel.webmark.R
-import me.thanel.webmark.test.base.BaseTest
 import me.thanel.webmark.preferences.WebMarkPreferences
+import me.thanel.webmark.test.base.BaseTest
+import me.thanel.webmark.test.matcher.onTooltipView
 import org.hamcrest.core.AllOf.allOf
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -65,5 +67,43 @@ class EmptyStateTest : BaseTest() {
         onView(withId(R.id.archiveToggleButton)).perform(click())
 
         onView(withId(R.id.archiveToggleButton)).check(matches(isChecked()))
+    }
+
+    @Test
+    fun search_toggle_button_shows_tooltip() {
+        onView(withId(R.id.searchToggleButton)).perform(longClick())
+
+        activityRule.onTooltipView(withText(R.string.action_search)).check(matches(isDisplayed()))
+
+        onView(withId(R.id.searchToggleButton)).perform(click()).perform(longClick())
+
+        activityRule.onTooltipView(withText(R.string.action_close_search))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun archive_toggle_button_shows_tooltip() {
+        onView(withId(R.id.archiveToggleButton)).perform(longClick())
+
+        activityRule.onTooltipView(withText(R.string.action_show_archive))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.archiveToggleButton)).perform(click()).perform(longClick())
+
+        activityRule.onTooltipView(withText(R.string.action_hide_archive))
+            .check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun theme_toggle_button_shows_tooltip() {
+        onView(withId(R.id.themeToggleButton)).perform(longClick())
+
+        activityRule.onTooltipView(withText(R.string.action_use_dark_theme))
+            .check(matches(isDisplayed()))
+
+        onView(withId(R.id.themeToggleButton)).perform(click()).perform(longClick())
+
+        activityRule.onTooltipView(withText(R.string.action_use_light_theme))
+            .check(matches(isDisplayed()))
     }
 }

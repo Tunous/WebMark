@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Patterns
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.widget.TooltipCompat
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.TransitionAdapter
 import androidx.core.view.isVisible
@@ -49,6 +50,8 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
         register(WebmarkViewBinder(this@WebmarkListFragment, imageLoader), WebmarkItemCallback)
     }
 
+    private val toolbarLayout by lazy { toolbar as MotionLayout }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -70,30 +73,35 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
             viewModel.filterText = it?.toString() ?: ""
         }
 
+        updateArchiveButtonTooltip()
         archiveToggleButton.isChecked = viewModel.showArchive
         archiveToggleButton.onCheckedChanged = { isChecked ->
             viewModel.showArchive = isChecked
+            updateArchiveButtonTooltip()
         }
 
+        updateThemeButtonTooltip()
         themeToggleButton.isChecked = WebMarkPreferences.useDarkTheme
         themeToggleButton.onCheckedChanged = { useDarkTheme ->
             WebMarkPreferences.useDarkTheme = useDarkTheme
+            updateThemeButtonTooltip()
             updateTheme(useDarkTheme)
         }
 
-        view.findViewById<MotionLayout>(R.id.toolbar)
-            .setTransitionListener(object : TransitionAdapter() {
-                override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
-                    if (currentId == R.id.start) {
-                        searchToggleButton.setImageResource(R.drawable.ic_search)
-                        searchInputView.clearFocus()
-                        searchInputView.text.clear()
-                    } else {
-                        searchToggleButton.setImageResource(R.drawable.ic_close)
-                        searchInputView.requestFocus()
-                    }
+        updateSearchButtonTooltip()
+        toolbarLayout.setTransitionListener(object : TransitionAdapter() {
+            override fun onTransitionCompleted(motionLayout: MotionLayout?, currentId: Int) {
+                updateSearchButtonTooltip(currentId)
+                if (currentId == R.id.defaultToolbarState) {
+                    searchToggleButton.setImageResource(R.drawable.ic_search)
+                    searchInputView.clearFocus()
+                    searchInputView.text.clear()
+                } else {
+                    searchToggleButton.setImageResource(R.drawable.ic_close)
+                    searchInputView.requestFocus()
                 }
-            })
+            }
+        })
 
         searchInputView.onFocusChangeListener = View.OnFocusChangeListener { focusView, hasFocus ->
             if (hasFocus) {
@@ -116,6 +124,27 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
         if (savedInstanceState == null) {
             suggestSaveCopiedUrl()
         }
+    }
+
+    private fun updateSearchButtonTooltip(state: Int = toolbarLayout.currentState) {
+        val searchButtonTooltip =
+            if (state == R.id.defaultToolbarState) getString(R.string.action_search)
+            else getString(R.string.action_close_search)
+        TooltipCompat.setTooltipText(searchToggleButton, searchButtonTooltip)
+    }
+
+    private fun updateArchiveButtonTooltip() {
+        val archiveButtonTooltip =
+            if (viewModel.showArchive) getString(R.string.action_hide_archive)
+            else getString(R.string.action_show_archive)
+        TooltipCompat.setTooltipText(archiveToggleButton, archiveButtonTooltip)
+    }
+
+    private fun updateThemeButtonTooltip() {
+        val themeButtonTooltip =
+            if (WebMarkPreferences.useDarkTheme) getString(R.string.action_use_light_theme)
+            else getString(R.string.action_use_dark_theme)
+        TooltipCompat.setTooltipText(themeToggleButton, themeButtonTooltip)
     }
 
     private fun updateEmptyView(shouldShow: Boolean) {

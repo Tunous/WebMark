@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
     <string name="action_archive">Archive</string>
+    <string name="action_close_search">Close search</string>
     <string name="action_delete">Delete</string>
     <string name="action_extract_details">Extract details</string>
+    <string name="action_hide_archive">Hide archive</string>
     <string name="action_save">Save</string>
+    <string name="action_search">Search</string>
     <string name="action_share_link">Share link</string>
+    <string name="action_show_archive">Show archive</string>
     <string name="action_unarchive">Unarchive</string>
     <string name="action_undo">Undo</string>
+    <string name="action_use_dark_theme">Use dark theme</string>
+    <string name="action_use_light_theme">Use light theme</string>
 
     <string name="app_name">WebMark</string>
 
