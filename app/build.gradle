@@ -3,6 +3,15 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+def signingPropertiesFile = project.rootProject.file('signing/signing.properties')
+def useLocalSigning = signingPropertiesFile.exists()
+Properties signingProperties = null
+
+if (useLocalSigning) {
+    signingProperties = new Properties()
+    signingProperties.load(signingPropertiesFile.newDataInputStream())
+}
+
 android {
     defaultConfig {
         applicationId "me.thanel.webmark"
@@ -10,10 +19,22 @@ android {
         versionName "1.0"
         testInstrumentationRunner "me.thanel.webmark.test.WebMarkRunner"
     }
+    signingConfigs {
+        release {
+            if (useLocalSigning) {
+                storeFile project.rootProject.file(signingProperties.getProperty('storeFile'))
+                keyAlias signingProperties.getProperty('keyAlias')
+                storePassword signingProperties.getProperty('storePassword')
+                keyPassword signingProperties.getProperty('keyPassword')
+            }
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     packagingOptions {
