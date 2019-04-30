@@ -63,6 +63,6 @@ private fun WebmarkQueries.insert(
     val id = lastInsertId().executeAsOne()
     updateById(title, faviconUrl?.toUri(), readingTime, imageUrl?.toUri(), id)
     if (archived) {
-        markAsReadById(id)
+        archiveById(id)
     }
 }

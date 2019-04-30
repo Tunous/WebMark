@@ -41,7 +41,7 @@ class WebmarkInteractionTest : SampleDataTest() {
         onView(withText(TITLE_WEBMARK)).perform(swipeRight())
 
         onView(withText(TITLE_WEBMARK)).check(doesNotExist())
-        val guardiansWebmark = queries.selectRead(TITLE_WEBMARK).executeAsOne()
+        val guardiansWebmark = queries.selectArchived(TITLE_WEBMARK).executeAsOne()
         assertNotNull("Webmark should be found as archived", guardiansWebmark)
 
         onView(withId(R.id.archiveToggleButton)).perform(click())
@@ -56,7 +56,7 @@ class WebmarkInteractionTest : SampleDataTest() {
 
         onView(withText(TITLE_ARCHIVED_WEBMARK)).check(doesNotExist())
 
-        val guardiansWebmark = queries.selectUnread(TITLE_ARCHIVED_WEBMARK).executeAsOne()
+        val guardiansWebmark = queries.selectUnarchived(TITLE_ARCHIVED_WEBMARK).executeAsOne()
         assertNotNull("Webmark should be found as unarchived", guardiansWebmark)
 
         onView(withId(R.id.archiveToggleButton)).perform(click())

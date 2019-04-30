@@ -14,14 +14,14 @@ class WebmarkTest : DatabaseTest<WebmarkQueries>({ it.webmarkQueries }) {
     fun selectAll_shouldReturnEverything() {
         insert(1L, "default")
 
-        insert(2L, "marked as read")
-        db.markAsReadById(2L)
+        insert(2L, "archived")
+        db.archiveById(2L)
 
         insert(3L, "marked for deletion")
         db.setMarkedForDeletionById(true, 3L)
 
-        insert(4L, "marked as read and for deletion")
-        db.markAsReadById(4L)
+        insert(4L, "archived and marked for deletion")
+        db.archiveById(4L)
         db.setMarkedForDeletionById(true, 4L)
 
         val actualIds = db.selectAll().executeAsList().map { it.id }
@@ -29,38 +29,38 @@ class WebmarkTest : DatabaseTest<WebmarkQueries>({ it.webmarkQueries }) {
     }
 
     @Test
-    fun selectUnread_shouldReturnOnlyUnreadWebmarks() {
+    fun selectUnarchived_shouldReturnOnlyUnarchivedWebmarks() {
         insert(1L, "default")
 
-        insert(2L, "marked as read")
-        db.markAsReadById(2L)
+        insert(2L, "archived")
+        db.archiveById(2L)
 
         insert(3L, "marked for deletion")
         db.setMarkedForDeletionById(true, 3L)
 
-        insert(4L, "marked as read and for deletion")
-        db.markAsReadById(4L)
+        insert(4L, "archived and marked for deletion")
+        db.archiveById(4L)
         db.setMarkedForDeletionById(true, 4L)
 
-        val actualIds = db.selectUnread(null).executeAsList().map { it.id }
+        val actualIds = db.selectUnarchived(null).executeAsList().map { it.id }
         assertThat(actualIds, Matchers.containsInAnyOrder(1L))
     }
 
     @Test
-    fun selectRead_shouldReturnOnlyReadWebmarks() {
+    fun selectArchived_shouldReturnOnlyArchivedWebmarks() {
         insert(1L, "default")
 
-        insert(2L, "marked as read")
-        db.markAsReadById(2L)
+        insert(2L, "archived")
+        db.archiveById(2L)
 
         insert(3L, "marked for deletion")
         db.setMarkedForDeletionById(true, 3L)
 
-        insert(4L, "marked as read and for deletion")
-        db.markAsReadById(4L)
+        insert(4L, "archived and marked for deletion")
+        db.archiveById(4L)
         db.setMarkedForDeletionById(true, 4L)
 
-        val actualIds = db.selectRead(null).executeAsList().map { it.id }
+        val actualIds = db.selectArchived(null).executeAsList().map { it.id }
         assertThat(actualIds, Matchers.containsInAnyOrder(2L))
     }
 
@@ -68,22 +68,22 @@ class WebmarkTest : DatabaseTest<WebmarkQueries>({ it.webmarkQueries }) {
     fun selectWithFilter_shouldReturnWebmarksWithMatchingTitleOrUrl() {
         insert(1L, "example.com/kotlin-1", title = "Article about Kotlin")
         insert(2L, "example.com/kotlin-2", title = "Article about Kotlin number 2")
-        db.markAsReadById(2L)
+        db.archiveById(2L)
         insert(3L, "example.com/android-1", title = "Article about Android")
         insert(4L, "example.com/android-2", title = "Article about Android number 2")
-        db.markAsReadById(4L)
+        db.archiveById(4L)
 
-        val unreadIdsByUrl = db.selectUnread("kotlin-").executeAsList().map { it.id }
-        assertThat(unreadIdsByUrl, Matchers.containsInAnyOrder(1L))
+        val unarchivedIdsByUrl = db.selectUnarchived("kotlin-").executeAsList().map { it.id }
+        assertThat(unarchivedIdsByUrl, Matchers.containsInAnyOrder(1L))
 
-        val unreadIdsByTitle = db.selectUnread("about Android").executeAsList().map { it.id }
-        assertThat(unreadIdsByTitle, Matchers.containsInAnyOrder(3L))
+        val unarchivedIdsByTitle = db.selectUnarchived("about Android").executeAsList().map { it.id }
+        assertThat(unarchivedIdsByTitle, Matchers.containsInAnyOrder(3L))
 
-        val readIdsByUrl = db.selectRead("kotlin-").executeAsList().map { it.id }
-        assertThat(readIdsByUrl, Matchers.containsInAnyOrder(2L))
+        val archivedIdsByUrl = db.selectArchived("kotlin-").executeAsList().map { it.id }
+        assertThat(archivedIdsByUrl, Matchers.containsInAnyOrder(2L))
 
-        val readIdsByTitle = db.selectRead("about Android").executeAsList().map { it.id }
-        assertThat(readIdsByTitle, Matchers.containsInAnyOrder(4L))
+        val archivedIdsByTitle = db.selectArchived("about Android").executeAsList().map { it.id }
+        assertThat(archivedIdsByTitle, Matchers.containsInAnyOrder(4L))
     }
 
     @Test
@@ -118,24 +118,24 @@ class WebmarkTest : DatabaseTest<WebmarkQueries>({ it.webmarkQueries }) {
     }
 
     @Test
-    fun markingAsRead() {
+    fun archiving() {
         insert(1L, "aaa")
         insert(2L, "bbb")
         insert(3L, "ccc")
 
-        db.markAsReadById(2L)
+        db.archiveById(2L)
         db.markAsNewById(3L)
-        db.markAsUnreadById(3L)
+        db.unarchiveById(3L)
 
         val all = db.selectAll().executeAsList()
         assertThat(all.size, equalTo(3))
 
-        val unread = db.selectUnread(null).executeAsList()
-        assertThat(unread.size, equalTo(2))
+        val unarchived = db.selectUnarchived(null).executeAsList()
+        assertThat(unarchived.size, equalTo(2))
 
-        val read = db.selectRead(null).executeAsList()
-        assertThat(read.size, equalTo(1))
-        assertThat(read.first().url, equalTo(Uri.parse("bbb")))
+        val archived = db.selectArchived(null).executeAsList()
+        assertThat(archived.size, equalTo(1))
+        assertThat(archived.first().url, equalTo(Uri.parse("bbb")))
     }
 
     @Test
@@ -143,23 +143,23 @@ class WebmarkTest : DatabaseTest<WebmarkQueries>({ it.webmarkQueries }) {
         insert(1L, "aaa", "First article")
         insert(2L, "bbb", "Second article")
         insert(3L, "ccc", "Something else")
-        insert(4L, "ddd", "Read article")
+        insert(4L, "ddd", "Archived article")
         insert(5L, "eee", "Third article - deleted")
-        insert(6L, "fff", "Read article - deleted")
+        insert(6L, "fff", "Archived article - deleted")
 
-        db.markAsReadById(4L)
+        db.archiveById(4L)
         db.setMarkedForDeletionById(true, 5L)
-        db.markAsReadById(6L)
+        db.archiveById(6L)
         db.setMarkedForDeletionById(true, 6L)
 
-        // selectUnread should return only matching unread (not-marked) articles
-        val unread = db.selectUnread("article").executeAsList()
-        assertThat(unread.size, equalTo(2))
-        assertThat(unread.map { it.title }, hasItems("First article", "Second article"))
+        // selectUnarchived should return only matching unarchived (not-marked for deletion) articles
+        val unarchived = db.selectUnarchived("article").executeAsList()
+        assertThat(unarchived.size, equalTo(2))
+        assertThat(unarchived.map { it.title }, hasItems("First article", "Second article"))
 
-        // Select read should return only matching read (not-marked) articles
-        val read = db.selectRead("article").executeAsOne()
-        assertThat(read.title, equalTo("Read article"))
+        // Select archived should return only matching archived (not-marked for deletion) articles
+        val archived = db.selectArchived("article").executeAsOne()
+        assertThat(archived.title, equalTo("Archived article"))
     }
 
     @Test

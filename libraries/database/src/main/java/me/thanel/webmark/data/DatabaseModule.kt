@@ -22,7 +22,7 @@ fun databaseModule(appContext: Context) = Kodein.Module("database") {
         Webmark.Adapter(
             urlAdapter = UriColumnAdapter,
             faviconUrlAdapter = UriColumnAdapter,
-            readAtAdapter = DateColumnAdapter,
+            archivedAtAdapter = DateColumnAdapter,
             savedAtAdapter = DateColumnAdapter,
             imageUrlAdapter = UriColumnAdapter
         )

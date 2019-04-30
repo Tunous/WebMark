@@ -114,7 +114,7 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.unreadWebmarks.observe(this, Observer {
+        viewModel.unarchivedWebmarks.observe(this, Observer {
             launch(Dispatchers.IO) {
                 adapterWrapper.updateItems(it)
             }
@@ -197,18 +197,18 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
     }
 
     private fun archive(id: Long) {
-        viewModel.markWebmarkAsRead(id)
+        viewModel.archiveWebmark(id)
 
         Snackbar.make(coordinator, R.string.info_archived, Snackbar.LENGTH_LONG)
-            .setAction(R.string.action_undo) { viewModel.markWebmarkAsUnread(id) }
+            .setAction(R.string.action_undo) { viewModel.unarchiveWebmark(id) }
             .show()
     }
 
     private fun unarchive(id: Long) {
-        viewModel.markWebmarkAsUnread(id)
+        viewModel.unarchiveWebmark(id)
 
         Snackbar.make(coordinator, R.string.info_unarchived, Snackbar.LENGTH_SHORT)
-            .setAction(R.string.action_undo) { viewModel.markWebmarkAsRead(id) }
+            .setAction(R.string.action_undo) { viewModel.archiveWebmark(id) }
             .show()
     }
 

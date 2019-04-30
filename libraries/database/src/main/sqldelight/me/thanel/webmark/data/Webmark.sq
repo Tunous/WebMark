@@ -8,7 +8,7 @@ CREATE TABLE webmark (
   title TEXT,
   faviconUrl TEXT AS Uri,
   estimatedReadingTimeMinutes INTEGER AS Int DEFAULT 0 NOT NULL,
-  readAt INTEGER AS Date,
+  archivedAt INTEGER AS Date,
   savedAt INTEGER AS Date DEFAULT CURRENT_TIMESTAMP,
   markedForDeletion INTEGER AS Boolean NOT NULL DEFAULT 0,
   imageUrl TEXT AS Uri
@@ -19,11 +19,11 @@ SELECT *
 FROM webmark
 ORDER BY savedAt DESC;
 
-selectUnread:
+selectUnarchived:
 SELECT *
 FROM webmark
 WHERE
-  readAt IS NULL
+  archivedAt IS NULL
   AND markedForDeletion = 0
   AND (
     :text IS NULL
@@ -32,18 +32,18 @@ WHERE
   )
 ORDER BY savedAt DESC;
 
-selectRead:
+selectArchived:
 SELECT *
 FROM webmark
 WHERE
-  readAt IS NOT NULL
+  archivedAt IS NOT NULL
   AND markedForDeletion = 0
   AND (
     :text IS NULL
     OR title LIKE ('%' || :text || '%')
     OR url LIKE ('%' || :text || '%')
   )
-ORDER BY readAt DESC;
+ORDER BY archivedAt DESC;
 
 insert:
 INSERT INTO webmark(id, url)
@@ -61,14 +61,14 @@ SET
   imageUrl = ?
 WHERE id = ?;
 
-markAsReadById:
+archiveById:
 UPDATE webmark
-SET readAt = CURRENT_TIMESTAMP
+SET archivedAt = CURRENT_TIMESTAMP
 WHERE id = ?;
 
-markAsUnreadById:
+unarchiveById:
 UPDATE webmark
-SET readAt = NULL
+SET archivedAt = NULL
 WHERE id = ?;
 
 selectIdForUrl:
@@ -86,7 +86,7 @@ LIMIT 1;
 markAsNewById:
 UPDATE webmark
 SET
-  readAt = NULL,
+  archivedAt = NULL,
   savedAt = CURRENT_TIMESTAMP,
   markedForDeletion = 0
 WHERE id = ?;
@@ -105,8 +105,8 @@ DELETE FROM webmark
 WHERE
   markedForDeletion = 1
   OR (
-    readAt IS NOT NULL
-    AND JULIANDAY('now') - JULIANDAY(readAt) >= 30
+    archivedAt IS NOT NULL
+    AND JULIANDAY('now') - JULIANDAY(archivedAt) >= 30
   );
 
 deleteEverything:

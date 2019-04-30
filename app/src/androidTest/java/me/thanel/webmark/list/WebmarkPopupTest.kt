@@ -53,7 +53,7 @@ class WebmarkPopupTest : SampleDataTest() {
 
         onView(withText(TITLE_WEBMARK)).check(doesNotExist())
 
-        val webmark = queries.selectRead(TITLE_WEBMARK).executeAsOne()
+        val webmark = queries.selectArchived(TITLE_WEBMARK).executeAsOne()
         assertNotNull("Webmark should be archived", webmark)
     }
 
@@ -87,7 +87,7 @@ class WebmarkPopupTest : SampleDataTest() {
 
         onView(withText(TITLE_ARCHIVED_WEBMARK)).check(doesNotExist())
 
-        val webmark = queries.selectUnread(TITLE_ARCHIVED_WEBMARK).executeAsOne()
+        val webmark = queries.selectUnarchived(TITLE_ARCHIVED_WEBMARK).executeAsOne()
         assertNotNull("Webmark should be unarchived", webmark)
     }
 

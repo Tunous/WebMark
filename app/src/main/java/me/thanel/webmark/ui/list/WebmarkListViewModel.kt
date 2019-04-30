@@ -36,27 +36,27 @@ class WebmarkListViewModel(app: Application) : BaseViewModel(app) {
             filterLiveData.value = value
         }
 
-    val unreadWebmarks: LiveData<List<Webmark>> = showArchiveLiveData.combineWith(filterLiveData)
+    val unarchivedWebmarks: LiveData<List<Webmark>> = showArchiveLiveData.combineWith(filterLiveData)
         .switchMap {
             getWebmarks(it.first, it.second?.nullIfBlank())
         }
 
     private fun getWebmarks(loadArchive: Boolean, filterText: String?): LiveData<List<Webmark>> {
         val query = if (loadArchive) {
-            database.webmarkQueries.selectRead(filterText)
+            database.webmarkQueries.selectArchived(filterText)
         } else {
-            database.webmarkQueries.selectUnread(filterText)
+            database.webmarkQueries.selectUnarchived(filterText)
         }
         return query.asLiveData()
             .mapToList(viewModelScope)
     }
 
-    fun markWebmarkAsRead(id: Long) = runInBackground {
-        database.webmarkQueries.markAsReadById(id)
+    fun archiveWebmark(id: Long) = runInBackground {
+        database.webmarkQueries.archiveById(id)
     }
 
-    fun markWebmarkAsUnread(id: Long) = runInBackground {
-        database.webmarkQueries.markAsUnreadById(id)
+    fun unarchiveWebmark(id: Long) = runInBackground {
+        database.webmarkQueries.unarchiveById(id)
     }
 
     fun deleteWebmark(id: Long) = runInBackground {
