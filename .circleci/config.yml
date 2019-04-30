@@ -163,7 +163,7 @@ workflows:
   workflow:
     jobs:
       - build_debug
-      - build_release
+#      - build_release
       - test_unit
       - test_instrumented:
           requires:
