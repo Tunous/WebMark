@@ -1,4 +1,4 @@
-package me.thanel.webmark.ui.touchhelper
+package me.thanel.webmark.action
 
 import androidx.annotation.AttrRes
 import androidx.annotation.DrawableRes

@@ -1,4 +1,4 @@
-package me.thanel.webmark.ui.list
+package me.thanel.webmark.model
 
 enum class WebmarkChange {
     Title,

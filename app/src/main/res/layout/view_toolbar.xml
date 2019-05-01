@@ -36,7 +36,7 @@
         app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <me.thanel.webmark.ui.CheckableImageView
+    <me.thanel.webmark.ui.view.CheckableImageView
         android:id="@+id/archiveToggleButton"
         android:layout_width="@dimen/toolbar_button_size"
         android:layout_height="@dimen/toolbar_button_size"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/checkable_color" />
 
-    <me.thanel.webmark.ui.CheckableImageView
+    <me.thanel.webmark.ui.view.CheckableImageView
         android:id="@+id/themeToggleButton"
         android:layout_width="@dimen/toolbar_button_size"
         android:layout_height="@dimen/toolbar_button_size"

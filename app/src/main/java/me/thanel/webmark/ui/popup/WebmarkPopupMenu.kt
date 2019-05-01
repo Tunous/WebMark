@@ -6,9 +6,9 @@ import me.thanel.webmark.action.WebmarkActionHandler
 import me.thanel.webmark.data.BuildConfig
 import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.data.ext.isArchived
+import me.thanel.webmark.action.WebmarkAction
 import me.thanel.webmark.ui.ext.coloredHeader
 import me.thanel.webmark.ui.ext.item
-import me.thanel.webmark.ui.touchhelper.WebmarkAction
 
 fun createPopupMenu(webmark: Webmark, actionHandler: WebmarkActionHandler) =
     popupMenu {

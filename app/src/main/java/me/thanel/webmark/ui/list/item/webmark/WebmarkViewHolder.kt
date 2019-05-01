@@ -1,4 +1,4 @@
-package me.thanel.webmark.ui.list
+package me.thanel.webmark.ui.list.item.webmark
 
 import android.view.Gravity
 import android.view.View
@@ -12,8 +12,8 @@ import me.thanel.webmark.R
 import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.data.ext.isArchived
 import me.thanel.webmark.ext.getColorFromAttr
+import me.thanel.webmark.action.WebmarkAction
 import me.thanel.webmark.ui.touchhelper.SwipeableViewHolder
-import me.thanel.webmark.ui.touchhelper.WebmarkAction
 
 class WebmarkViewHolder(containerView: View) :
     ContainerViewHolder(containerView),

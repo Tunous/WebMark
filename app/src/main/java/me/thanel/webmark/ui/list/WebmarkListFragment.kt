@@ -28,13 +28,15 @@ import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.ext.share
 import me.thanel.webmark.ext.updateTheme
 import me.thanel.webmark.ext.viewModel
+import me.thanel.webmark.action.WebmarkAction
+import me.thanel.webmark.model.WebmarkItemCallback
 import me.thanel.webmark.preferences.WebMarkPreferences
 import me.thanel.webmark.ui.base.BaseFragment
 import me.thanel.webmark.ui.imageloader.ImageLoader
+import me.thanel.webmark.ui.list.item.webmark.WebmarkViewBinder
 import me.thanel.webmark.ui.touchhelper.CollapseItemAnimator
 import me.thanel.webmark.ui.touchhelper.ItemTouchCallback
 import me.thanel.webmark.ui.touchhelper.SwipeableViewHolder
-import me.thanel.webmark.ui.touchhelper.WebmarkAction
 import me.thanel.webmark.work.ExtractWebmarkDetailsWorker
 import me.thanel.webmark.work.SaveWebmarkWorker
 import org.kodein.di.generic.instance

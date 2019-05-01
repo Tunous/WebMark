@@ -1,4 +1,4 @@
-package me.thanel.webmark.ui.list
+package me.thanel.webmark.ui.list.item.webmark
 
 import android.view.View
 import androidx.core.view.isVisible
@@ -8,6 +8,7 @@ import me.thanel.webmark.R
 import me.thanel.webmark.action.WebmarkActionHandler
 import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.ext.openInBrowser
+import me.thanel.webmark.model.WebmarkChange
 import me.thanel.webmark.ui.imageloader.ImageLoader
 import me.thanel.webmark.ui.popup.createPopupMenu
 
@@ -29,7 +30,8 @@ class WebmarkViewBinder(
         }
     }
 
-    override fun onCreateViewHolder(itemView: View) = WebmarkViewHolder(itemView)
+    override fun onCreateViewHolder(itemView: View) =
+        WebmarkViewHolder(itemView)
 
     override fun onInflateViewHolder(holder: WebmarkViewHolder) {
         super.onInflateViewHolder(holder)
@@ -82,15 +84,23 @@ class WebmarkViewBinder(
 
     private fun WebmarkViewHolder.bindFavicon(item: Webmark) {
         webmarkFaviconView.isVisible = false
-        imageLoader.loadImage(webmarkFaviconView, item.faviconUrl, faviconCornerRadius) {
-            webmarkFaviconView.isVisible = true
+        if (item.faviconUrl != null) {
+            imageLoader.loadImage(webmarkFaviconView, item.faviconUrl, faviconCornerRadius) {
+                webmarkFaviconView.isVisible = true
+            }
+        } else {
+            imageLoader.clearImage(webmarkFaviconView)
         }
     }
 
     private fun WebmarkViewHolder.bindImage(item: Webmark) {
         webmarkImageView.isVisible = false
-        imageLoader.loadImage(webmarkImageView, item.imageUrl, imageCornerRadius) {
-            webmarkImageView.isVisible = true
+        if (item.imageUrl != null) {
+            imageLoader.loadImage(webmarkImageView, item.imageUrl, imageCornerRadius) {
+                webmarkImageView.isVisible = true
+            }
+        } else {
+            imageLoader.clearImage(webmarkImageView)
         }
     }
 }

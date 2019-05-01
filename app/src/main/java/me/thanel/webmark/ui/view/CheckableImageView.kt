@@ -1,4 +1,4 @@
-package me.thanel.webmark.ui
+package me.thanel.webmark.ui.view
 
 import android.content.Context
 import android.util.AttributeSet

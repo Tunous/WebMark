@@ -22,4 +22,8 @@ object GlideImageLoader : ImageLoader {
             .listener(targetView.getGlideLoadListener(onLoad))
             .into(targetView)
     }
+
+    override fun clearImage(targetView: ImageView) {
+        Glide.with(targetView).clear(targetView)
+    }
 }
