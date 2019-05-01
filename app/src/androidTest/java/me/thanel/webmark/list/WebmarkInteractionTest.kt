@@ -118,4 +118,3 @@ class WebmarkInteractionTest : SampleDataTest() {
         onView(withText(TITLE_ARCHIVED_WEBMARK)).check(matches(isDisplayed()))
     }
 }
-

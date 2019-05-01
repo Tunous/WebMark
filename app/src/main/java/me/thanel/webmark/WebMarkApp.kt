@@ -45,5 +45,4 @@ open class WebMarkApp : Application(), KodeinAware {
         }
         AppCompatDelegate.setDefaultNightMode(nightMode)
     }
-
 }

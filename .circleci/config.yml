@@ -149,6 +149,22 @@ jobs:
           path: firebase/
           destination: /firebase/
 
+  check_code_style:
+    <<: *android_config
+    steps:
+      - checkout
+      - *attach_workspace
+      - *restore_cache
+      - run:
+          name: Running android lint
+          command: ./gradlew :app:lintDebug
+      - store_artifacts:
+          path: app/build/reports/
+          destination: /reports/
+      - run:
+          name: Checking code style
+          command: ./gradlew spotlessCheck
+
   deploy_debug_to_github:
     <<: *github_config
     steps:
@@ -180,10 +196,16 @@ workflows:
       - build_release:
           requires:
             - build_debug
+            - check_code_style
 
       # Tests
       - test_unit
       - test_instrumented:
+          requires:
+            - build_debug
+
+      # Checks
+      - check_code_style:
           requires:
             - build_debug
 

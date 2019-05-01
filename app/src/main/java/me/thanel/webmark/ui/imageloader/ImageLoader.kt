@@ -14,4 +14,3 @@ interface ImageLoader {
 
     fun clearImage(targetView: ImageView) = Unit
 }
-

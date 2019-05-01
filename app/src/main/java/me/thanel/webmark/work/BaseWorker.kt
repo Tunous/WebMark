@@ -12,5 +12,4 @@ abstract class BaseWorker(
 ) : CoroutineWorker(appContext, workerParams), KodeinAware {
 
     override val kodein by kodein(appContext)
-
 }

@@ -230,5 +230,4 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
             WebmarkAction.ExtractDetails -> ExtractWebmarkDetailsWorker.enqueue(webmark.id)
         }
     }
-
 }

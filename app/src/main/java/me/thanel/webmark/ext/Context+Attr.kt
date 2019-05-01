@@ -12,4 +12,3 @@ fun Context.getColorFromAttr(@AttrRes attrResId: Int): Int {
         it.getColor(0, Color.WHITE)
     }
 }
-

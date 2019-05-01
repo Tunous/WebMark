@@ -20,6 +20,7 @@ object Versions {
     const val kodein = "6.1.0"
     const val kotlin = "1.3.21"
     const val kotpref = "2.7.0"
+    const val ktlint = "0.32.0"
     const val materialPopupMenu = "a6f06e29de"
     const val okhttp = "3.14.1"
     const val sqlDelight = "1.1.1"

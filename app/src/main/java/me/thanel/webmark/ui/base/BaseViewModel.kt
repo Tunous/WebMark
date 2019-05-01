@@ -20,5 +20,4 @@ abstract class BaseViewModel(app: Application) : AndroidViewModel(app), KodeinAw
     protected fun runInMain(block: suspend CoroutineScope.() -> Unit) {
         viewModelScope.launch(Dispatchers.Main, block = block)
     }
-
 }

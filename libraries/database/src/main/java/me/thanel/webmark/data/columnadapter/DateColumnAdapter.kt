@@ -1,7 +1,7 @@
 package me.thanel.webmark.data.columnadapter
 
 import com.squareup.sqldelight.ColumnAdapter
-import java.util.*
+import java.util.Date
 
 internal object DateColumnAdapter : ColumnAdapter<Date, Long> {
     override fun decode(databaseValue: Long): Date = Date(databaseValue)

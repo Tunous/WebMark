@@ -9,15 +9,15 @@ object WebmarkItemCallback : DiffUtil.ItemCallback<Webmark>() {
         oldItem.id == newItem.id
 
     override fun areContentsTheSame(oldItem: Webmark, newItem: Webmark) =
-        oldItem.id == newItem.id
-                && oldItem.url == newItem.url
-                && oldItem.title == newItem.title
-                && oldItem.faviconUrl == newItem.faviconUrl
-                && oldItem.estimatedReadingTimeMinutes == newItem.estimatedReadingTimeMinutes
-                && oldItem.archivedAt == newItem.archivedAt
-                && oldItem.savedAt == newItem.savedAt
-                && oldItem.markedForDeletion == newItem.markedForDeletion
-                && oldItem.imageUrl == newItem.imageUrl
+        oldItem.id == newItem.id &&
+                oldItem.url == newItem.url &&
+                oldItem.title == newItem.title &&
+                oldItem.faviconUrl == newItem.faviconUrl &&
+                oldItem.estimatedReadingTimeMinutes == newItem.estimatedReadingTimeMinutes &&
+                oldItem.archivedAt == newItem.archivedAt &&
+                oldItem.savedAt == newItem.savedAt &&
+                oldItem.markedForDeletion == newItem.markedForDeletion &&
+                oldItem.imageUrl == newItem.imageUrl
 
     override fun getChangePayload(oldItem: Webmark, newItem: Webmark): Any? =
         mutableListOf<WebmarkChange>()

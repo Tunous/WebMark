@@ -112,7 +112,7 @@ class WebmarkTest : DatabaseTest<WebmarkQueries>({ it.webmarkQueries }) {
         insert(1L, "aaa")
         assertThat(db.lastInsertId().executeAsOne(), equalTo(1L))
 
-        insert(7L,"bbb")
+        insert(7L, "bbb")
         insert(4L, "ccc")
         assertThat(db.lastInsertId().executeAsOne(), equalTo(4L))
     }

@@ -102,4 +102,3 @@ class WebmarkSearchTest : SampleDataTest() {
         onView(withText(TITLE_CAPTAIN_MARVEL)).check(matches(isDisplayed()))
     }
 }
-

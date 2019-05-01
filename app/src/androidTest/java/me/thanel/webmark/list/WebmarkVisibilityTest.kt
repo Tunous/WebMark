@@ -56,4 +56,3 @@ class WebmarkVisibilityTest : SampleDataTest() {
             .check(matches(hasDescendant(withText(TITLE_ARCHIVED_WEBMARK))))
     }
 }
-
