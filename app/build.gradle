@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
-def signingPropertiesFile = project.rootProject.file('signing/signing.properties')
+def signingPropertiesFile = rootProject.file('signing/signing.properties')
 def useLocalSigning = signingPropertiesFile.exists()
 Properties signingProperties = null
 
@@ -22,7 +22,7 @@ android {
     signingConfigs {
         release {
             if (useLocalSigning) {
-                storeFile project.rootProject.file(signingProperties.getProperty('storeFile'))
+                storeFile rootProject.file('signing/app-release.jks')
                 keyAlias signingProperties.getProperty('keyAlias')
                 storePassword signingProperties.getProperty('storePassword')
                 keyPassword signingProperties.getProperty('keyPassword')

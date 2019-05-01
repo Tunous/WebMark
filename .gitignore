@@ -16,4 +16,5 @@
 .idea/sqldelight
 .idea/sqlandroid.xml
 buildSrc/build
-/signing
+/signing/*.jks
+/signing/*.properties

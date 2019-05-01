@@ -33,6 +33,17 @@ references:
       name: Decoding Google Cloud credentials
       command: echo $GCLOUD_SERVICE_KEY | base64 -di > ${HOME}/gcloud-service-key.json
 
+  # Signing secrets
+
+  setup_signing: &setup_signing
+    run:
+      name: Setting-up signing configuration
+      command: signing/setup.sh $ENCRYPT_KEY
+  cleanup_signing: &cleanup_signing
+    run:
+      name: Cleaning-up signing configuration
+      command: signing/cleanup.sh
+
   ## Docker image configurations
 
   android_config: &android_config
@@ -61,7 +72,7 @@ jobs:
       - *save_cache
       - run:
           name: Building debug apk
-          command: ./gradlew -PciBuild=true :app:assembleDebug :app:assembleAndroidTest
+          command: ./gradlew :app:assembleDebug :app:assembleAndroidTest
       - persist_to_workspace:
           root: *workspace
           paths:
@@ -80,9 +91,11 @@ jobs:
           name: Downloading dependencies
           command: ./gradlew androidDependencies
       - *save_cache
+      - *setup_signing
       - run:
           name: Building release apk
-          command: ./gradlew -PciBuild=true :app:assembleRelease
+          command: ./gradlew :app:assembleRelease
+      - *cleanup_signing
       - persist_to_workspace:
           root: *workspace
           paths:
@@ -105,7 +118,7 @@ jobs:
       - *save_cache
       - run:
           name: Running unit tests
-          command: ./gradlew -PciBuild=true testDebugUnitTest
+          command: ./gradlew testDebugUnitTest
       - store_artifacts:
           path: app/build/reports/
           destination: /reports/
@@ -160,14 +173,21 @@ jobs:
 
 workflows:
   version: 2
-  workflow:
+  build_test_deploy:
     jobs:
+      # Builds
       - build_debug
-#      - build_release
+      - build_release:
+          requires:
+            - build_debug
+
+      # Tests
       - test_unit
       - test_instrumented:
           requires:
             - build_debug
+
+      # Deployments
       - deploy_debug_to_github:
           filters:
             branches:
