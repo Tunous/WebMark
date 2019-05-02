@@ -5,14 +5,18 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.util.Log
 import androidx.arch.core.executor.testing.CountingTaskExecutorRule
+import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.IdlingResource
 import androidx.test.espresso.intent.rule.IntentsTestRule
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.work.Configuration
 import androidx.work.testing.SynchronousExecutor
 import androidx.work.testing.WorkManagerTestInitHelper
+import me.thanel.webmark.EspressoIdlingResource
 import me.thanel.webmark.MainActivity
 import me.thanel.webmark.ext.asApp
 import me.thanel.webmark.preferences.WebMarkPreferences
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.kodein.di.DKodein
@@ -22,11 +26,11 @@ import java.util.concurrent.TimeUnit
 
 abstract class BaseTest : DKodeinAware {
 
+    private lateinit var clipboardManager: ClipboardManager
+    private var idlingResource: IdlingResource? = null
     protected lateinit var appContext: Context
 
     override lateinit var dkodein: DKodein
-
-    private lateinit var clipboardManager: ClipboardManager
 
     @get:Rule
     val activityRule = IntentsTestRule<MainActivity>(MainActivity::class.java, false, false)
@@ -38,6 +42,8 @@ abstract class BaseTest : DKodeinAware {
     open fun setup() {
         appContext = InstrumentationRegistry.getInstrumentation().targetContext
         dkodein = appContext.asApp().kodein.direct
+        idlingResource = EspressoIdlingResource.idlingResource
+        IdlingRegistry.getInstance().register(idlingResource)
 
         setupWorkManager()
 
@@ -47,6 +53,13 @@ abstract class BaseTest : DKodeinAware {
 
         clearPreferences()
         clearClipboard()
+    }
+
+    @After
+    fun unregisterIdlingResource() {
+        if (idlingResource != null) {
+            IdlingRegistry.getInstance().unregister(idlingResource)
+        }
     }
 
     protected fun clearClipboard() {

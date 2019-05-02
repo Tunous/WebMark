@@ -19,16 +19,15 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_webmark_list.*
 import kotlinx.android.synthetic.main.view_empty.*
 import kotlinx.android.synthetic.main.view_toolbar.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import me.thanel.recyclerviewutils.adapter.lazyAdapterWrapper
 import me.thanel.webmark.R
+import me.thanel.webmark.action.WebmarkAction
 import me.thanel.webmark.action.WebmarkActionHandler
 import me.thanel.webmark.data.Webmark
+import me.thanel.webmark.ext.launchIdling
 import me.thanel.webmark.ext.share
 import me.thanel.webmark.ext.updateTheme
 import me.thanel.webmark.ext.viewModel
-import me.thanel.webmark.action.WebmarkAction
 import me.thanel.webmark.model.WebmarkItemCallback
 import me.thanel.webmark.preferences.WebMarkPreferences
 import me.thanel.webmark.ui.base.BaseFragment
@@ -116,8 +115,8 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel.unarchivedWebmarks.observe(this, Observer {
-            launch(Dispatchers.IO) {
+        viewModel.webmarks.observe(this, Observer {
+            launchIdling {
                 adapterWrapper.updateItems(it)
             }
             updateEmptyView(it.isEmpty())
@@ -178,9 +177,9 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
 
         if (WebMarkPreferences.latestSuggestedUrl == text) return
 
-        launch {
+        launchIdling {
             val uri = Uri.parse(text)
-            if (viewModel.isSaved(uri)) return@launch
+            if (viewModel.isSaved(uri)) return@launchIdling
 
             val message = getString(R.string.question_save_copied_url, text)
             Snackbar.make(coordinator, message, Snackbar.LENGTH_LONG)

@@ -36,7 +36,7 @@ class WebmarkListViewModel(app: Application) : BaseViewModel(app) {
             filterLiveData.value = value
         }
 
-    val unarchivedWebmarks: LiveData<List<Webmark>> = showArchiveLiveData.combineWith(filterLiveData)
+    val webmarks: LiveData<List<Webmark>> = showArchiveLiveData.combineWith(filterLiveData)
         .switchMap {
             getWebmarks(it.first, it.second?.nullIfBlank())
         }

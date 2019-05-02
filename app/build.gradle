@@ -74,6 +74,7 @@ dependencies {
     implementation Deps.coroutinesAndroid
     implementation Deps.coroutinesCore
     implementation Deps.crux
+    implementation Deps.espressoIdlingResource
     implementation Deps.glide
     implementation Deps.jsoup
     implementation Deps.kodein

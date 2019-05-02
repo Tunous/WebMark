@@ -75,6 +75,7 @@ object Deps {
     const val coreTesting = "androidx.arch.core:core-testing:${Versions.coreTesting}"
     const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
     const val espressoContrib = "androidx.test.espresso:espresso-contrib:${Versions.espresso}"
+    const val espressoIdlingResource = "androidx.test.espresso:espresso-idling-resource:${Versions.espresso}"
     const val espressoIntents = "androidx.test.espresso:espresso-intents:${Versions.espresso}"
     const val junit = "junit:junit:${Versions.junit}"
     const val testRules = "androidx.test:rules:${Versions.androidxTesting}"
