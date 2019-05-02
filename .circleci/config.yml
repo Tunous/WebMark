@@ -142,6 +142,7 @@ jobs:
           command: |
             mkdir -p ${HOME}/workspace/firebase/
             gsutil -m cp -r -U "`gsutil ls gs://test-lab-qdmua4iszy7tc-mpbqc3mvmnhtk | tail -1`*" ${HOME}/workspace/firebase/
+          when: always
       - store_artifacts:
           path: firebase/
           destination: /firebase/
