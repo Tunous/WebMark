@@ -11,6 +11,7 @@
         <item name="mpm_paddingLeft">0dp</item>
         <item name="mpm_paddingRight">0dp</item>
         <item name="mpm_paddingTop">0dp</item>
+        <item name="mpm_activeIconColor">?colorControlNormal</item>
     </style>
 
     <!-- Dark -->
@@ -26,6 +27,7 @@
         <item name="mpm_paddingLeft">0dp</item>
         <item name="mpm_paddingRight">0dp</item>
         <item name="mpm_paddingTop">0dp</item>
+        <item name="mpm_activeIconColor">?colorControlNormal</item>
     </style>
 
 </resources>

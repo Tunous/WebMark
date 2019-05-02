@@ -4,8 +4,6 @@
     <color name="primaryDark">#E64A19</color>
     <color name="accent">@color/primary</color>
 
-    <color name="colorOnSurface">#000000</color>
-
     <color name="actionArchive">#388E3C</color>
     <color name="actionDelete">#D32F2F</color>
     <color name="actionUnarchive">#F57C00</color>

@@ -7,7 +7,7 @@
     <string name="action_hide_archive">Hide archive</string>
     <string name="action_save">Save</string>
     <string name="action_search">Search</string>
-    <string name="action_share_link">Share link</string>
+    <string name="action_share">Share…</string>
     <string name="action_show_archive">Show archive</string>
     <string name="action_unarchive">Unarchive</string>
     <string name="action_undo">Undo</string>

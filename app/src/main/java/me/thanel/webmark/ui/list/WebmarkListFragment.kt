@@ -25,14 +25,15 @@ import me.thanel.webmark.action.WebmarkAction
 import me.thanel.webmark.action.WebmarkActionHandler
 import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.ext.launchIdling
-import me.thanel.webmark.ext.share
 import me.thanel.webmark.ext.updateTheme
 import me.thanel.webmark.ext.viewModel
 import me.thanel.webmark.model.WebmarkItemCallback
 import me.thanel.webmark.preferences.WebMarkPreferences
+import me.thanel.webmark.share.share
 import me.thanel.webmark.ui.base.BaseFragment
 import me.thanel.webmark.ui.imageloader.ImageLoader
 import me.thanel.webmark.ui.list.item.webmark.WebmarkViewBinder
+import me.thanel.webmark.ui.popup.WebMarkPopupMenu
 import me.thanel.webmark.ui.touchhelper.CollapseItemAnimator
 import me.thanel.webmark.ui.touchhelper.ItemTouchCallback
 import me.thanel.webmark.ui.touchhelper.SwipeableViewHolder
@@ -46,9 +47,12 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
     private val clipboard: ClipboardManager by instance()
     private val inputMethodManager: InputMethodManager by instance()
     private val imageLoader: ImageLoader by instance()
+    private val webMarkPopupMenu: WebMarkPopupMenu by instance()
 
     private val adapterWrapper by lazyAdapterWrapper {
-        register(WebmarkViewBinder(this@WebmarkListFragment, imageLoader), WebmarkItemCallback)
+        register(WebmarkViewBinder(imageLoader).apply {
+            onLongClickListener = ::showPopupMenu
+        }, WebmarkItemCallback)
     }
 
     private val toolbarLayout by lazy { toolbar as MotionLayout }
@@ -108,7 +112,10 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
             if (hasFocus) {
                 inputMethodManager.showSoftInput(focusView, InputMethodManager.SHOW_IMPLICIT)
             } else {
-                inputMethodManager.hideSoftInputFromWindow(focusView.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+                inputMethodManager.hideSoftInputFromWindow(
+                    focusView.windowToken,
+                    InputMethodManager.HIDE_NOT_ALWAYS
+                )
             }
         }
     }
@@ -190,6 +197,11 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
 
             WebMarkPreferences.latestSuggestedUrl = text
         }
+    }
+
+    private fun showPopupMenu(view: View, webmark: Webmark) {
+        webMarkPopupMenu.createPopupMenu(requireContext(), webmark, this)
+            .show(requireContext(), view)
     }
 
     private fun onSwiped(direction: Int, webmark: Webmark) {

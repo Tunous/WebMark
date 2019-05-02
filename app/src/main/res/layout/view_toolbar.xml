@@ -29,12 +29,14 @@
         android:alpha="0"
         android:background="@drawable/background_filled"
         android:hint="@string/hint_search"
+        android:importantForAutofill="no"
         android:inputType="text"
         android:padding="8dp"
         android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:targetApi="o" />
 
     <me.thanel.webmark.ui.view.CheckableImageView
         android:id="@+id/archiveToggleButton"

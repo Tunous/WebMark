@@ -16,7 +16,7 @@ enum class WebmarkAction(
     Archive(R.string.action_archive, R.attr.colorActionArchive, R.drawable.ic_archive),
     Delete(R.string.action_delete, R.attr.colorActionDelete, R.drawable.ic_delete),
     ExtractDetails(R.string.action_extract_details, R.attr.colorActionUnavailable, R.drawable.ic_extract_details),
-    ShareLink(R.string.action_share_link, R.attr.colorActionUnavailable, R.drawable.ic_share),
+    ShareLink(R.string.action_share, R.attr.colorActionUnavailable, R.drawable.ic_share),
     Unarchive(R.string.action_unarchive, R.attr.colorActionUnarchive, R.drawable.ic_unarchive);
 
     companion object {

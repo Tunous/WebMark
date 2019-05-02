@@ -1,5 +1,6 @@
 package me.thanel.webmark.list
 
+import android.content.ComponentName
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.longClick
@@ -10,15 +11,18 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import me.thanel.webmark.R
+import me.thanel.webmark.preferences.WebMarkPreferences
 import me.thanel.webmark.test.base.SampleDataTest
 import me.thanel.webmark.test.data.LINK_ARCHIVED_WEBMARK
 import me.thanel.webmark.test.data.LINK_WEBMARK
 import me.thanel.webmark.test.data.TITLE_ARCHIVED_WEBMARK
 import me.thanel.webmark.test.data.TITLE_WEBMARK
 import me.thanel.webmark.test.matcher.chooserIntent
+import me.thanel.webmark.test.matcher.directShareIntent
 import me.thanel.webmark.test.matcher.onViewInPopup
 import me.thanel.webmark.test.matcher.shareIntent
 import me.thanel.webmark.test.matcher.stubExternalIntents
+import org.hamcrest.CoreMatchers.not
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -33,7 +37,7 @@ class WebmarkPopupTest : SampleDataTest() {
         onViewInPopup(withText(TITLE_WEBMARK)).check(matches(isDisplayed()))
         onViewInPopup(withText(R.string.action_archive)).check(matches(isDisplayed()))
         onViewInPopup(withText(R.string.action_delete)).check(matches(isDisplayed()))
-        onViewInPopup(withText(R.string.action_share_link)).check(matches(isDisplayed()))
+        onViewInPopup(withText(R.string.action_share)).check(matches(isDisplayed()))
     }
 
     @Test
@@ -45,7 +49,7 @@ class WebmarkPopupTest : SampleDataTest() {
         onViewInPopup(withText(TITLE_ARCHIVED_WEBMARK)).check(matches(isDisplayed()))
         onViewInPopup(withText(R.string.action_unarchive)).check(matches(isDisplayed()))
         onViewInPopup(withText(R.string.action_delete)).check(matches(isDisplayed()))
-        onViewInPopup(withText(R.string.action_share_link)).check(matches(isDisplayed()))
+        onViewInPopup(withText(R.string.action_share)).check(matches(isDisplayed()))
     }
 
     @Test
@@ -81,7 +85,7 @@ class WebmarkPopupTest : SampleDataTest() {
 
         drain()
         onView(withText(TITLE_WEBMARK)).perform(longClick())
-        onViewInPopup(withText(R.string.action_share_link)).perform(click())
+        onViewInPopup(withText(R.string.action_share)).perform(click())
 
         intended(chooserIntent(shareIntent(LINK_WEBMARK)))
     }
@@ -122,7 +126,7 @@ class WebmarkPopupTest : SampleDataTest() {
         onView(withId(R.id.archiveToggleButton)).perform(click())
         drain()
         onView(withText(TITLE_ARCHIVED_WEBMARK)).perform(longClick())
-        onViewInPopup(withText(R.string.action_share_link)).perform(click())
+        onViewInPopup(withText(R.string.action_share)).perform(click())
 
         intended(chooserIntent(shareIntent(LINK_ARCHIVED_WEBMARK)))
     }
@@ -155,5 +159,27 @@ class WebmarkPopupTest : SampleDataTest() {
         drain()
 
         onView(withText(TITLE_WEBMARK)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun does_not_show_quick_share_action_if_no_component_is_saved() {
+        WebMarkPreferences.latestShareComponent = null
+
+        onView(withText(TITLE_WEBMARK)).perform(longClick())
+
+        onView(withText(R.string.action_share)).check(matches(isDisplayed()))
+        onView(withId(R.id.quickShareIconImageView)).check(matches(not(isDisplayed())))
+    }
+
+    @Test
+    fun can_perform_quick_share_action_from_popup() {
+        stubExternalIntents()
+        val shareComponent = ComponentName("abc", "def")
+        WebMarkPreferences.latestShareComponent = shareComponent
+
+        onView(withText(TITLE_WEBMARK)).perform(longClick())
+        onView(withId(R.id.quickShareIconImageView)).perform(click())
+
+        intended(directShareIntent(shareComponent))
     }
 }

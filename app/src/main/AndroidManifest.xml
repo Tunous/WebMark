@@ -40,5 +40,7 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".ShareIntentChoiceBroadcastReceiver" />
     </application>
 </manifest>
