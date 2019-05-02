@@ -37,6 +37,7 @@ class EmptyStateTest : BaseTest() {
     @Test
     fun going_to_archive_changes_title_of_info_view() {
         onView(withId(R.id.archiveToggleButton)).perform(click())
+        drain()
 
         onView(withText(R.string.title_nothing_archived)).check(matches(isDisplayed()))
         onView(withText(R.string.info_save_instructions)).check(matches(isDisplayed()))

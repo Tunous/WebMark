@@ -13,8 +13,9 @@ object Config {
 object Versions {
     const val androidxLegacy = "1.0.0"
     const val androidxTesting = "1.1.1"
-    const val appCompat = "1.0.2"
+    const val androidxAppCompat = "1.0.2"
     const val constraintLayout = "2.0.0-alpha3"
+    const val coreTesting = "2.0.0"
     const val coroutines = "1.1.1"
     const val crux = "2.0.2"
     const val espresso = "3.1.0"
@@ -41,7 +42,7 @@ object Versions {
 
 object Deps {
     const val androidxLegacy = "androidx.legacy:legacy-support-v4:${Versions.androidxLegacy}"
-    const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
+    const val androidxAppCompat = "androidx.appcompat:appcompat:${Versions.androidxAppCompat}"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
     const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
     const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
@@ -65,11 +66,13 @@ object Deps {
     const val sqlDelight = "com.squareup.sqldelight:android-driver:${Versions.sqlDelight}"
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
     const val work = "androidx.work:work-runtime-ktx:${Versions.work}"
+    const val workTesting = "androidx.work:work-testing:${Versions.work}"
 
     const val tools_gradleAndroid = "com.android.tools.build:gradle:${Versions.gradleAndroid}"
     const val tools_kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
     const val tools_sqlDelight = "com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}"
 
+    const val coreTesting = "androidx.arch.core:core-testing:${Versions.coreTesting}"
     const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
     const val espressoContrib = "androidx.test.espresso:espresso-contrib:${Versions.espresso}"
     const val espressoIntents = "androidx.test.espresso:espresso-intents:${Versions.espresso}"

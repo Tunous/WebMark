@@ -23,6 +23,7 @@ class WebmarkVisibilityTest : SampleDataTest() {
 
     @Test
     fun displays_saved_webmarks() {
+        drain()
         onView(withId(R.id.webmarkRecyclerView))
             .check(matches(hasItemCount(4)))
 
@@ -48,6 +49,7 @@ class WebmarkVisibilityTest : SampleDataTest() {
     @Test
     fun displays_archived_webmarks() {
         onView(withId(R.id.archiveToggleButton)).perform(click())
+        drain()
 
         onView(withId(R.id.webmarkRecyclerView))
             .check(matches(hasItemCount(1)))

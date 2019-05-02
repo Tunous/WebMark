@@ -69,7 +69,7 @@ dependencies {
     kapt Deps.glideCompiler
 
     implementation Deps.androidxLegacy
-    implementation Deps.appCompat
+    implementation Deps.androidxAppCompat
     implementation Deps.constraintLayout
     implementation Deps.coroutinesAndroid
     implementation Deps.coroutinesCore
@@ -94,10 +94,12 @@ dependencies {
 
     testImplementation Deps.junit
 
-    androidTestImplementation Deps.testRunner
-    androidTestImplementation Deps.testRules
+    androidTestImplementation Deps.coreTesting
     androidTestImplementation Deps.espresso
     androidTestImplementation Deps.espressoContrib
     androidTestImplementation Deps.espressoIntents
     androidTestImplementation Deps.sqlDelight
+    androidTestImplementation Deps.testRules
+    androidTestImplementation Deps.testRunner
+    androidTestImplementation Deps.workTesting
 }

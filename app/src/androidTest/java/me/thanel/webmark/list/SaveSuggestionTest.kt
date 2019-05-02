@@ -35,6 +35,7 @@ class SaveSuggestionTest : SampleDataTest(autoStartActivity = false) {
         startActivity()
 
         onView(withText(R.string.action_save)).perform(click())
+        drain()
 
         onView(withText(LINK_NOT_SAVED)).check(matches(isDisplayed()))
 

@@ -27,6 +27,7 @@ class WebmarkPopupTest : SampleDataTest() {
 
     @Test
     fun displays_popup_menu_when_long_pressed_on_webmark() {
+        drain()
         onView(withText(TITLE_WEBMARK)).perform(longClick())
 
         onViewInPopup(withText(TITLE_WEBMARK)).check(matches(isDisplayed()))
@@ -38,6 +39,7 @@ class WebmarkPopupTest : SampleDataTest() {
     @Test
     fun displays_popup_menu_when_long_pressed_on_archived_webmark() {
         onView(withId(R.id.archiveToggleButton)).perform(click())
+        drain()
         onView(withText(TITLE_ARCHIVED_WEBMARK)).perform(longClick())
 
         onViewInPopup(withText(TITLE_ARCHIVED_WEBMARK)).check(matches(isDisplayed()))
@@ -48,8 +50,10 @@ class WebmarkPopupTest : SampleDataTest() {
 
     @Test
     fun can_archive_webmark_from_popup() {
+        drain()
         onView(withText(TITLE_WEBMARK)).perform(longClick())
         onViewInPopup(withText(R.string.action_archive)).perform(click())
+        drain()
 
         onView(withText(TITLE_WEBMARK)).check(doesNotExist())
 
@@ -59,8 +63,10 @@ class WebmarkPopupTest : SampleDataTest() {
 
     @Test
     fun can_delete_webmark_from_popup() {
+        drain()
         onView(withText(TITLE_WEBMARK)).perform(longClick())
         onViewInPopup(withText(R.string.action_delete)).perform(click())
+        drain()
 
         onView(withText(TITLE_WEBMARK)).check(doesNotExist())
 
@@ -73,6 +79,7 @@ class WebmarkPopupTest : SampleDataTest() {
     fun can_share_webmark_link_from_popup() {
         stubExternalIntents()
 
+        drain()
         onView(withText(TITLE_WEBMARK)).perform(longClick())
         onViewInPopup(withText(R.string.action_share_link)).perform(click())
 
@@ -82,8 +89,10 @@ class WebmarkPopupTest : SampleDataTest() {
     @Test
     fun can_unarchive_archived_webmark_from_popup() {
         onView(withId(R.id.archiveToggleButton)).perform(click())
+        drain()
         onView(withText(TITLE_ARCHIVED_WEBMARK)).perform(longClick())
         onViewInPopup(withText(R.string.action_unarchive)).perform(click())
+        drain()
 
         onView(withText(TITLE_ARCHIVED_WEBMARK)).check(doesNotExist())
 
@@ -94,8 +103,10 @@ class WebmarkPopupTest : SampleDataTest() {
     @Test
     fun can_delete_archived_webmark_from_popup() {
         onView(withId(R.id.archiveToggleButton)).perform(click())
+        drain()
         onView(withText(TITLE_ARCHIVED_WEBMARK)).perform(longClick())
         onViewInPopup(withText(R.string.action_delete)).perform(click())
+        drain()
 
         onView(withText(TITLE_ARCHIVED_WEBMARK)).check(doesNotExist())
 
@@ -109,6 +120,7 @@ class WebmarkPopupTest : SampleDataTest() {
         stubExternalIntents()
 
         onView(withId(R.id.archiveToggleButton)).perform(click())
+        drain()
         onView(withText(TITLE_ARCHIVED_WEBMARK)).perform(longClick())
         onViewInPopup(withText(R.string.action_share_link)).perform(click())
 
@@ -117,24 +129,30 @@ class WebmarkPopupTest : SampleDataTest() {
 
     @Test
     fun can_undo_archive_action_performed_from_popup() {
+        drain()
         onView(withText(TITLE_WEBMARK)).perform(longClick())
         onViewInPopup(withText(R.string.action_archive)).perform(click())
+        drain()
 
         onView(withText(TITLE_WEBMARK)).check(doesNotExist())
 
         onView(withText(R.string.action_undo)).perform(click())
+        drain()
 
         onView(withText(TITLE_WEBMARK)).check(matches(isDisplayed()))
     }
 
     @Test
     fun can_undo_delete_action_performed_from_popup() {
+        drain()
         onView(withText(TITLE_WEBMARK)).perform(longClick())
         onViewInPopup(withText(R.string.action_delete)).perform(click())
+        drain()
 
         onView(withText(TITLE_WEBMARK)).check(doesNotExist())
 
         onView(withText(R.string.action_undo)).perform(click())
+        drain()
 
         onView(withText(TITLE_WEBMARK)).check(matches(isDisplayed()))
     }

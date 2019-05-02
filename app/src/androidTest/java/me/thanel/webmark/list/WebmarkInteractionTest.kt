@@ -38,13 +38,16 @@ class WebmarkInteractionTest : SampleDataTest() {
 
     @Test
     fun swiping_webmark_right_archives_it() {
+        drain()
         onView(withText(TITLE_WEBMARK)).perform(swipeRight())
+        drain()
 
         onView(withText(TITLE_WEBMARK)).check(doesNotExist())
         val guardiansWebmark = queries.selectArchived(TITLE_WEBMARK).executeAsOne()
         assertNotNull("Webmark should be found as archived", guardiansWebmark)
 
         onView(withId(R.id.archiveToggleButton)).perform(click())
+        drain()
 
         onView(withText(TITLE_WEBMARK)).check(matches(isDisplayed()))
     }
@@ -52,7 +55,9 @@ class WebmarkInteractionTest : SampleDataTest() {
     @Test
     fun swiping_archived_webmark_left_unarchives_it() {
         onView(withId(R.id.archiveToggleButton)).perform(click())
+        drain()
         onView(withText(TITLE_ARCHIVED_WEBMARK)).perform(swipeLeft())
+        drain()
 
         onView(withText(TITLE_ARCHIVED_WEBMARK)).check(doesNotExist())
 
@@ -60,6 +65,7 @@ class WebmarkInteractionTest : SampleDataTest() {
         assertNotNull("Webmark should be found as unarchived", guardiansWebmark)
 
         onView(withId(R.id.archiveToggleButton)).perform(click())
+        drain()
 
         onView(withText(TITLE_ARCHIVED_WEBMARK)).check(matches(isDisplayed()))
     }
@@ -67,11 +73,14 @@ class WebmarkInteractionTest : SampleDataTest() {
     @Test
     fun swiping_archived_webmark_right_deletes_it() {
         onView(withId(R.id.archiveToggleButton)).perform(click())
+        drain()
         onView(withText(TITLE_ARCHIVED_WEBMARK)).perform(swipeRight())
+        drain()
 
         onView(withText(TITLE_ARCHIVED_WEBMARK)).check(doesNotExist())
 
         onView(withId(R.id.archiveToggleButton)).perform(click())
+        drain()
 
         onView(withText(TITLE_ARCHIVED_WEBMARK)).check(doesNotExist())
 
@@ -82,12 +91,15 @@ class WebmarkInteractionTest : SampleDataTest() {
 
     @Test
     fun archive_action_displays_snackbar_with_undo_option() {
+        drain()
         onView(withText(TITLE_WEBMARK)).perform(swipeRight())
+        drain()
 
         onView(withText(TITLE_WEBMARK)).check(doesNotExist())
         onView(withText(R.string.info_archived)).check(matches(isDisplayed()))
 
         onView(withText(R.string.action_undo)).perform(click())
+        drain()
 
         onView(withText(TITLE_WEBMARK)).check(matches(isDisplayed()))
     }
@@ -95,12 +107,15 @@ class WebmarkInteractionTest : SampleDataTest() {
     @Test
     fun unarchive_action_displays_snackbar_with_undo_option() {
         onView(withId(R.id.archiveToggleButton)).perform(click())
+        drain()
         onView(withText(TITLE_ARCHIVED_WEBMARK)).perform(swipeLeft())
+        drain()
 
         onView(withText(TITLE_ARCHIVED_WEBMARK)).check(doesNotExist())
         onView(withText(R.string.info_unarchived)).check(matches(isDisplayed()))
 
         onView(withText(R.string.action_undo)).perform(click())
+        drain()
 
         onView(withText(TITLE_ARCHIVED_WEBMARK)).check(matches(isDisplayed()))
     }
@@ -108,12 +123,15 @@ class WebmarkInteractionTest : SampleDataTest() {
     @Test
     fun delete_action_displays_snackbar_with_undo_option() {
         onView(withId(R.id.archiveToggleButton)).perform(click())
+        drain()
         onView(withText(TITLE_ARCHIVED_WEBMARK)).perform(swipeRight())
+        drain()
 
         onView(withText(TITLE_ARCHIVED_WEBMARK)).check(doesNotExist())
         onView(withText(R.string.info_deleted)).check(matches(isDisplayed()))
 
         onView(withText(R.string.action_undo)).perform(click())
+        drain()
 
         onView(withText(TITLE_ARCHIVED_WEBMARK)).check(matches(isDisplayed()))
     }
