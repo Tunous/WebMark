@@ -20,7 +20,7 @@ const val LINK_ARCHIVED_WEBMARK = "https://mcuexchange.com/avengers-endgame-pres
 
 const val LINK_NOT_SAVED = "https://mcucosmic.com/2019/03/13/mcu-phase-4-movies/"
 
-fun WebmarkQueries.insertSampleData() {
+fun WebmarkQueries.insertSampleData() = transaction {
     insert(
         url = LINK_WEBMARK,
         title = TITLE_WEBMARK,
