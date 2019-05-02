@@ -3,8 +3,18 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.squareup.sqldelight'
 
 android {
+    buildToolsVersion Config.buildTools
+    compileSdkVersion Config.compileSdk
+
     defaultConfig {
+        minSdkVersion Config.minSdk
+        targetSdkVersion Config.targetSdk
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    compileOptions {
+        sourceCompatibility Config.javaVersion
+        targetCompatibility Config.javaVersion
     }
 }
 

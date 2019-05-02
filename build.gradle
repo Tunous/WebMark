@@ -33,23 +33,4 @@ subprojects {
             ktlint(Versions.ktlint)
         }
     }
-
-    afterEvaluate { project ->
-        if (project.plugins.findPlugin('android') ?: project.plugins.findPlugin('android-library')) {
-            android {
-                buildToolsVersion Config.buildTools
-                compileSdkVersion Config.compileSdk
-
-                defaultConfig {
-                    minSdkVersion Config.minSdk
-                    targetSdkVersion Config.targetSdk
-                }
-
-                compileOptions {
-                    sourceCompatibility Config.javaVersion
-                    targetCompatibility Config.javaVersion
-                }
-            }
-        }
-    }
 }

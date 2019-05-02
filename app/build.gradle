@@ -13,12 +13,23 @@ if (useLocalSigning) {
 }
 
 android {
+    buildToolsVersion Config.buildTools
+    compileSdkVersion Config.compileSdk
+
     defaultConfig {
+        minSdkVersion Config.minSdk
+        targetSdkVersion Config.targetSdk
         applicationId "me.thanel.webmark"
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "me.thanel.webmark.test.WebMarkRunner"
     }
+
+    compileOptions {
+        sourceCompatibility Config.javaVersion
+        targetCompatibility Config.javaVersion
+    }
+
     signingConfigs {
         release {
             if (useLocalSigning) {
@@ -29,6 +40,7 @@ android {
             }
         }
     }
+
     buildTypes {
         release {
             minifyEnabled true
@@ -37,9 +49,11 @@ android {
             signingConfig signingConfigs.release
         }
     }
+
     packagingOptions {
         exclude 'META-INF/library_release.kotlin_module'
     }
+
     testOptions {
         animationsDisabled = true
     }
@@ -54,30 +68,29 @@ dependencies {
 
     kapt Deps.glideCompiler
 
-    implementation Deps.coroutinesCore
+    implementation Deps.androidxLegacy
+    implementation Deps.appCompat
+    implementation Deps.constraintLayout
     implementation Deps.coroutinesAndroid
+    implementation Deps.coroutinesCore
+    implementation Deps.crux
     implementation Deps.glide
+    implementation Deps.jsoup
     implementation Deps.kodein
     implementation Deps.kodeinAndroid
     implementation Deps.kodeinConfigurable
     implementation Deps.kotlin
     implementation Deps.kotpref
+    implementation Deps.ktx
+    implementation Deps.lifecycle
+    implementation Deps.lifecycleViewModel
+    implementation Deps.material
     implementation Deps.materialPopupMenu
     implementation Deps.okhttp
+    implementation Deps.recyclerView
+    implementation Deps.recyclerViewUtils
     implementation Deps.timber
-
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.core:core-ktx:1.1.0-alpha05'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0-alpha03'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation 'com.github.chimbori:crux:2.0.2'
-    implementation 'org.jsoup:jsoup:1.11.3'
-    implementation 'com.github.Tunous:RecyclerViewUtils:c6e595ab0f'
-    implementation 'com.google.android.material:material:1.1.0-alpha05'
-    implementation 'androidx.work:work-runtime-ktx:2.0.0'
+    implementation Deps.work
 
     testImplementation Deps.junit
 
