@@ -5,10 +5,14 @@ import android.net.Uri
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.hasItems
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers
+import org.hamcrest.Matchers.containsInAnyOrder
+import org.hamcrest.Matchers.empty
+import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.util.Calendar
+import java.util.Date
 
-class WebmarkTest : DatabaseTest<WebmarkQueries>({ it.webmarkQueries }) {
+class WebmarkDatabaseTest : BaseQueriesTest<WebmarkQueries>({ it.webmarkQueries }) {
 
     @Test
     fun selectAll_shouldReturnEverything() {
@@ -25,7 +29,7 @@ class WebmarkTest : DatabaseTest<WebmarkQueries>({ it.webmarkQueries }) {
         db.setMarkedForDeletionById(true, 4L)
 
         val actualIds = db.selectAll().executeAsList().map { it.id }
-        assertThat(actualIds, Matchers.containsInAnyOrder(1L, 2L, 3L, 4L))
+        assertThat(actualIds, containsInAnyOrder(1L, 2L, 3L, 4L))
     }
 
     @Test
@@ -43,7 +47,7 @@ class WebmarkTest : DatabaseTest<WebmarkQueries>({ it.webmarkQueries }) {
         db.setMarkedForDeletionById(true, 4L)
 
         val actualIds = db.selectUnarchived(null).executeAsList().map { it.id }
-        assertThat(actualIds, Matchers.containsInAnyOrder(1L))
+        assertThat(actualIds, containsInAnyOrder(1L))
     }
 
     @Test
@@ -61,7 +65,7 @@ class WebmarkTest : DatabaseTest<WebmarkQueries>({ it.webmarkQueries }) {
         db.setMarkedForDeletionById(true, 4L)
 
         val actualIds = db.selectArchived(null).executeAsList().map { it.id }
-        assertThat(actualIds, Matchers.containsInAnyOrder(2L))
+        assertThat(actualIds, containsInAnyOrder(2L))
     }
 
     @Test
@@ -74,16 +78,17 @@ class WebmarkTest : DatabaseTest<WebmarkQueries>({ it.webmarkQueries }) {
         db.archiveById(4L)
 
         val unarchivedIdsByUrl = db.selectUnarchived("kotlin-").executeAsList().map { it.id }
-        assertThat(unarchivedIdsByUrl, Matchers.containsInAnyOrder(1L))
+        assertThat(unarchivedIdsByUrl, containsInAnyOrder(1L))
 
-        val unarchivedIdsByTitle = db.selectUnarchived("about Android").executeAsList().map { it.id }
-        assertThat(unarchivedIdsByTitle, Matchers.containsInAnyOrder(3L))
+        val unarchivedIdsByTitle =
+            db.selectUnarchived("about Android").executeAsList().map { it.id }
+        assertThat(unarchivedIdsByTitle, containsInAnyOrder(3L))
 
         val archivedIdsByUrl = db.selectArchived("kotlin-").executeAsList().map { it.id }
-        assertThat(archivedIdsByUrl, Matchers.containsInAnyOrder(2L))
+        assertThat(archivedIdsByUrl, containsInAnyOrder(2L))
 
         val archivedIdsByTitle = db.selectArchived("about Android").executeAsList().map { it.id }
-        assertThat(archivedIdsByTitle, Matchers.containsInAnyOrder(4L))
+        assertThat(archivedIdsByTitle, containsInAnyOrder(4L))
     }
 
     @Test
@@ -163,22 +168,66 @@ class WebmarkTest : DatabaseTest<WebmarkQueries>({ it.webmarkQueries }) {
     }
 
     @Test
-    fun deletion() {
+    fun marking_for_deletion_should_keep_webmark_in_database() {
         insert(1L, "aaa")
-        insert(2L, "bbb")
-        insert(3L, "ccc")
 
-        // Marking for deletion should keep the item in database
-        db.setMarkedForDeletionById(true, 2L)
-        assertThat(db.selectAll().executeAsList().size, equalTo(3))
+        db.setMarkedForDeletionById(true, 1L)
 
-        // Deletion should remove immediately
+        val webmark = db.selectAll().executeAsOne()
+        assertThat("Webmark should be kept in database", webmark.id, equalTo(1L))
+        assertTrue("Webmark should be marked for deletion", webmark.markedForDeletion)
+    }
+
+    @Test
+    fun deletion_should_remove_webmark_from_database() {
+        insert(1L, "aaa")
+
         db.deleteById(1L)
-        assertThat(db.selectAll().executeAsList().size, equalTo(2))
 
-        // Cleanup should delete marked items
+        assertThat(db.selectAll().executeAsList(), empty())
+    }
+
+    @Test
+    fun cleanup_deletes_webmarks_older_than_month() {
+        insert(1L, "archived today")
+        db.archiveById(1L)
+        insert(2L, "archived week ago")
+        db.setArchivedAt(todayPlusDays(-7), 2L)
+        insert(3L, "archived month ago")
+        db.setArchivedAt(todayPlusDays(-30), 3L)
+        insert(4L, "archived day and month ago")
+        db.setArchivedAt(todayPlusDays(-31), 4L)
+        insert(5L, "archived 2 months ago")
+        db.setArchivedAt(todayPlusDays(-60), 5L)
+
         db.cleanup()
-        assertThat(db.selectAll().executeAsOne().id, equalTo(3L))
+
+        val executeAsList = db.selectAll().executeAsList()
+        val leftIds = executeAsList.map { it.id }
+        assertThat(leftIds, containsInAnyOrder(1L, 2L, 3L))
+    }
+
+    @Test
+    fun cleanup_deletes_webmarks_marked_for_deletion() {
+        insert(1L, "regular")
+        insert(2L, "archived")
+        db.archiveById(2L)
+        insert(3L, "marked for deletion")
+        db.setMarkedForDeletionById(true, 3L)
+        insert(4L, "archived and marked for deletion")
+        db.archiveById(4L)
+        db.setMarkedForDeletionById(true, 4L)
+
+        db.cleanup()
+
+        val leftIds = db.selectAll().executeAsList().map { it.id }
+        assertThat(leftIds, containsInAnyOrder(1L, 2L))
+    }
+
+    private fun todayPlusDays(amount: Int): Date {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DATE, amount)
+        return calendar.time
     }
 
     private fun insert(id: Long? = null, url: String, title: String? = null) {

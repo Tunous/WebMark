@@ -6,7 +6,7 @@ import org.junit.Before
 import org.kodein.di.Kodein
 import org.kodein.di.generic.instance
 
-abstract class DatabaseTest<T : Transacter>(
+abstract class BaseQueriesTest<T : Transacter>(
     private val getQueries: (Database) -> T
 ) {
 

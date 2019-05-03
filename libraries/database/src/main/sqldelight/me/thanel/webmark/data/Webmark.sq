@@ -9,7 +9,7 @@ CREATE TABLE webmark (
   faviconUrl TEXT AS Uri,
   estimatedReadingTimeMinutes INTEGER AS Int DEFAULT 0 NOT NULL,
   archivedAt INTEGER AS Date,
-  savedAt INTEGER AS Date DEFAULT CURRENT_TIMESTAMP,
+  savedAt INTEGER AS Date DEFAULT (strftime('%s', 'now')),
   markedForDeletion INTEGER AS Boolean NOT NULL DEFAULT 0,
   imageUrl TEXT AS Uri
 );
@@ -63,7 +63,7 @@ WHERE id = ?;
 
 archiveById:
 UPDATE webmark
-SET archivedAt = CURRENT_TIMESTAMP
+SET archivedAt = strftime('%s', 'now')
 WHERE id = ?;
 
 unarchiveById:
@@ -87,7 +87,7 @@ markAsNewById:
 UPDATE webmark
 SET
   archivedAt = NULL,
-  savedAt = CURRENT_TIMESTAMP,
+  savedAt = strftime('%s', 'now'),
   markedForDeletion = 0
 WHERE id = ?;
 
@@ -106,8 +106,15 @@ WHERE
   markedForDeletion = 1
   OR (
     archivedAt IS NOT NULL
-    AND JULIANDAY('now') - JULIANDAY(archivedAt) >= 30
+    AND date(archivedAt, 'unixepoch') < date('now', '-30 days')
   );
+
+-- Used by tests:
 
 deleteEverything:
 DELETE FROM webmark;
+
+setArchivedAt:
+UPDATE webmark
+SET archivedAt = ?
+WHERE id = ?;
