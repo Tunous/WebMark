@@ -4,9 +4,11 @@ import android.app.Activity
 import android.app.Instrumentation.ActivityResult
 import android.content.ComponentName
 import android.content.Intent
+import androidx.core.net.toUri
 import androidx.test.espresso.intent.Intents.intending
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasAction
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasData
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasExtra
 import androidx.test.espresso.intent.matcher.IntentMatchers.hasType
 import androidx.test.espresso.intent.matcher.IntentMatchers.isInternal
@@ -34,4 +36,9 @@ fun directShareIntent(component: ComponentName): Matcher<Intent> = allOf(
     hasAction(Intent.ACTION_SEND),
     hasType("text/plain"),
     hasComponent(component)
+)
+
+fun browserIntent(url: String): Matcher<Intent> = allOf(
+    hasAction(Intent.ACTION_VIEW),
+    hasData(url.toUri())
 )

@@ -3,12 +3,10 @@
 
     <style name="Theme.WebMark.Light" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="transparentBackgroundColor">@color/transparentBackgroundLight</item>
-        <item name="materialPopupMenuStyle">@style/RoundedPopup</item>
     </style>
 
     <style name="Theme.WebMark.Dark" parent="Theme.MaterialComponents.NoActionBar">
         <item name="transparentBackgroundColor">@color/transparentBackgroundDark</item>
-        <item name="materialPopupMenuStyle">@style/RoundedPopup.Dark</item>
     </style>
 
     <style name="Base.Theme.WebMark.DayNight" parent="Theme.WebMark.Light" />
@@ -26,5 +24,32 @@
         <item name="colorActionDelete">@color/actionDelete</item>
         <item name="colorActionUnarchive">@color/actionUnarchive</item>
         <item name="colorActionUnavailable">@color/actionUnavailable</item>
+
+        <item name="materialPopupMenuStyle">@style/Theme.WebMark.PopupMenu.DayNight</item>
+    </style>
+
+    <!-- Popup Menu -->
+
+    <style name="Theme.WebMark.PopupMenu.Light" parent="Widget.MPM.Menu" />
+
+    <style name="Theme.WebMark.PopupMenu.Dark" parent="Widget.MPM.Menu.Dark" />
+
+    <style name="Base.Theme.WebMark.PopupMenu.DayNight" parent="Theme.WebMark.PopupMenu.Light" />
+
+    <style name="Theme.WebMark.PopupMenu.DayNight" parent="Base.Theme.WebMark.PopupMenu.DayNight">
+        <item name="android:theme">@style/Theme.WebMark.DayNight</item>
+        <item name="android:popupBackground">@drawable/background_popup_menu</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.2</item>
+        <item name="mpm_paddingBottom">0dp</item>
+        <item name="mpm_paddingLeft">0dp</item>
+        <item name="mpm_paddingRight">0dp</item>
+        <item name="mpm_paddingTop">0dp</item>
+        <item name="mpm_activeIconColor">?colorControlNormal</item>
+    </style>
+
+    <style name="Theme.WebMark.PopupMenu.DayNight.WithOffset">
+        <item name="android:dropDownVerticalOffset">16dp</item>
+        <item name="android:dropDownHorizontalOffset">16dp</item>
     </style>
 </resources>

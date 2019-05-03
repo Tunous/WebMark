@@ -32,6 +32,7 @@ class WebMarkPopupMenu(
         webmark: Webmark,
         actionHandler: WebmarkActionHandler
     ) = popupMenu {
+        style = R.style.Theme_WebMark_PopupMenu_DayNight_WithOffset
         section {
             coloredHeader(webmark.title ?: webmark.url.toString())
 
@@ -77,10 +78,10 @@ class WebMarkPopupMenu(
             context.share(uri)
         }
     }
-}
 
-fun MaterialPopupMenuBuilder.SectionHolder.item(
-    webmark: Webmark,
-    action: WebmarkAction,
-    actionHandler: WebmarkActionHandler
-) = item(action.labelResId, action.iconResId) { actionHandler.performAction(action, webmark) }
+    private fun MaterialPopupMenuBuilder.SectionHolder.item(
+        webmark: Webmark,
+        action: WebmarkAction,
+        actionHandler: WebmarkActionHandler
+    ) = item(action.labelResId, action.iconResId) { actionHandler.performAction(action, webmark) }
+}

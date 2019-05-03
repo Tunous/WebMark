@@ -46,19 +46,20 @@
         android:padding="16dp"
         android:src="@drawable/ic_archive"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/themeToggleButton"
+        app:layout_constraintEnd_toStartOf="@+id/moreOptionsButton"
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/checkable_color" />
 
-    <me.thanel.webmark.ui.view.CheckableImageView
-        android:id="@+id/themeToggleButton"
+    <ImageView
+        android:id="@+id/moreOptionsButton"
         android:layout_width="@dimen/toolbar_button_size"
         android:layout_height="@dimen/toolbar_button_size"
         android:background="?selectableItemBackgroundBorderless"
+        android:contentDescription="@string/action_more_options"
         android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_moon_checkable" />
+        app:srcCompat="@drawable/ic_more_horiz" />
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

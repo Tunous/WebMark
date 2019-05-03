@@ -5,6 +5,7 @@
     <string name="action_delete">Delete</string>
     <string name="action_extract_details">Extract details</string>
     <string name="action_hide_archive">Hide archive</string>
+    <string name="action_more_options">Show more options</string>
     <string name="action_save">Save</string>
     <string name="action_search">Search</string>
     <string name="action_share">Share…</string>
@@ -13,6 +14,7 @@
     <string name="action_undo">Undo</string>
     <string name="action_use_dark_theme">Use dark theme</string>
     <string name="action_use_light_theme">Use light theme</string>
+    <string name="action_view_github">View on GitHub</string>
 
     <string name="app_name">WebMark</string>
 
@@ -20,16 +22,19 @@
 
     <string name="hint_search">Search</string>
 
+    <string name="info_app_description">Your convenient storage for links and articles.</string>
     <string name="info_archived">Archived</string>
     <string name="info_deleted">Deleted</string>
     <string name="info_duplicate_url">Link is already in your list</string>
     <string name="info_invalid_url">Invalid URL</string>
+    <string name="info_made_by">Made by Łukasz Rutkowski</string>
     <string name="info_save_instructions">You can save link to any webpage from other apps by using standard share action.</string>
     <string name="info_saved">Saved page</string>
     <string name="info_unarchived">Unarchived</string>
 
     <string name="question_save_copied_url">Save copied URL?\n%1$s</string>
 
+    <string name="title_about">About</string>
     <string name="title_nothing_archived">Nothing archived</string>
     <string name="title_nothing_found">Nothing found</string>
     <string name="title_nothing_saved">Nothing saved</string>

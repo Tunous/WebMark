@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Constraint
-            android:id="@+id/themeToggleButton"
+            android:id="@+id/moreOptionsButton"
             android:layout_width="@dimen/toolbar_button_size"
             android:layout_height="@dimen/toolbar_button_size"
             app:layout_constraintBottom_toBottomOf="parent"

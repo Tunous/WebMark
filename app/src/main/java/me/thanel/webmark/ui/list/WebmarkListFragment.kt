@@ -33,6 +33,7 @@ import me.thanel.webmark.share.share
 import me.thanel.webmark.ui.base.BaseFragment
 import me.thanel.webmark.ui.imageloader.ImageLoader
 import me.thanel.webmark.ui.list.item.webmark.WebmarkViewBinder
+import me.thanel.webmark.ui.popup.OptionsPopupMenu
 import me.thanel.webmark.ui.popup.WebMarkPopupMenu
 import me.thanel.webmark.ui.touchhelper.CollapseItemAnimator
 import me.thanel.webmark.ui.touchhelper.ItemTouchCallback
@@ -85,12 +86,9 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
             updateArchiveButtonTooltip()
         }
 
-        updateThemeButtonTooltip()
-        themeToggleButton.isChecked = WebMarkPreferences.useDarkTheme
-        themeToggleButton.onCheckedChanged = { useDarkTheme ->
-            WebMarkPreferences.useDarkTheme = useDarkTheme
-            updateThemeButtonTooltip()
-            updateTheme(useDarkTheme)
+        TooltipCompat.setTooltipText(moreOptionsButton, getString(R.string.action_more_options))
+        moreOptionsButton.setOnClickListener { anchorView ->
+            OptionsPopupMenu.show(requireContext(), anchorView, ::toggleTheme)
         }
 
         updateSearchButtonTooltip()
@@ -120,6 +118,12 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
         }
     }
 
+    private fun toggleTheme() {
+        val useDarkTheme = !WebMarkPreferences.useDarkTheme
+        WebMarkPreferences.useDarkTheme = useDarkTheme
+        updateTheme(useDarkTheme)
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel.webmarks.observe(this, Observer {
@@ -146,13 +150,6 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
             if (viewModel.showArchive) getString(R.string.action_hide_archive)
             else getString(R.string.action_show_archive)
         TooltipCompat.setTooltipText(archiveToggleButton, archiveButtonTooltip)
-    }
-
-    private fun updateThemeButtonTooltip() {
-        val themeButtonTooltip =
-            if (WebMarkPreferences.useDarkTheme) getString(R.string.action_use_light_theme)
-            else getString(R.string.action_use_dark_theme)
-        TooltipCompat.setTooltipText(themeToggleButton, themeButtonTooltip)
     }
 
     private fun updateEmptyView(shouldShow: Boolean) {

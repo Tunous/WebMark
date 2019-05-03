@@ -2,4 +2,6 @@
 <resources>
 
     <style name="Base.Theme.WebMark.DayNight" parent="Theme.WebMark.Dark" />
+
+    <style name="Base.Theme.WebMark.PopupMenu.DayNight" parent="Theme.WebMark.PopupMenu.Dark" />
 </resources>
