@@ -1,4 +1,4 @@
-package me.thanel.webmark.test.base
+package me.thanel.webmark.test.base.ui
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -24,7 +24,7 @@ import org.kodein.di.DKodeinAware
 import org.kodein.di.direct
 import java.util.concurrent.TimeUnit
 
-abstract class BaseTest : DKodeinAware {
+abstract class BaseUserInterfaceTest : DKodeinAware {
 
     private lateinit var clipboardManager: ClipboardManager
     private var idlingResource: IdlingResource? = null

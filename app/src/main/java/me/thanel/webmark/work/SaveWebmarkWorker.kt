@@ -4,18 +4,21 @@ import android.content.Context
 import android.net.Uri
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.annotation.VisibleForTesting
 import androidx.core.net.toUri
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.Operation
 import androidx.work.WorkManager
+import androidx.work.WorkRequest
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 import me.thanel.webmark.R
 import me.thanel.webmark.data.Database
 import me.thanel.webmark.data.ext.transactionWithResult
 import org.kodein.di.generic.instance
+import timber.log.Timber
 
 class SaveWebmarkWorker(
     private val appContext: Context,
@@ -24,11 +27,12 @@ class SaveWebmarkWorker(
 
     private val database: Database by instance()
 
-    override suspend fun doWork(): Result = coroutineScope {
+    override suspend fun doWork(): Result {
         val url = inputData.getString(KEY_URI)?.toUri()
         if (url == null) {
             showToast(R.string.info_invalid_url)
-            return@coroutineScope Result.failure()
+            Timber.e("This shouldn't happen: Started save work without url as input")
+            return Result.failure()
         }
 
         if (checkIsAlreadySaved(url)) {
@@ -37,7 +41,7 @@ class SaveWebmarkWorker(
             saveWebmark(url)
         }
 
-        return@coroutineScope Result.success()
+        return Result.success()
     }
 
     private fun checkIsAlreadySaved(uri: Uri): Boolean {
@@ -53,11 +57,12 @@ class SaveWebmarkWorker(
         val queries = database.webmarkQueries
         val id = queries.transactionWithResult {
             queries.insert(null, uri)
-            return@transactionWithResult queries.lastInsertId().executeAsOneOrNull()
+            queries.lastInsertId().executeAsOneOrNull()
         }
 
         if (id == null) {
             showToast(R.string.error_saving)
+            Timber.d("This shouldn't happen: Something went wrong while trying to save new webmark.")
         } else {
             showToast(R.string.info_saved)
             ExtractWebmarkDetailsWorker.enqueue(id)
@@ -72,11 +77,16 @@ class SaveWebmarkWorker(
     companion object {
         private const val KEY_URI = "uri"
 
-        fun enqueue(uri: Uri) {
+        @VisibleForTesting
+        internal const val TAG_SAVE_WEBMARK = "save-webmark"
+
+        fun enqueue(context: Context, uri: Uri): Pair<WorkRequest, Operation> {
             val request = OneTimeWorkRequestBuilder<SaveWebmarkWorker>()
                 .setInputData(workDataOf(KEY_URI to uri.toString()))
+                .addTag(TAG_SAVE_WEBMARK)
                 .build()
-            WorkManager.getInstance().enqueue(request)
+            val operation = WorkManager.getInstance(context).enqueue(request)
+            return request to operation
         }
     }
 }

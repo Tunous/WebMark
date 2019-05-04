@@ -35,7 +35,7 @@ open class WebMarkApp : Application(), KodeinAware {
         setupLogging()
         Kotpref.init(this)
         setupTheme()
-        CleanupDatabaseWorker.enqueuePeriodic()
+        CleanupDatabaseWorker.enqueuePeriodic(this)
     }
 
     private fun setupLogging() {

@@ -13,7 +13,7 @@ class SaveWebmarkActivity : Activity() {
         super.onCreate(savedInstanceState)
         val url = getSharedUrlFromIntent()
         if (url != null) {
-            SaveWebmarkWorker.enqueue(url)
+            SaveWebmarkWorker.enqueue(this, url)
         } else {
             Toast.makeText(this, "Invalid URL", Toast.LENGTH_SHORT).show()
         }

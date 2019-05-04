@@ -1,4 +1,4 @@
-package me.thanel.webmark.list
+package me.thanel.webmark.ui.list
 
 import android.content.ComponentName
 import androidx.test.espresso.Espresso.onView
@@ -12,7 +12,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import me.thanel.webmark.R
 import me.thanel.webmark.preferences.WebMarkPreferences
-import me.thanel.webmark.test.base.SampleDataTest
+import me.thanel.webmark.test.base.ui.SampleDataUserInterfaceTest
 import me.thanel.webmark.test.data.LINK_ARCHIVED_WEBMARK
 import me.thanel.webmark.test.data.LINK_WEBMARK
 import me.thanel.webmark.test.data.TITLE_ARCHIVED_WEBMARK
@@ -27,7 +27,7 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-class WebmarkPopupTest : SampleDataTest() {
+class WebmarkPopupTest : SampleDataUserInterfaceTest() {
 
     @Test
     fun displays_popup_menu_when_long_pressed_on_webmark() {

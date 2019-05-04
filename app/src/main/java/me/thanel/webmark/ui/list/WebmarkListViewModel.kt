@@ -1,6 +1,7 @@
 package me.thanel.webmark.ui.list
 
 import android.app.Application
+import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -59,14 +60,14 @@ class WebmarkListViewModel(app: Application) : BaseViewModel(app) {
         database.webmarkQueries.unarchiveById(id)
     }
 
-    fun deleteWebmark(id: Long) = runInBackground {
+    fun deleteWebmark(context: Context, id: Long) = runInBackground {
         database.webmarkQueries.setMarkedForDeletionById(id = id, markedForDeletion = true)
-        CleanupDatabaseWorker.enqueueDelayed()
+        CleanupDatabaseWorker.enqueueDelayed(context)
     }
 
-    fun undoDeleteWebmark(id: Long) = runInBackground {
+    fun undoDeleteWebmark(context: Context, id: Long) = runInBackground {
         database.webmarkQueries.setMarkedForDeletionById(id = id, markedForDeletion = false)
-        CleanupDatabaseWorker.cancelNonPeriodic()
+        CleanupDatabaseWorker.cancelNonPeriodic(context)
     }
 
     suspend fun isSaved(uri: Uri): Boolean = withContext(Dispatchers.IO) {

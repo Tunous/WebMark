@@ -1,4 +1,4 @@
-package me.thanel.webmark.list
+package me.thanel.webmark.ui.list
 
 import androidx.core.net.toUri
 import androidx.test.espresso.Espresso.onView
@@ -8,13 +8,13 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import me.thanel.webmark.R
-import me.thanel.webmark.test.base.SampleDataTest
+import me.thanel.webmark.test.base.ui.SampleDataUserInterfaceTest
 import me.thanel.webmark.test.data.LINK_NOT_SAVED
 import org.hamcrest.CoreMatchers.startsWith
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 
-class SaveSuggestionTest : SampleDataTest(autoStartActivity = false) {
+class SaveSuggestionTest : SampleDataUserInterfaceTest(autoStartActivity = false) {
 
     private val questionText by lazy {
         appContext.getString(R.string.question_save_copied_url, LINK_NOT_SAVED)

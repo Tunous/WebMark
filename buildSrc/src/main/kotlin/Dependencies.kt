@@ -37,7 +37,7 @@ object Versions {
     const val recyclerViewUtils = "c6e595ab0f"
     const val sqlDelight = "1.1.3"
     const val timber = "4.7.1"
-    const val work = "2.0.0"
+    const val work = "2.1.0-alpha01"
 }
 
 object Deps {

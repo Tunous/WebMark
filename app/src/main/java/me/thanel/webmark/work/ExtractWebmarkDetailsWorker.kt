@@ -12,7 +12,6 @@ import com.chimbori.crux.articles.Article
 import com.chimbori.crux.articles.ArticleExtractor
 import com.chimbori.crux.images.ImageUrlExtractor
 import com.chimbori.crux.urls.CruxURL
-import kotlinx.coroutines.coroutineScope
 import me.thanel.webmark.data.Database
 import me.thanel.webmark.ext.nullIfBlank
 import okhttp3.OkHttpClient
@@ -30,14 +29,14 @@ class ExtractWebmarkDetailsWorker(
 
     private val database: Database by instance()
 
-    override suspend fun doWork(): Result = coroutineScope {
+    override suspend fun doWork(): Result {
         val id = inputData.getLong(KEY_ID, -1L)
         check(id != -1L) { "Tried to start webmark details extraction task without valid id" }
 
         val uri = database.webmarkQueries.selectUrlForId(id).executeAsOneOrNull()
         if (uri == null) {
             Timber.w("Didn't find webmark for requested id: $id")
-            return@coroutineScope Result.failure()
+            return Result.failure()
         }
 
         val url = uri.toString()
@@ -45,7 +44,7 @@ class ExtractWebmarkDetailsWorker(
             downloadPageContent(url)
         } catch (e: IOException) {
             Timber.e(e, "Error while downloading webmark page")
-            return@coroutineScope Result.retry()
+            return Result.retry()
         }
 
         val article = document?.let {
@@ -71,7 +70,7 @@ class ExtractWebmarkDetailsWorker(
             imageUrl = imageUrl?.toUri()
         )
 
-        return@coroutineScope Result.success()
+        return Result.success()
     }
 
     private fun extractDetails(url: String, document: Document): Article? {

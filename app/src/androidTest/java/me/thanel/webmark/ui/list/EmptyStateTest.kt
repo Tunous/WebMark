@@ -1,4 +1,4 @@
-package me.thanel.webmark.list
+package me.thanel.webmark.ui.list
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -11,13 +11,13 @@ import androidx.test.espresso.matcher.ViewMatchers.isNotChecked
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import me.thanel.webmark.R
-import me.thanel.webmark.test.base.BaseTest
+import me.thanel.webmark.test.base.ui.BaseUserInterfaceTest
 import me.thanel.webmark.test.matcher.onTooltipView
 import org.hamcrest.core.AllOf.allOf
 import org.junit.Before
 import org.junit.Test
 
-class EmptyStateTest : BaseTest() {
+class EmptyStateTest : BaseUserInterfaceTest() {
 
     @Before
     override fun setup() {

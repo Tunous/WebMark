@@ -1,4 +1,4 @@
-package me.thanel.webmark.list
+package me.thanel.webmark.ui.list
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -11,7 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import me.thanel.webmark.BuildConfig
 import me.thanel.webmark.R
 import me.thanel.webmark.preferences.WebMarkPreferences
-import me.thanel.webmark.test.base.BaseTest
+import me.thanel.webmark.test.base.ui.BaseUserInterfaceTest
 import me.thanel.webmark.test.matcher.browserIntent
 import me.thanel.webmark.test.matcher.onTooltipView
 import me.thanel.webmark.test.matcher.onViewInPopup
@@ -21,7 +21,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
-class OptionsMenuTest : BaseTest() {
+class OptionsMenuTest : BaseUserInterfaceTest() {
 
     @Before
     fun setupActivity() {

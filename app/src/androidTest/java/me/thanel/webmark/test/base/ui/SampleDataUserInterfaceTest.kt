@@ -1,4 +1,4 @@
-package me.thanel.webmark.test.base
+package me.thanel.webmark.test.base.ui
 
 import me.thanel.webmark.data.Database
 import me.thanel.webmark.data.WebmarkQueries
@@ -6,7 +6,10 @@ import me.thanel.webmark.test.data.insertSampleData
 import org.junit.Before
 import org.kodein.di.generic.instance
 
-abstract class SampleDataTest(private val autoStartActivity: Boolean = true) : BaseTest() {
+abstract class SampleDataUserInterfaceTest(
+    private val autoStartActivity: Boolean = true
+) : BaseUserInterfaceTest() {
+
     protected lateinit var queries: WebmarkQueries
 
     @Before

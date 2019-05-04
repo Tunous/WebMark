@@ -188,7 +188,7 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
             val message = getString(R.string.question_save_copied_url, text)
             Snackbar.make(coordinator, message, Snackbar.LENGTH_LONG)
                 .setAction(R.string.action_save) {
-                    SaveWebmarkWorker.enqueue(uri)
+                    SaveWebmarkWorker.enqueue(requireContext(), uri)
                 }
                 .show()
 
@@ -223,9 +223,9 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
     }
 
     private fun delete(id: Long) {
-        viewModel.deleteWebmark(id)
+        viewModel.deleteWebmark(requireContext(), id)
         Snackbar.make(coordinator, R.string.info_deleted, Snackbar.LENGTH_LONG)
-            .setAction(R.string.action_undo) { viewModel.undoDeleteWebmark(id) }
+            .setAction(R.string.action_undo) { viewModel.undoDeleteWebmark(requireContext(), id) }
             .show()
     }
 

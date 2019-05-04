@@ -1,4 +1,4 @@
-package me.thanel.webmark.list
+package me.thanel.webmark.ui.list
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
@@ -11,7 +11,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import me.thanel.webmark.R
-import me.thanel.webmark.test.base.SampleDataTest
+import me.thanel.webmark.test.base.ui.SampleDataUserInterfaceTest
 import me.thanel.webmark.test.data.LINK_WEBMARK
 import me.thanel.webmark.test.data.TITLE_ARCHIVED_WEBMARK
 import me.thanel.webmark.test.data.TITLE_WEBMARK
@@ -21,7 +21,7 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-class WebmarkInteractionTest : SampleDataTest() {
+class WebmarkInteractionTest : SampleDataUserInterfaceTest() {
 
     @Test
     fun clicking_on_webmark_redirects_to_browser() {
