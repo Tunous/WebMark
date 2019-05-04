@@ -15,6 +15,9 @@ import androidx.work.testing.WorkManagerTestInitHelper
 import me.thanel.webmark.ext.asApp
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.collection.IsCollectionWithSize.hasSize
+import org.hamcrest.collection.IsEmptyCollection.empty
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.fail
 import org.junit.Before
@@ -55,9 +58,14 @@ abstract class BaseWorkerTest {
         return appContext.asApp().kodein.direct.instance()
     }
 
-    protected fun assertWorkRemoved(request: WorkRequest) {
+    protected fun assertWorkNotExists(request: WorkRequest) {
         val workInfo = workManager.getWorkInfoById(request.id).get()
-        assertNull("No work info should exists", workInfo)
+        assertNull("Work should not exist", workInfo)
+    }
+
+    protected fun assertWorkExists(request: WorkRequest) {
+        val workInfo = workManager.getWorkInfoById(request.id).get()
+        assertNotNull("Work should exist", workInfo)
     }
 
     protected fun assertWorkState(request: WorkRequest, state: WorkInfo.State) {
@@ -79,5 +87,15 @@ abstract class BaseWorkerTest {
             fail("Work (${request.id}) did not reach expected state ($state) in time")
         }
         liveData.removeObserver(observer)
+    }
+
+    protected fun assertWorkWithTagStarted(tag: String) {
+        val workInfos = workManager.getWorkInfosByTag(tag).get()
+        assertThat("Work should be started", workInfos, hasSize(1))
+    }
+
+    protected fun assertWorkWithTagNotStarted(tag: String) {
+        val workInfos = workManager.getWorkInfosByTag(tag).get()
+        assertThat("Work shouldn't be started", workInfos, empty())
     }
 }

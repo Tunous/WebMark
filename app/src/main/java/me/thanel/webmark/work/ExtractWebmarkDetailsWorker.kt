@@ -1,6 +1,7 @@
 package me.thanel.webmark.work
 
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import androidx.core.net.toUri
 import androidx.work.Constraints
 import androidx.work.NetworkType
@@ -129,15 +130,19 @@ class ExtractWebmarkDetailsWorker(
     companion object {
         private const val KEY_ID = "id"
 
-        fun enqueue(id: Long) {
+        @VisibleForTesting
+        internal const val TAG = "extract-webmark-details"
+
+        fun enqueue(context: Context, id: Long) {
             val constraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
             val request = OneTimeWorkRequestBuilder<ExtractWebmarkDetailsWorker>()
                 .setInputData(workDataOf(KEY_ID to id))
                 .setConstraints(constraints)
+                .addTag(TAG)
                 .build()
-            WorkManager.getInstance().enqueue(request)
+            WorkManager.getInstance(context).enqueue(request)
         }
     }
 }

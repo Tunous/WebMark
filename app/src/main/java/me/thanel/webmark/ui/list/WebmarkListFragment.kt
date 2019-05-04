@@ -235,7 +235,7 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
             WebmarkAction.Delete -> delete(webmark.id)
             WebmarkAction.ShareLink -> requireContext().share(webmark.url)
             WebmarkAction.Unarchive -> unarchive(webmark.id)
-            WebmarkAction.ExtractDetails -> ExtractWebmarkDetailsWorker.enqueue(webmark.id)
+            WebmarkAction.ExtractDetails -> ExtractWebmarkDetailsWorker.enqueue(requireContext(), webmark.id)
         }
     }
 }

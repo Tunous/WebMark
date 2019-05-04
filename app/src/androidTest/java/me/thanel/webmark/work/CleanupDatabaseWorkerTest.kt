@@ -23,15 +23,12 @@ class CleanupDatabaseWorkerTest : BaseWorkerTest() {
         val (request, operation) = CleanupDatabaseWorker.enqueueDelayed(appContext)
         operation.result.get()
         assertWorkState(request, WorkInfo.State.ENQUEUED)
+        
         val (newRequest, newOperation) = CleanupDatabaseWorker.enqueueDelayed(appContext)
         newOperation.result.get()
 
-        assertWorkRemoved(request)
+        assertWorkNotExists(request)
         assertWorkState(newRequest, WorkInfo.State.ENQUEUED)
-
-        testDriver.setInitialDelayMet(newRequest.id)
-
-        awaitWorkState(newRequest, WorkInfo.State.SUCCEEDED)
     }
 
     @Test
@@ -50,30 +47,23 @@ class CleanupDatabaseWorkerTest : BaseWorkerTest() {
     fun new_periodic_work_will_keep_previous() {
         val (request, operation) = CleanupDatabaseWorker.enqueuePeriodic(appContext)
         operation.result.get()
-        assertWorkState(request, WorkInfo.State.ENQUEUED)
 
         val (newRequest, newOperation) = CleanupDatabaseWorker.enqueuePeriodic(appContext)
         newOperation.result.get()
 
         assertWorkState(request, WorkInfo.State.ENQUEUED)
-        assertWorkRemoved(newRequest)
+        assertWorkNotExists(newRequest)
     }
 
     @Test
     fun periodic_and_delayed_work_will_not_override_each_other() {
         val (periodicRequest, periodicOperation) = CleanupDatabaseWorker.enqueuePeriodic(appContext)
         periodicOperation.result.get()
-        assertWorkState(periodicRequest, WorkInfo.State.ENQUEUED)
         val (delayedRequest, delayedOperation) = CleanupDatabaseWorker.enqueueDelayed(appContext)
         delayedOperation.result.get()
+
+        assertWorkState(periodicRequest, WorkInfo.State.ENQUEUED)
         assertWorkState(delayedRequest, WorkInfo.State.ENQUEUED)
-
-        testDriver.setPeriodDelayMet(periodicRequest.id)
-        testDriver.setAllConstraintsMet(periodicRequest.id)
-        testDriver.setInitialDelayMet(delayedRequest.id)
-
-        awaitWorkState(periodicRequest, WorkInfo.State.ENQUEUED)
-        awaitWorkState(delayedRequest, WorkInfo.State.SUCCEEDED)
     }
 
     @Test

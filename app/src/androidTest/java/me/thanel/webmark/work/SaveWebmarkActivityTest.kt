@@ -3,9 +3,6 @@ package me.thanel.webmark.work
 import android.content.Intent
 import androidx.test.espresso.intent.rule.IntentsTestRule
 import me.thanel.webmark.test.base.work.BaseWorkerTest
-import org.hamcrest.Matchers.empty
-import org.hamcrest.Matchers.hasSize
-import org.junit.Assert.assertThat
 import org.junit.Rule
 import org.junit.Test
 
@@ -21,7 +18,7 @@ class SaveWebmarkActivityTest : BaseWorkerTest() {
         }
         activityRule.launchActivity(intent)
 
-        assertSaveWork(started = false)
+        assertWorkWithTagNotStarted(SaveWebmarkWorker.TAG)
     }
 
     @Test
@@ -29,14 +26,14 @@ class SaveWebmarkActivityTest : BaseWorkerTest() {
         val intent = Intent(Intent.ACTION_SEND)
         activityRule.launchActivity(intent)
 
-        assertSaveWork(started = false)
+        assertWorkWithTagNotStarted(SaveWebmarkWorker.TAG)
     }
 
     @Test
     fun launching_activity_without_intent_will_not_start_save_work() {
         activityRule.launchActivity(null)
 
-        assertSaveWork(started = false)
+        assertWorkWithTagNotStarted(SaveWebmarkWorker.TAG)
     }
 
     @Test
@@ -46,15 +43,6 @@ class SaveWebmarkActivityTest : BaseWorkerTest() {
         }
         activityRule.launchActivity(intent)
 
-        assertSaveWork(started = true)
-    }
-
-    private fun assertSaveWork(started: Boolean) {
-        val workInfos = workManager.getWorkInfosByTag(SaveWebmarkWorker.TAG_SAVE_WEBMARK).get()
-        if (started) {
-            assertThat("Work should be started", workInfos, hasSize(1))
-        } else {
-            assertThat("Work shouldn't be started", workInfos, empty())
-        }
+        assertWorkWithTagStarted(SaveWebmarkWorker.TAG)
     }
 }

@@ -65,7 +65,7 @@ class SaveWebmarkWorker(
             Timber.d("This shouldn't happen: Something went wrong while trying to save new webmark.")
         } else {
             showToast(R.string.info_saved)
-            ExtractWebmarkDetailsWorker.enqueue(id)
+            ExtractWebmarkDetailsWorker.enqueue(appContext, id)
         }
     }
 
@@ -78,12 +78,12 @@ class SaveWebmarkWorker(
         private const val KEY_URI = "uri"
 
         @VisibleForTesting
-        internal const val TAG_SAVE_WEBMARK = "save-webmark"
+        internal const val TAG = "save-webmark"
 
         fun enqueue(context: Context, uri: Uri): Pair<WorkRequest, Operation> {
             val request = OneTimeWorkRequestBuilder<SaveWebmarkWorker>()
                 .setInputData(workDataOf(KEY_URI to uri.toString()))
-                .addTag(TAG_SAVE_WEBMARK)
+                .addTag(TAG)
                 .build()
             val operation = WorkManager.getInstance(context).enqueue(request)
             return request to operation
