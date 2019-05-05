@@ -19,9 +19,9 @@ class TodayDateMatcher : TypeSafeMatcher<Date>() {
         val thenMonthDay = calendar.get(Calendar.DAY_OF_MONTH)
 
         calendar.time = Date()
-        return (thenYear == calendar.get(Calendar.YEAR)
-            && thenMonth == calendar.get(Calendar.MONTH)
-            && thenMonthDay == calendar.get(Calendar.DAY_OF_MONTH))
+        return (thenYear == calendar.get(Calendar.YEAR) &&
+            thenMonth == calendar.get(Calendar.MONTH) &&
+            thenMonthDay == calendar.get(Calendar.DAY_OF_MONTH))
     }
 }
 
