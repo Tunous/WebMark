@@ -167,6 +167,18 @@ jobs:
           name: Checking code style
           command: ./gradlew spotlessCheck
 
+  check_dependency_updates:
+    <<: *android_config
+    steps:
+      - checkout
+      - *restore_cache
+      - run:
+          name: Checking dependency updates
+          command: ./gradlew dependencyUpdates
+      - store_artifacts:
+          path: build/dependencyUpdates
+          destination: /dependencyUpdates/
+
   deploy_debug_to_github:
     <<: *github_config
     steps:
@@ -210,6 +222,11 @@ workflows:
       - check_code_style:
           requires:
             - build_debug
+      - check_dependency_updates:
+          filter:
+            branches:
+              only:
+                - master
 
       # Deployments
       - deploy_debug_to_github:
