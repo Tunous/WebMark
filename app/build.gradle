@@ -98,7 +98,7 @@ dependencies {
 
     testImplementation Deps.junit
 
-    androidTestImplementation Deps.coreTesting
+    androidTestImplementation Deps.androidxArchCoreTesting
     androidTestImplementation Deps.espresso
     androidTestImplementation Deps.espressoContrib
     androidTestImplementation Deps.espressoIntents

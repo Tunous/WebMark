@@ -24,6 +24,7 @@ android {
 }
 
 dependencies {
+    implementation Deps.androidxLifecycleLiveData
     implementation Deps.coroutinesCore
     implementation Deps.coroutinesAndroid
     implementation Deps.kodein
