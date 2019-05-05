@@ -20,8 +20,11 @@ plugins {
 allprojects {
     repositories {
         google()
-        jcenter()
         maven { url "https://jitpack.io" }
+        jcenter()
+
+        // TODO: Temporary until https://github.com/Kodein-Framework/Kodein-DI/issues/192 is fixed
+        maven { url = uri("https://dl.bintray.com/kodein-framework/Kodein-DI") }
     }
 }
 

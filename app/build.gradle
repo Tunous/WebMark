@@ -79,7 +79,6 @@ dependencies {
     implementation Deps.jsoup
     implementation Deps.kodein
     implementation Deps.kodeinAndroid
-    implementation Deps.kodeinConfigurable
     implementation Deps.kotlin
     implementation Deps.kotpref
     implementation Deps.ktx

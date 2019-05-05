@@ -23,7 +23,7 @@ class CleanupDatabaseWorkerTest : BaseWorkerTest() {
         val (request, operation) = CleanupDatabaseWorker.enqueueDelayed(appContext)
         operation.result.get()
         assertWorkState(request, WorkInfo.State.ENQUEUED)
-        
+
         val (newRequest, newOperation) = CleanupDatabaseWorker.enqueueDelayed(appContext)
         newOperation.result.get()
 
