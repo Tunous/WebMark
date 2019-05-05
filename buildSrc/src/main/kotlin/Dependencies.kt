@@ -35,9 +35,11 @@ object Versions {
     const val okhttp = "3.14.1"
     const val recyclerView = "1.0.0"
     const val recyclerViewUtils = "c6e595ab0f"
+    const val robolectric = "4.2.1"
     const val sqlDelight = "1.1.3"
     const val timber = "4.7.1"
     const val work = "2.1.0-alpha01"
+    const val androidxTestCore = "1.0.0"
 }
 
 object Deps {
@@ -77,6 +79,8 @@ object Deps {
     const val espressoIdlingResource = "androidx.test.espresso:espresso-idling-resource:${Versions.espresso}"
     const val espressoIntents = "androidx.test.espresso:espresso-intents:${Versions.espresso}"
     const val junit = "junit:junit:${Versions.junit}"
+    const val robolectric = "org.robolectric:robolectric:${Versions.robolectric}"
     const val testRules = "androidx.test:rules:${Versions.androidxTesting}"
-    const val testRunner = "androidx.test:runner:${Versions.androidxTesting}"
+    const val androidxTestRunner = "androidx.test:runner:${Versions.androidxTesting}"
+    const val androidxTestCore = "androidx.test:core:${Versions.androidxTestCore}"
 }

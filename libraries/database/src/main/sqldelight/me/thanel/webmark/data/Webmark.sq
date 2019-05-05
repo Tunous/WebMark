@@ -9,10 +9,12 @@ CREATE TABLE webmark (
   faviconUrl TEXT AS Uri,
   estimatedReadingTimeMinutes INTEGER AS Int DEFAULT 0 NOT NULL,
   archivedAt INTEGER AS Date,
-  savedAt INTEGER AS Date DEFAULT (strftime('%s', 'now')),
+  savedAt INTEGER AS Date NOT NULL DEFAULT (strftime('%s', 'now')),
   markedForDeletion INTEGER AS Boolean NOT NULL DEFAULT 0,
   imageUrl TEXT AS Uri
 );
+
+-- Select
 
 selectAll:
 SELECT *
@@ -45,12 +47,28 @@ WHERE
   )
 ORDER BY archivedAt DESC;
 
+selectIdForUrl:
+SELECT id
+FROM webmark
+WHERE url = ?
+LIMIT 1;
+
+selectUrlForId:
+SELECT url
+FROM webmark
+WHERE id = ?
+LIMIT 1;
+
+lastInsertId:
+SELECT last_insert_rowid();
+
+-- Insert
+
 insert:
 INSERT INTO webmark(id, url)
 VALUES (?, ?);
 
-lastInsertId:
-SELECT last_insert_rowid();
+-- Update
 
 updateById:
 UPDATE webmark
@@ -71,18 +89,6 @@ UPDATE webmark
 SET archivedAt = NULL
 WHERE id = ?;
 
-selectIdForUrl:
-SELECT id
-FROM webmark
-WHERE url = ?
-LIMIT 1;
-
-selectUrlForId:
-SELECT url
-FROM webmark
-WHERE id = ?
-LIMIT 1;
-
 markAsNewById:
 UPDATE webmark
 SET
@@ -91,13 +97,15 @@ SET
   markedForDeletion = 0
 WHERE id = ?;
 
-deleteById:
-DELETE FROM webmark
-WHERE id = ?;
-
 setMarkedForDeletionById:
 UPDATE webmark
 SET markedForDeletion = ?
+WHERE id = ?;
+
+-- Delete
+
+deleteById:
+DELETE FROM webmark
 WHERE id = ?;
 
 cleanup:
@@ -109,7 +117,7 @@ WHERE
     AND date(archivedAt, 'unixepoch') < date('now', '-30 days')
   );
 
--- Used by tests:
+-- Test only
 
 deleteEverything:
 DELETE FROM webmark;
@@ -117,4 +125,9 @@ DELETE FROM webmark;
 setArchivedAt:
 UPDATE webmark
 SET archivedAt = ?
+WHERE id = ?;
+
+setSavedAt:
+UPDATE webmark
+SET savedAt = ?
 WHERE id = ?;

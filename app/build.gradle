@@ -100,6 +100,6 @@ dependencies {
     androidTestImplementation Deps.espressoIntents
     androidTestImplementation Deps.sqlDelight
     androidTestImplementation Deps.testRules
-    androidTestImplementation Deps.testRunner
+    androidTestImplementation Deps.androidxTestRunner
     androidTestImplementation Deps.workTesting
 }

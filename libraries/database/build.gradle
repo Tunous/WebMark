@@ -9,12 +9,17 @@ android {
     defaultConfig {
         minSdkVersion Config.minSdk
         targetSdkVersion Config.targetSdk
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {
         sourceCompatibility Config.javaVersion
         targetCompatibility Config.javaVersion
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
     }
 }
 
@@ -25,9 +30,7 @@ dependencies {
     implementation Deps.kodeinAndroid
     implementation Deps.sqlDelight
 
+    testImplementation Deps.androidxTestCore
     testImplementation Deps.junit
-
-    androidTestImplementation Deps.testRunner
-    androidTestImplementation Deps.testRules
-    androidTestImplementation Deps.espresso
+    testImplementation Deps.robolectric
 }
