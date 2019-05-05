@@ -48,6 +48,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
+        debug {
+            versionNameSuffix '-debug'
+            applicationIdSuffix '.debug'
+        }
     }
 
     packagingOptions {
