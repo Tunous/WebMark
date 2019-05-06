@@ -12,8 +12,8 @@ object Config {
 
 object Versions {
     const val androidxAppCompat = "1.0.2"
-    const val androidxArchCoreTesting = "2.0.1"
     const val androidxLegacy = "1.0.0"
+    const val androidxLifecycle = "2.0.0"
     const val androidxTestCore = "1.1.0"
     const val androidxTesting = "1.1.1"
     const val constraintLayout = "2.0.0-alpha3"
@@ -29,7 +29,6 @@ object Versions {
     const val kotpref = "2.8.0"
     const val ktlint = "0.32.0"
     const val ktx = "1.1.0-alpha05"
-    const val lifecycle = "2.0.0"
     const val lifecycleViewModel = "2.1.0-alpha03"
     const val material = "1.1.0-alpha05"
     const val materialPopupMenu = "3.4.0"
@@ -45,7 +44,8 @@ object Versions {
 object Deps {
     const val androidxAppCompat = "androidx.appcompat:appcompat:${Versions.androidxAppCompat}"
     const val androidxLegacy = "androidx.legacy:legacy-support-v4:${Versions.androidxLegacy}"
-    const val androidxLifecycleLiveData = "androidx.lifecycle:lifecycle-livedata:${Versions.lifecycle}"
+    const val androidxLifecycle = "androidx.lifecycle:lifecycle-extensions:${Versions.androidxLifecycle}"
+    const val androidxLifecycleLiveData = "androidx.lifecycle:lifecycle-livedata:${Versions.androidxLifecycle}"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
     const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
     const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
@@ -58,7 +58,6 @@ object Deps {
     const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
     const val kotpref = "com.chibatching.kotpref:kotpref:${Versions.kotpref}"
     const val ktx = "androidx.core:core-ktx:${Versions.ktx}"
-    const val lifecycle = "androidx.lifecycle:lifecycle-extensions:${Versions.lifecycle}"
     const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycleViewModel}"
     const val material = "com.google.android.material:material:${Versions.material}"
     const val materialPopupMenu = "com.github.zawadz88.materialpopupmenu:material-popup-menu:${Versions.materialPopupMenu}"
@@ -74,7 +73,7 @@ object Deps {
     const val tools_kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
     const val tools_sqlDelight = "com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}"
 
-    const val androidxArchCoreTesting = "androidx.arch.core:core-testing:${Versions.androidxArchCoreTesting}"
+    const val androidxArchCoreTesting = "androidx.arch.core:core-testing:${Versions.androidxLifecycle}"
     const val androidxTestCore = "androidx.test:core:${Versions.androidxTestCore}"
     const val androidxTestRunner = "androidx.test:runner:${Versions.androidxTesting}"
     const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"

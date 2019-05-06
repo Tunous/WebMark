@@ -72,8 +72,9 @@ dependencies {
 
     kapt Deps.glideCompiler
 
-    implementation Deps.androidxLegacy
     implementation Deps.androidxAppCompat
+    implementation Deps.androidxLegacy
+    implementation Deps.androidxLifecycle
     implementation Deps.constraintLayout
     implementation Deps.coroutinesAndroid
     implementation Deps.coroutinesCore
@@ -86,7 +87,6 @@ dependencies {
     implementation Deps.kotlin
     implementation Deps.kotpref
     implementation Deps.ktx
-    implementation Deps.lifecycle
     implementation Deps.lifecycleViewModel
     implementation Deps.material
     implementation Deps.materialPopupMenu
