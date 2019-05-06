@@ -10,77 +10,96 @@ object Config {
     val javaVersion = JavaVersion.VERSION_1_8
 }
 
-object Versions {
-    const val androidxAppCompat = "1.0.2"
-    const val androidxLegacy = "1.0.0"
-    const val androidxLifecycle = "2.0.0"
-    const val androidxTestCore = "1.1.0"
-    const val androidxTesting = "1.1.1"
-    const val constraintLayout = "2.0.0-alpha3"
-    const val coroutines = "1.2.1"
-    const val crux = "2.1.0"
-    const val espresso = "3.1.1"
-    const val glide = "4.9.0"
-    const val gradleAndroid = "3.4.0"
-    const val jsoup = "1.11.3"
-    const val junit = "4.12"
-    const val kodein = "6.2.0"
-    const val kotlin = "1.3.31"
-    const val kotpref = "2.8.0"
-    const val ktlint = "0.32.0"
-    const val ktx = "1.1.0-alpha05"
-    const val lifecycleViewModel = "2.1.0-alpha03"
-    const val material = "1.1.0-alpha05"
-    const val materialPopupMenu = "3.4.0"
-    const val okhttp = "3.14.1"
-    const val recyclerView = "1.0.0"
-    const val recyclerViewUtils = "c6e595ab0f"
-    const val robolectric = "4.2.1"
-    const val sqlDelight = "1.1.3"
-    const val timber = "4.7.1"
-    const val work = "2.1.0-alpha01"
-}
-
 object Deps {
-    const val androidxAppCompat = "androidx.appcompat:appcompat:${Versions.androidxAppCompat}"
-    const val androidxLegacy = "androidx.legacy:legacy-support-v4:${Versions.androidxLegacy}"
-    const val androidxLifecycle = "androidx.lifecycle:lifecycle-extensions:${Versions.androidxLifecycle}"
-    const val androidxLifecycleLiveData = "androidx.lifecycle:lifecycle-livedata:${Versions.androidxLifecycle}"
-    const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
-    const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
-    const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}"
-    const val crux = "com.github.chimbori:crux:${Versions.crux}"
-    const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
-    const val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
-    const val jsoup = "org.jsoup:jsoup:${Versions.jsoup}"
-    const val kodein = "org.kodein.di:kodein-di-generic-jvm:${Versions.kodein}"
-    const val kodeinAndroid = "org.kodein.di:kodein-di-framework-android-x:${Versions.kodein}"
-    const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
-    const val kotpref = "com.chibatching.kotpref:kotpref:${Versions.kotpref}"
-    const val ktx = "androidx.core:core-ktx:${Versions.ktx}"
-    const val lifecycleViewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycleViewModel}"
-    const val material = "com.google.android.material:material:${Versions.material}"
-    const val materialPopupMenu = "com.github.zawadz88.materialpopupmenu:material-popup-menu:${Versions.materialPopupMenu}"
-    const val okhttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
-    const val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerView}"
-    const val recyclerViewUtils = "com.github.Tunous:RecyclerViewUtils:${Versions.recyclerViewUtils}"
-    const val sqlDelight = "com.squareup.sqldelight:android-driver:${Versions.sqlDelight}"
-    const val timber = "com.jakewharton.timber:timber:${Versions.timber}"
-    const val work = "androidx.work:work-runtime-ktx:${Versions.work}"
-    const val workTesting = "androidx.work:work-testing:${Versions.work}"
 
-    const val tools_gradleAndroid = "com.android.tools.build:gradle:${Versions.gradleAndroid}"
-    const val tools_kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
-    const val tools_sqlDelight = "com.squareup.sqldelight:gradle-plugin:${Versions.sqlDelight}"
+    const val androidGradlePlugin = "com.android.tools.build:gradle:3.4.0"
 
-    const val androidxArchCoreTesting = "androidx.arch.core:core-testing:${Versions.androidxLifecycle}"
-    const val androidxTestCore = "androidx.test:core:${Versions.androidxTestCore}"
-    const val androidxTestRunner = "androidx.test:runner:${Versions.androidxTesting}"
-    const val espresso = "androidx.test.espresso:espresso-core:${Versions.espresso}"
-    const val espressoContrib = "androidx.test.espresso:espresso-contrib:${Versions.espresso}"
-    const val espressoIdlingResource = "androidx.test.espresso:espresso-idling-resource:${Versions.espresso}"
-    const val espressoIntents = "androidx.test.espresso:espresso-intents:${Versions.espresso}"
-    const val junit = "junit:junit:${Versions.junit}"
-    const val robolectric = "org.robolectric:robolectric:${Versions.robolectric}"
-    const val testRules = "androidx.test:rules:${Versions.androidxTesting}"
+    private const val appCompatVersion = "1.0.2"
+    const val androidxAppCompat = "androidx.appcompat:appcompat:$appCompatVersion}"
+
+    private const val legacyVersion = "1.0.0"
+    const val androidxLegacy = "androidx.legacy:legacy-support-v4:$legacyVersion"
+
+    private const val lifecycleVersion = "2.0.0"
+    const val lifecycle = "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
+    const val liveData = "androidx.lifecycle:lifecycle-livedata:$lifecycleVersion"
+    const val lifecycleTesting = "androidx.arch.core:core-testing:$lifecycleVersion"
+
+    private const val viewModelVersion = "2.1.0-alpha03"
+    const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewModelVersion"
+
+    private const val constraintLayoutVersion = "2.0.0-alpha3"
+    const val constraintLayout =
+        "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+
+    private const val ktxVersion = "1.1.0-alpha05"
+    const val ktx = "androidx.core:core-ktx:$ktxVersion"
+
+    private const val recyclerViewVersion = "1.0.0"
+    const val recyclerView = "androidx.recyclerview:recyclerview:$recyclerViewVersion"
+
+    private const val workVersion = "2.1.0-alpha01"
+    const val work = "androidx.work:work-runtime-ktx:$workVersion"
+    const val workTesting = "androidx.work:work-testing:$workVersion"
+
+    private const val testCoreVersion = "1.1.0"
+    const val testCore = "androidx.test:core:$testCoreVersion"
+
+    private const val androidxTestVersion = "1.1.1"
+    const val testRunner = "androidx.test:runner:$androidxTestVersion"
+    const val testRules = "androidx.test:rules:$androidxTestVersion"
+
+    private const val espressoVersion = "3.1.1"
+    const val espresso = "androidx.test.espresso:espresso-core:$espressoVersion"
+    const val espressoContrib = "androidx.test.espresso:espresso-contrib:$espressoVersion"
+    const val espressoIdlingResource =
+        "androidx.test.espresso:espresso-idling-resource:$espressoVersion"
+    const val espressoIntents = "androidx.test.espresso:espresso-intents:$espressoVersion"
+
+    private const val junitVersion = "4.12"
+    const val junit = "junit:junit:$junitVersion"
+
+    private const val robolectricVersion = "4.2.1"
+    const val robolectric = "org.robolectric:robolectric:$robolectricVersion"
+
+    private const val glideVersion = "4.9.0"
+    const val glide = "com.github.bumptech.glide:glide:$glideVersion"
+    const val glideCompiler = "com.github.bumptech.glide:compiler:$glideVersion"
+
+    const val material = "com.google.android.material:material:1.1.0-alpha05"
+
+    const val materialPopupMenu =
+        "com.github.zawadz88.materialpopupmenu:material-popup-menu:3.4.0"
+
+    const val recyclerViewUtils =
+        "com.github.Tunous:RecyclerViewUtils:c6e595ab0f"
+
+    private const val coroutinesVersion = "1.2.1"
+    const val coroutinesAndroid =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+    const val coroutinesCore =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+
+    const val crux = "com.github.chimbori:crux:2.1.0"
+
+    const val jsoup = "org.jsoup:jsoup:1.11.3"
+
+    private const val kodeinVersion = "6.2.0"
+    const val kodein = "org.kodein.di:kodein-di-generic-jvm:$kodeinVersion"
+    const val kodeinAndroid = "org.kodein.di:kodein-di-framework-android-x:$kodeinVersion"
+
+    private const val kotlinVersion = "1.3.31"
+    const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
+    const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+
+    const val kotpref = "com.chibatching.kotpref:kotpref:2.8.0"
+
+    const val okhttp = "com.squareup.okhttp3:okhttp:3.14.1"
+
+    const val timber = "com.jakewharton.timber:timber:4.7.1"
+
+    private const val sqlDelightVersion = "1.1.3"
+    const val sqlDelight = "com.squareup.sqldelight:android-driver:$sqlDelightVersion"
+    const val sqlDelightGradlePlugin = "com.squareup.sqldelight:gradle-plugin:$sqlDelightVersion"
+
 }
