@@ -17,9 +17,6 @@ object Deps {
     private const val appCompatVersion = "1.0.2"
     const val androidxAppCompat = "androidx.appcompat:appcompat:$appCompatVersion}"
 
-    private const val legacyVersion = "1.0.0"
-    const val androidxLegacy = "androidx.legacy:legacy-support-v4:$legacyVersion"
-
     private const val lifecycleVersion = "2.0.0"
     const val lifecycle = "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
     const val liveData = "androidx.lifecycle:lifecycle-livedata:$lifecycleVersion"

@@ -78,7 +78,6 @@ dependencies {
     kapt(Deps.glideCompiler)
 
     implementation(Deps.androidxAppCompat)
-    implementation(Deps.androidxLegacy)
     implementation(Deps.constraintLayout)
     implementation(Deps.coroutinesAndroid)
     implementation(Deps.coroutinesCore)
