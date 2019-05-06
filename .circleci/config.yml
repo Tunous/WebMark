@@ -223,7 +223,7 @@ workflows:
           requires:
             - build_debug
       - check_dependency_updates:
-          filter:
+          filters:
             branches:
               only:
                 - master
