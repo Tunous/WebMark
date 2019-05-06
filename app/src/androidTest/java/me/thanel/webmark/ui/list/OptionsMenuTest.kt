@@ -53,8 +53,8 @@ class OptionsMenuTest : BaseUserInterfaceTest() {
         onView(withId(R.id.moreOptionsButton)).perform(click())
         onViewInPopup(withText(R.string.title_about)).perform(click())
 
-        onView(withText(R.string.app_name)).check(matches(isDisplayed()))
-        onView(withText("v${BuildConfig.VERSION_NAME}")).check(matches(isDisplayed()))
+        val nameVersionText = appContext.getString(R.string.app_name) + " v${BuildConfig.VERSION_NAME}"
+        onView(withText(nameVersionText)).check(matches(isDisplayed()))
         onView(withText(R.string.info_app_description)).check(matches(isDisplayed()))
         onView(withId(R.id.appIconView)).check(matches(isDisplayed()))
         onView(withText(R.string.info_made_by)).check(matches(isDisplayed()))

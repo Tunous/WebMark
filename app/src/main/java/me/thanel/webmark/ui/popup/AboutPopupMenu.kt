@@ -2,13 +2,21 @@ package me.thanel.webmark.ui.popup
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Typeface.BOLD
+import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
+import android.text.style.StyleSpan
 import android.view.Gravity
 import android.view.View
 import androidx.core.net.toUri
+import androidx.core.text.buildSpannedString
+import androidx.core.text.inSpans
+import com.github.zawadz88.materialpopupmenu.MaterialPopupMenuBuilder
 import com.github.zawadz88.materialpopupmenu.popupMenu
 import kotlinx.android.synthetic.main.view_about.view.*
 import me.thanel.webmark.BuildConfig
 import me.thanel.webmark.R
+import me.thanel.webmark.ext.getColorFromAttr
 import me.thanel.webmark.share.openInBrowser
 
 object AboutPopupMenu {
@@ -17,12 +25,7 @@ object AboutPopupMenu {
         popupMenu {
             dropdownGravity = Gravity.END
             section {
-                customItem {
-                    layoutResId = R.layout.view_about
-                    viewBoundCallback = {
-                        it.appVersionView.text = "v${BuildConfig.VERSION_NAME}"
-                    }
-                }
+                aboutView(context)
             }
             section {
                 item {
@@ -38,5 +41,25 @@ object AboutPopupMenu {
                 }
             }
         }.show(context, anchor)
+    }
+
+    private fun MaterialPopupMenuBuilder.SectionHolder.aboutView(context: Context) {
+        customItem {
+            layoutResId = R.layout.view_about
+            viewBoundCallback = {
+                it.appNameView.text = buildSpannedString {
+                    append(context.getText(R.string.app_name))
+                    append(' ')
+                    inSpans(
+                        ForegroundColorSpan(context.getColorFromAttr(android.R.attr.textColorSecondary)),
+                        StyleSpan(BOLD),
+                        RelativeSizeSpan(0.6f)
+                    ) {
+                        append('v')
+                        append(BuildConfig.VERSION_NAME)
+                    }
+                }
+            }
+        }
     }
 }
