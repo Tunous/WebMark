@@ -59,6 +59,13 @@ references:
     docker:
       - image: circleci/golang:1.8
 
+  ## Other
+
+  download_github_releases_tool: &download_github_releases_tool
+    run:
+      name: Downloading GitHub releases tool
+      command: go get github.com/tcnksm/ghr
+
 jobs:
 
   build_debug:
@@ -183,11 +190,9 @@ jobs:
     <<: *github_config
     steps:
       - *attach_workspace
+      - *download_github_releases_tool
       - run:
-          name: Downloading GitHub releases tool
-          command: go get github.com/tcnksm/ghr
-      - run:
-          name: Publishing Pre-Release on Github
+          name: Publishing Pre-Release on GitHub
           command: |
             APK="WebMark-debug.apk"
             cp app/build/outputs/apk/debug/app-debug.apk ${APK}
@@ -196,21 +201,45 @@ jobs:
                 -r ${CIRCLE_PROJECT_REPONAME} \
                 -c ${CIRCLE_SHA1} \
                 -n "Continuous build" \
-                -b "[CircleCI build log](https://circleci.com/workflow-run/$CIRCLE_WORKFLOW_ID)" \
+                -b "[CircleCI build log](https://circleci.com/workflow-run/${CIRCLE_WORKFLOW_ID})" \
                 -recreate \
                 -prerelease \
                 continuous ${APK}
+
+  deploy_release_to_github:
+    <<: *github_config
+    steps:
+      - *attach_workspace
+      - *download_github_releases_tool
+      - run:
+          name: Publishing Release on GitHub
+          command: |
+            APK="WebMark-${CIRCLE_TAG}.apk"
+            cp app/build/outputs/apk/release/app-release.apk "${APK}"
+            ghr -t ${GITHUB_TOKEN} \
+                -u ${CIRCLE_PROJECT_USERNAME} \
+                -r ${CIRCLE_PROJECT_REPONAME} \
+                -c ${CIRCLE_SHA1} \
+                -n "Version ${CIRCLE_TAG}" \
+                -b "_Changelog here_" \
+                -draft \
+                ${CIRCLE_TAG} "${APK}"
 
 workflows:
   version: 2
   build_test_deploy:
     jobs:
       # Builds
-      - build_debug
+      - build_debug:
+          filters:
+            tags:
+              only: /^\d+\.\d+\.\d+$/
       - build_release:
+          filters:
+            tags:
+              only: /^\d+\.\d+\.\d+$/
           requires:
             - build_debug
-            - check_code_style
 
       # Tests
       - test_unit
@@ -238,3 +267,13 @@ workflows:
             - build_debug
             - test_unit
             - test_instrumented
+      - deploy_release_to_github:
+          filters:
+            branches:
+              ignore:
+                - /.*/
+            tags:
+              only:
+                - /^\d+\.\d+\.\d+$/
+          requires:
+            - build_release
