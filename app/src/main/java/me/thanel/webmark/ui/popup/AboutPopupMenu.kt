@@ -46,6 +46,7 @@ object AboutPopupMenu {
     private fun MaterialPopupMenuBuilder.SectionHolder.aboutView(context: Context) {
         customItem {
             layoutResId = R.layout.view_about
+            dismissOnSelect = false
             viewBoundCallback = {
                 it.appNameView.text = buildSpannedString {
                     append(context.getText(R.string.app_name))

@@ -70,4 +70,14 @@ class OptionsMenuTest : BaseUserInterfaceTest() {
 
         intended(browserIntent("https://github.com/Tunous/WebMark"))
     }
+
+    @Test
+    fun clicking_on_description_in_popup_keeps_popup_open() {
+        onView(withId(R.id.moreOptionsButton)).perform(click())
+        onViewInPopup(withText(R.string.title_about)).perform(click())
+
+        onView(withText(R.string.info_app_description)).perform(click())
+
+        onView(withText(R.string.info_app_description)).check(matches(isDisplayed()))
+    }
 }

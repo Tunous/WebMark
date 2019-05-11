@@ -98,5 +98,4 @@ object Deps {
     private const val sqlDelightVersion = "1.1.3"
     const val sqlDelight = "com.squareup.sqldelight:android-driver:$sqlDelightVersion"
     const val sqlDelightGradlePlugin = "com.squareup.sqldelight:gradle-plugin:$sqlDelightVersion"
-
 }
