@@ -23,9 +23,6 @@ allprojects {
         google()
         maven("https://jitpack.io")
         jcenter()
-
-        // TODO: Temporary until https://github.com/Kodein-Framework/Kodein-DI/issues/192 is fixed
-        maven("https://dl.bintray.com/kodein-framework/Kodein-DI")
     }
 }
 
