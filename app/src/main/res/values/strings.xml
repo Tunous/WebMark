@@ -5,6 +5,7 @@
     <string name="action_delete">Delete</string>
     <string name="action_extract_details">Extract details</string>
     <string name="action_hide_archive">Hide archive</string>
+    <string name="action_licenses">Open Source Licenses</string>
     <string name="action_more_options">Show more options</string>
     <string name="action_save">Save</string>
     <string name="action_search">Search</string>

@@ -36,6 +36,13 @@ object AboutPopupMenu {
                     }
                 }
                 item {
+                    labelRes = R.string.action_licenses
+                    icon = R.drawable.ic_open_source
+                    callback = {
+                        LicensesPopupMenu.show(context, anchor)
+                    }
+                }
+                item {
                     labelRes = R.string.info_made_by
                     icon = R.drawable.ic_copyright
                 }
