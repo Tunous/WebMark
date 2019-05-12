@@ -16,6 +16,7 @@ import me.thanel.webmark.test.matcher.browserIntent
 import me.thanel.webmark.test.matcher.onTooltipView
 import me.thanel.webmark.test.matcher.onViewInPopup
 import me.thanel.webmark.test.matcher.stubExternalIntents
+import me.thanel.webmark.ui.popup.LicensesPopupMenu
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -79,5 +80,19 @@ class OptionsMenuTest : BaseUserInterfaceTest() {
         onView(withText(R.string.info_app_description)).perform(click())
 
         onView(withText(R.string.info_app_description)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun can_view_open_source_licenses_from_options_popup() {
+        stubExternalIntents()
+
+        for ((name, link) in LicensesPopupMenu.licenses) {
+            onView(withId(R.id.moreOptionsButton)).perform(click())
+            onViewInPopup(withText(R.string.title_about)).perform(click())
+            onViewInPopup(withText(R.string.action_licenses)).perform(click())
+            onViewInPopup(withText(name)).perform(click())
+
+            intended(browserIntent(link))
+        }
     }
 }

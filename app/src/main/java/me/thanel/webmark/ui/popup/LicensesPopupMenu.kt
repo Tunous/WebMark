@@ -3,12 +3,14 @@ package me.thanel.webmark.ui.popup
 import android.content.Context
 import android.view.Gravity
 import android.view.View
+import androidx.annotation.VisibleForTesting
 import androidx.core.net.toUri
 import com.github.zawadz88.materialpopupmenu.popupMenu
 import me.thanel.webmark.share.openInBrowser
 
 object LicensesPopupMenu {
-    private val licenses = mapOf(
+    @VisibleForTesting
+    internal val licenses = mapOf(
         "Crux" to "https://github.com/chimbori/crux/blob/master/LICENSE.txt",
         "Glide" to "https://github.com/bumptech/glide/blob/master/LICENSE",
         "jsoup" to "https://jsoup.org/license",
