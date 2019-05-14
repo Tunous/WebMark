@@ -8,6 +8,9 @@ if [ ! -z "$ENCRYPT_KEY" ]; then
 
     # Decrypt signing properties
     openssl aes-256-cbc -md sha256 -d -in signing/signing.properties.aes -out signing/signing.properties -k $ENCRYPT_KEY
+
+    # Decrypt Play Store service account
+    openssl aes-256-cbc -md sha256 -d -in signing/play-account.aes -out signing/play-account.json -k $ENCRYPT_KEY
 else
     echo "ENCRYPT_KEY is empty"
 fi

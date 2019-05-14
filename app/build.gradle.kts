@@ -7,6 +7,7 @@ plugins {
     id("kotlin-android")
     id("kotlin-android-extensions")
     id("kotlin-kapt")
+    id("com.github.triplet.play")
 }
 
 android {
@@ -70,6 +71,12 @@ android {
 
 androidExtensions {
     isExperimental = true
+}
+
+play {
+    track = "internal"
+    defaultToAppBundles = true
+    serviceAccountCredentials = rootProject.file("signing/play-account.json")
 }
 
 dependencies {
