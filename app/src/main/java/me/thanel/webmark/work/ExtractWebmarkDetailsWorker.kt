@@ -55,12 +55,14 @@ class ExtractWebmarkDetailsWorker(
         val title = article?.title?.nullIfBlank()
         val faviconUrl = article?.faviconUrl?.toUri()
         val estimatedReadingTimeMinutes = article?.estimatedReadingTimeMinutes ?: 0
+        val content = article?.document?.html()
         Timber.d(
-            "Extracted webmark details: title=%s, faviconUrl=%s, estimatedReadingTimeMinutes=%d, imageUrl=%s",
+            "Extracted webmark details: title=%s, faviconUrl=%s, estimatedReadingTimeMinutes=%d, imageUrl=%s, content=%s",
             title,
             faviconUrl,
             estimatedReadingTimeMinutes,
-            imageUrl
+            imageUrl,
+            content
         )
 
         database.webmarkQueries.updateById(
@@ -68,7 +70,8 @@ class ExtractWebmarkDetailsWorker(
             title = title,
             faviconUrl = faviconUrl,
             estimatedReadingTimeMinutes = estimatedReadingTimeMinutes,
-            imageUrl = imageUrl?.toUri()
+            imageUrl = imageUrl?.toUri(),
+            content = content
         )
 
         return Result.success()

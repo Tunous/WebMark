@@ -100,6 +100,8 @@ dependencies {
     implementation(Deps.viewModel)
     implementation(Deps.work)
 
+    implementation("com.github.m7mdra:HtmlRecycler:0.1.11")
+
     testImplementation(Deps.junit)
 
     androidTestImplementation(Deps.lifecycleTesting)

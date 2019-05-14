@@ -7,7 +7,7 @@ import me.thanel.recyclerviewutils.viewholder.BaseItemViewBinder
 import me.thanel.webmark.R
 import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.model.WebmarkChange
-import me.thanel.webmark.share.openInBrowser
+import me.thanel.webmark.ui.content.ContentActivity
 import me.thanel.webmark.ui.imageloader.ImageLoader
 
 class WebmarkViewBinder(
@@ -21,7 +21,8 @@ class WebmarkViewBinder(
 
     init {
         onItemClickListener = { view, item ->
-            view.context.openInBrowser(item.url)
+            ContentActivity.start(view.context, item.id)
+            // view.context.openInBrowser(item.url)
         }
     }
 

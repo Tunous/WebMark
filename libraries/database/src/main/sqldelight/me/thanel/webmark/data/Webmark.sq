@@ -11,7 +11,8 @@ CREATE TABLE webmark (
   archivedAt INTEGER AS Date,
   savedAt INTEGER AS Date NOT NULL DEFAULT (strftime('%s', 'now')),
   markedForDeletion INTEGER AS Boolean NOT NULL DEFAULT 0,
-  imageUrl TEXT AS Uri
+  imageUrl TEXT AS Uri,
+  content TEXT
 );
 
 -- Select
@@ -62,6 +63,11 @@ LIMIT 1;
 lastInsertId:
 SELECT last_insert_rowid();
 
+selectById:
+SELECT *
+FROM webmark
+WHERE id = ?;
+
 -- Insert
 
 insert:
@@ -76,7 +82,8 @@ SET
   title = ?,
   faviconUrl = ?,
   estimatedReadingTimeMinutes = ?,
-  imageUrl = ?
+  imageUrl = ?,
+  content = ?
 WHERE id = ?;
 
 archiveById:

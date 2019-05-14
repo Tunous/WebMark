@@ -17,21 +17,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WebMark.DayNight"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity android:name=".ui.content.ContentActivity"></activity>
         <activity android:name=".MainActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".work.SaveWebmarkActivity"
             android:label="Save page"
             android:theme="@android:style/Theme.NoDisplay">
-
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
@@ -43,4 +40,5 @@
 
         <receiver android:name=".ShareIntentChoiceBroadcastReceiver" />
     </application>
+
 </manifest>

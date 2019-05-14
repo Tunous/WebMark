@@ -1,0 +1,1 @@
+ALTER TABLE webmark ADD COLUMN content TEXT;
