@@ -1,4 +1,4 @@
-# WebMark ![GitHub release](https://img.shields.io/github/release/Tunous/WebMark.svg) ![CircleCI branch](https://img.shields.io/circleci/project/github/Tunous/WebMark/master.svg)
+# WebMark [![GitHub release](https://img.shields.io/github/release/Tunous/WebMark.svg)](https://github.com/Tunous/WebMark/releases) [![CircleCI build](https://img.shields.io/circleci/project/github/Tunous/WebMark/master.svg)](https://circleci.com/gh/Tunous/WebMark)
 
 Your convenient storage for links and articles.
 
