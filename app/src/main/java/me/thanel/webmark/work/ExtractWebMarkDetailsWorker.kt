@@ -23,7 +23,7 @@ import org.kodein.di.generic.instance
 import timber.log.Timber
 import java.io.IOException
 
-class ExtractWebmarkDetailsWorker(
+class ExtractWebMarkDetailsWorker(
     appContext: Context,
     workerParams: WorkerParameters
 ) : BaseWorker(appContext, workerParams) {
@@ -34,7 +34,7 @@ class ExtractWebmarkDetailsWorker(
         val id = inputData.getLong(KEY_ID, -1L)
         check(id != -1L) { "Tried to start webmark details extraction task without valid id" }
 
-        val uri = database.webmarkQueries.selectUrlForId(id).executeAsOneOrNull()
+        val uri = database.webMarkQueries.selectUrlForId(id).executeAsOneOrNull()
         if (uri == null) {
             Timber.w("Didn't find webmark for requested id: $id")
             return Result.failure()
@@ -63,7 +63,7 @@ class ExtractWebmarkDetailsWorker(
             imageUrl
         )
 
-        database.webmarkQueries.updateById(
+        database.webMarkQueries.updateById(
             id = id,
             title = title,
             faviconUrl = faviconUrl,
@@ -137,7 +137,7 @@ class ExtractWebmarkDetailsWorker(
             val constraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
-            val request = OneTimeWorkRequestBuilder<ExtractWebmarkDetailsWorker>()
+            val request = OneTimeWorkRequestBuilder<ExtractWebMarkDetailsWorker>()
                 .setInputData(workDataOf(KEY_ID to id))
                 .setConstraints(constraints)
                 .addTag(TAG)

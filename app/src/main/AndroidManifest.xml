@@ -28,8 +28,8 @@
         </activity>
 
         <activity
-            android:name=".work.SaveWebmarkActivity"
-            android:label="Save page"
+            android:name=".work.SaveWebMarkActivity"
+            android:label="@string/action_save_to_webmark"
             android:theme="@android:style/Theme.NoDisplay">
 
             <intent-filter>

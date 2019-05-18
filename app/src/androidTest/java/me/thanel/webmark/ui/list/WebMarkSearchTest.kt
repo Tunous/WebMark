@@ -22,7 +22,7 @@ import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.not
 import org.junit.Test
 
-class WebmarkSearchTest : SampleDataUserInterfaceTest() {
+class WebMarkSearchTest : SampleDataUserInterfaceTest() {
 
     @Test
     fun pressing_on_search_toggle_toggles_visibility_and_focus_of_search_input() {

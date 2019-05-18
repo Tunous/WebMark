@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.DiffUtil
 import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.ext.addIf
 
-object WebmarkItemCallback : DiffUtil.ItemCallback<Webmark>() {
+object WebMarkItemCallback : DiffUtil.ItemCallback<Webmark>() {
     override fun areItemsTheSame(oldItem: Webmark, newItem: Webmark) =
         oldItem.id == newItem.id
 
@@ -20,9 +20,9 @@ object WebmarkItemCallback : DiffUtil.ItemCallback<Webmark>() {
                 oldItem.imageUrl == newItem.imageUrl
 
     override fun getChangePayload(oldItem: Webmark, newItem: Webmark): Any? =
-        mutableListOf<WebmarkChange>()
-            .addIf(WebmarkChange.Title) { oldItem.title != newItem.title }
-            .addIf(WebmarkChange.Favicon) { oldItem.faviconUrl != newItem.faviconUrl }
-            .addIf(WebmarkChange.Details) { oldItem.url != newItem.url || oldItem.estimatedReadingTimeMinutes != newItem.estimatedReadingTimeMinutes }
-            .addIf(WebmarkChange.Image) { oldItem.imageUrl != newItem.imageUrl }
+        mutableListOf<WebMarkChange>()
+            .addIf(WebMarkChange.Title) { oldItem.title != newItem.title }
+            .addIf(WebMarkChange.Favicon) { oldItem.faviconUrl != newItem.faviconUrl }
+            .addIf(WebMarkChange.Details) { oldItem.url != newItem.url || oldItem.estimatedReadingTimeMinutes != newItem.estimatedReadingTimeMinutes }
+            .addIf(WebMarkChange.Image) { oldItem.imageUrl != newItem.imageUrl }
 }

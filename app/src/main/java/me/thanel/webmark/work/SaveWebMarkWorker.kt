@@ -20,7 +20,7 @@ import me.thanel.webmark.data.ext.transactionWithResult
 import org.kodein.di.generic.instance
 import timber.log.Timber
 
-class SaveWebmarkWorker(
+class SaveWebMarkWorker(
     private val appContext: Context,
     workerParams: WorkerParameters
 ) : BaseWorker(appContext, workerParams) {
@@ -45,7 +45,7 @@ class SaveWebmarkWorker(
     }
 
     private fun checkIsAlreadySaved(uri: Uri): Boolean {
-        val queries = database.webmarkQueries
+        val queries = database.webMarkQueries
         val existingId = queries.selectIdForUrl(uri).executeAsOneOrNull() ?: return false
 
         // If already saved mark the link as new to update its position on list
@@ -54,7 +54,7 @@ class SaveWebmarkWorker(
     }
 
     private suspend fun saveWebmark(uri: Uri) {
-        val queries = database.webmarkQueries
+        val queries = database.webMarkQueries
         val id = queries.transactionWithResult {
             queries.insert(null, uri)
             queries.lastInsertId().executeAsOneOrNull()
@@ -65,7 +65,7 @@ class SaveWebmarkWorker(
             Timber.d("This shouldn't happen: Something went wrong while trying to save new webmark.")
         } else {
             showToast(R.string.info_saved)
-            ExtractWebmarkDetailsWorker.enqueue(appContext, id)
+            ExtractWebMarkDetailsWorker.enqueue(appContext, id)
         }
     }
 
@@ -81,7 +81,7 @@ class SaveWebmarkWorker(
         internal const val TAG = "save-webmark"
 
         fun enqueue(context: Context, uri: Uri): Pair<WorkRequest, Operation> {
-            val request = OneTimeWorkRequestBuilder<SaveWebmarkWorker>()
+            val request = OneTimeWorkRequestBuilder<SaveWebMarkWorker>()
                 .setInputData(workDataOf(KEY_URI to uri.toString()))
                 .addTag(TAG)
                 .build()

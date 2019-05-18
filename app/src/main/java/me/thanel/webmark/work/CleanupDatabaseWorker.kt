@@ -22,7 +22,7 @@ open class CleanupDatabaseWorker(
     private val database: Database by instance()
 
     override suspend fun doWork(): Result {
-        database.webmarkQueries.cleanup()
+        database.webMarkQueries.cleanup()
         return Result.success()
     }
 

@@ -9,13 +9,13 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import kotlinx.android.synthetic.main.item_webmark.*
 import me.thanel.recyclerviewutils.viewholder.ContainerViewHolder
 import me.thanel.webmark.R
+import me.thanel.webmark.action.WebMarkAction
 import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.data.ext.isArchived
 import me.thanel.webmark.ext.getColorFromAttr
-import me.thanel.webmark.action.WebmarkAction
 import me.thanel.webmark.ui.touchhelper.SwipeableViewHolder
 
-class WebmarkViewHolder(containerView: View) :
+class WebMarkViewHolder(containerView: View) :
     ContainerViewHolder(containerView),
     SwipeableViewHolder {
 
@@ -47,8 +47,8 @@ class WebmarkViewHolder(containerView: View) :
 
     private fun updateActionIcon(item: Webmark, isSwipingRight: Boolean) {
         val action = when {
-            isSwipingRight -> WebmarkAction.rightSwipeFor(item)
-            else -> WebmarkAction.leftSwipeFor(item)
+            isSwipingRight -> WebMarkAction.rightSwipeFor(item)
+            else -> WebMarkAction.leftSwipeFor(item)
         }
         val iconResId = action?.iconResId
         if (iconResId != null) {
@@ -68,8 +68,8 @@ class WebmarkViewHolder(containerView: View) :
 
     private fun updateBackgroundColor(item: Webmark, isSwipingRight: Boolean) {
         val action = when {
-            isSwipingRight -> WebmarkAction.rightSwipeFor(item)
-            else -> WebmarkAction.leftSwipeFor(item)
+            isSwipingRight -> WebMarkAction.rightSwipeFor(item)
+            else -> WebMarkAction.leftSwipeFor(item)
         }
         val colorAttrId = action?.colorAttrId ?: R.attr.colorActionUnarchive
         containerView.setBackgroundColor(context.getColorFromAttr(colorAttrId))

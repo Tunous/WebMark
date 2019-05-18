@@ -11,8 +11,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import me.thanel.webmark.R
-import me.thanel.webmark.action.WebmarkAction
-import me.thanel.webmark.action.WebmarkActionHandler
+import me.thanel.webmark.action.WebMarkAction
+import me.thanel.webmark.action.WebMarkActionHandler
 import me.thanel.webmark.data.BuildConfig
 import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.data.ext.isArchived
@@ -30,22 +30,22 @@ class WebMarkPopupMenu(
     fun createPopupMenu(
         context: Context,
         webmark: Webmark,
-        actionHandler: WebmarkActionHandler
+        actionHandler: WebMarkActionHandler
     ) = popupMenu {
         style = R.style.Theme_WebMark_PopupMenu_DayNight_WithOffset
         section {
             coloredHeader(webmark.title ?: webmark.url.toString())
 
             val archiveAction =
-                if (webmark.isArchived) WebmarkAction.Unarchive else WebmarkAction.Archive
+                if (webmark.isArchived) WebMarkAction.Unarchive else WebMarkAction.Archive
             item(webmark, archiveAction, actionHandler)
-            item(webmark, WebmarkAction.Delete, actionHandler)
+            item(webmark, WebMarkAction.Delete, actionHandler)
             shareItem(context, webmark.url)
         }
 
         if (BuildConfig.DEBUG) {
             section {
-                item(webmark, WebmarkAction.ExtractDetails, actionHandler)
+                item(webmark, WebMarkAction.ExtractDetails, actionHandler)
             }
         }
     }
@@ -81,7 +81,7 @@ class WebMarkPopupMenu(
 
     private fun MaterialPopupMenuBuilder.SectionHolder.item(
         webmark: Webmark,
-        action: WebmarkAction,
-        actionHandler: WebmarkActionHandler
+        action: WebMarkAction,
+        actionHandler: WebMarkActionHandler
     ) = item(action.labelResId, action.iconResId) { actionHandler.performAction(action, webmark) }
 }

@@ -7,13 +7,13 @@ import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
 
-class SaveWebmarkActivity : Activity() {
+class SaveWebMarkActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val url = getSharedUrlFromIntent()
         if (url != null) {
-            SaveWebmarkWorker.enqueue(this, url)
+            SaveWebMarkWorker.enqueue(this, url)
         } else {
             Toast.makeText(this, "Invalid URL", Toast.LENGTH_SHORT).show()
         }

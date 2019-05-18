@@ -21,39 +21,39 @@ import kotlinx.android.synthetic.main.view_empty.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import me.thanel.recyclerviewutils.adapter.lazyAdapterWrapper
 import me.thanel.webmark.R
-import me.thanel.webmark.action.WebmarkAction
-import me.thanel.webmark.action.WebmarkActionHandler
+import me.thanel.webmark.action.WebMarkAction
+import me.thanel.webmark.action.WebMarkActionHandler
 import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.ext.launchIdling
 import me.thanel.webmark.ext.updateTheme
 import me.thanel.webmark.ext.viewModel
-import me.thanel.webmark.model.WebmarkItemCallback
+import me.thanel.webmark.model.WebMarkItemCallback
 import me.thanel.webmark.preferences.WebMarkPreferences
 import me.thanel.webmark.share.share
 import me.thanel.webmark.ui.base.BaseFragment
 import me.thanel.webmark.ui.imageloader.ImageLoader
-import me.thanel.webmark.ui.list.item.webmark.WebmarkViewBinder
+import me.thanel.webmark.ui.list.item.webmark.WebMarkViewBinder
 import me.thanel.webmark.ui.popup.OptionsPopupMenu
 import me.thanel.webmark.ui.popup.WebMarkPopupMenu
 import me.thanel.webmark.ui.touchhelper.CollapseItemAnimator
 import me.thanel.webmark.ui.touchhelper.ItemTouchCallback
 import me.thanel.webmark.ui.touchhelper.SwipeableViewHolder
-import me.thanel.webmark.work.ExtractWebmarkDetailsWorker
-import me.thanel.webmark.work.SaveWebmarkWorker
+import me.thanel.webmark.work.ExtractWebMarkDetailsWorker
+import me.thanel.webmark.work.SaveWebMarkWorker
 import org.kodein.di.generic.instance
 
-class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), WebmarkActionHandler {
+class WebMarkListFragment : BaseFragment(R.layout.fragment_webmark_list), WebMarkActionHandler {
 
-    private val viewModel: WebmarkListViewModel by viewModel()
+    private val viewModel: WebMarkListViewModel by viewModel()
     private val clipboard: ClipboardManager by instance()
     private val inputMethodManager: InputMethodManager by instance()
     private val imageLoader: ImageLoader by instance()
     private val webMarkPopupMenu: WebMarkPopupMenu by instance()
 
     private val adapterWrapper by lazyAdapterWrapper {
-        register(WebmarkViewBinder(imageLoader).apply {
+        register(WebMarkViewBinder(imageLoader).apply {
             onLongClickListener = ::showPopupMenu
-        }, WebmarkItemCallback)
+        }, WebMarkItemCallback)
     }
 
     private val toolbarLayout by lazy { toolbar as MotionLayout }
@@ -188,7 +188,7 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
             val message = getString(R.string.question_save_copied_url, text)
             Snackbar.make(coordinator, message, Snackbar.LENGTH_LONG)
                 .setAction(R.string.action_save) {
-                    SaveWebmarkWorker.enqueue(requireContext(), uri)
+                    SaveWebMarkWorker.enqueue(requireContext(), uri)
                 }
                 .show()
 
@@ -202,7 +202,7 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
     }
 
     private fun onSwiped(direction: Int, webmark: Webmark) {
-        val action = WebmarkAction.swipeInDirectionFor(direction, webmark) ?: return
+        val action = WebMarkAction.swipeInDirectionFor(direction, webmark) ?: return
         performAction(action, webmark)
     }
 
@@ -229,13 +229,13 @@ class WebmarkListFragment : BaseFragment(R.layout.fragment_webmark_list), Webmar
             .show()
     }
 
-    override fun performAction(action: WebmarkAction, webmark: Webmark) {
+    override fun performAction(action: WebMarkAction, webmark: Webmark) {
         when (action) {
-            WebmarkAction.Archive -> archive(webmark.id)
-            WebmarkAction.Delete -> delete(webmark.id)
-            WebmarkAction.ShareLink -> requireContext().share(webmark.url)
-            WebmarkAction.Unarchive -> unarchive(webmark.id)
-            WebmarkAction.ExtractDetails -> ExtractWebmarkDetailsWorker.enqueue(requireContext(), webmark.id)
+            WebMarkAction.Archive -> archive(webmark.id)
+            WebMarkAction.Delete -> delete(webmark.id)
+            WebMarkAction.ShareLink -> requireContext().share(webmark.url)
+            WebMarkAction.Unarchive -> unarchive(webmark.id)
+            WebMarkAction.ExtractDetails -> ExtractWebMarkDetailsWorker.enqueue(requireContext(), webmark.id)
         }
     }
 }

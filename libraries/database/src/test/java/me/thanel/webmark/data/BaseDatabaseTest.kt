@@ -14,7 +14,7 @@ import java.util.Date
 @RunWith(RobolectricTestRunner::class)
 abstract class BaseDatabaseTest {
 
-    protected lateinit var db: WebmarkQueries
+    protected lateinit var db: WebMarkQueries
         private set
 
     @Before
@@ -25,7 +25,7 @@ abstract class BaseDatabaseTest {
             import(databaseModule(context))
             import(testDatabaseModule(context), allowOverride = true)
         }
-        db = kodein.instance<Database>().webmarkQueries
+        db = kodein.instance<Database>().webMarkQueries
     }
 
     protected fun todayPlusDays(amount: Int): Date {

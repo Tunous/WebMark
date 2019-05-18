@@ -14,30 +14,30 @@ class SaveWebMarkWorkerTest : BaseWorkerTest() {
 
     @Before
     fun setupDatabase() {
-        getDependency<Database>().webmarkQueries.deleteEverything()
+        getDependency<Database>().webMarkQueries.deleteEverything()
     }
 
     @Test
     fun will_save_new_link_to_database() {
         val uri = "https://example.com".toUri()
 
-        val (request, operation) = SaveWebmarkWorker.enqueue(appContext, uri)
+        val (request, operation) = SaveWebMarkWorker.enqueue(appContext, uri)
         operation.result.get()
 
         awaitWorkState(request, WorkInfo.State.SUCCEEDED)
-        val queries = getDependency<Database>().webmarkQueries
+        val queries = getDependency<Database>().webMarkQueries
         val id = queries.selectIdForUrl(uri).executeAsOneOrNull()
         assertNotNull("Webmark for requested url should be saved", id)
     }
 
     @Test
     fun will_succeed_without_saving_if_webmark_already_exists() {
-        val queries = getDependency<Database>().webmarkQueries
+        val queries = getDependency<Database>().webMarkQueries
         val uri = "https://example.com".toUri()
         val originalId = 1L
         queries.insert(originalId, uri)
 
-        val (request, operation) = SaveWebmarkWorker.enqueue(appContext, uri)
+        val (request, operation) = SaveWebMarkWorker.enqueue(appContext, uri)
         operation.result.get()
 
         awaitWorkState(request, WorkInfo.State.SUCCEEDED)
@@ -49,10 +49,10 @@ class SaveWebMarkWorkerTest : BaseWorkerTest() {
     fun will_start_details_extraction_task_after_saving() {
         val uri = "https://example.com".toUri()
 
-        val (request, operation) = SaveWebmarkWorker.enqueue(appContext, uri)
+        val (request, operation) = SaveWebMarkWorker.enqueue(appContext, uri)
         operation.result.get()
         awaitWorkState(request, WorkInfo.State.SUCCEEDED)
 
-        assertWorkWithTagStarted(ExtractWebmarkDetailsWorker.TAG)
+        assertWorkWithTagStarted(ExtractWebMarkDetailsWorker.TAG)
     }
 }

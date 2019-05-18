@@ -8,7 +8,7 @@ import me.thanel.webmark.R
 import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.data.ext.isArchived
 
-enum class WebmarkAction(
+enum class WebMarkAction(
     @StringRes val labelResId: Int,
     @AttrRes val colorAttrId: Int,
     @DrawableRes val iconResId: Int

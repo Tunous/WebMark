@@ -21,7 +21,7 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-class WebmarkInteractionTest : SampleDataUserInterfaceTest() {
+class WebMarkInteractionTest : SampleDataUserInterfaceTest() {
 
     @Test
     fun clicking_on_webmark_redirects_to_browser() {

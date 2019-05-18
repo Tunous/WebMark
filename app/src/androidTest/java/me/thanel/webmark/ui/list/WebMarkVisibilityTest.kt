@@ -19,7 +19,7 @@ import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.not
 import org.junit.Test
 
-class WebmarkVisibilityTest : SampleDataUserInterfaceTest() {
+class WebMarkVisibilityTest : SampleDataUserInterfaceTest() {
 
     @Test
     fun displays_saved_webmarks() {

@@ -1,7 +1,7 @@
 package me.thanel.webmark.test.data
 
 import androidx.core.net.toUri
-import me.thanel.webmark.data.WebmarkQueries
+import me.thanel.webmark.data.WebMarkQueries
 
 const val TITLE_WEBMARK =
     "Humor, Charm, and Creativity Save Guardians of the Galaxy from Stock Storytelling"
@@ -20,7 +20,7 @@ const val LINK_ARCHIVED_WEBMARK = "https://mcuexchange.com/avengers-endgame-pres
 
 const val LINK_NOT_SAVED = "https://mcucosmic.com/2019/03/13/mcu-phase-4-movies/"
 
-fun WebmarkQueries.insertSampleData() = transaction {
+fun WebMarkQueries.insertSampleData() = transaction {
     insert(
         url = LINK_WEBMARK,
         title = TITLE_WEBMARK,
@@ -51,7 +51,7 @@ fun WebmarkQueries.insertSampleData() = transaction {
     )
 }
 
-private fun WebmarkQueries.insert(
+private fun WebMarkQueries.insert(
     url: String,
     title: String,
     imageUrl: String? = null,

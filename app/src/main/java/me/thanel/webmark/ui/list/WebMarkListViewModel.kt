@@ -19,7 +19,7 @@ import me.thanel.webmark.ui.base.BaseViewModel
 import me.thanel.webmark.work.CleanupDatabaseWorker
 import org.kodein.di.generic.instance
 
-class WebmarkListViewModel(app: Application) : BaseViewModel(app) {
+class WebMarkListViewModel(app: Application) : BaseViewModel(app) {
     private val database: Database by instance()
 
     private val filterLiveData = mutableLiveDataOf("")
@@ -44,33 +44,33 @@ class WebmarkListViewModel(app: Application) : BaseViewModel(app) {
 
     private fun getWebmarks(loadArchive: Boolean, filterText: String?): LiveData<List<Webmark>> {
         val query = if (loadArchive) {
-            database.webmarkQueries.selectArchived(filterText)
+            database.webMarkQueries.selectArchived(filterText)
         } else {
-            database.webmarkQueries.selectUnarchived(filterText)
+            database.webMarkQueries.selectUnarchived(filterText)
         }
         return query.asLiveData()
             .mapToList(viewModelScope)
     }
 
     fun archiveWebmark(id: Long) = runInBackground {
-        database.webmarkQueries.archiveById(id)
+        database.webMarkQueries.archiveById(id)
     }
 
     fun unarchiveWebmark(id: Long) = runInBackground {
-        database.webmarkQueries.unarchiveById(id)
+        database.webMarkQueries.unarchiveById(id)
     }
 
     fun deleteWebmark(context: Context, id: Long) = runInBackground {
-        database.webmarkQueries.setMarkedForDeletionById(id = id, markedForDeletion = true)
+        database.webMarkQueries.setMarkedForDeletionById(id = id, markedForDeletion = true)
         CleanupDatabaseWorker.enqueueDelayed(context)
     }
 
     fun undoDeleteWebmark(context: Context, id: Long) = runInBackground {
-        database.webmarkQueries.setMarkedForDeletionById(id = id, markedForDeletion = false)
+        database.webMarkQueries.setMarkedForDeletionById(id = id, markedForDeletion = false)
         CleanupDatabaseWorker.cancelNonPeriodic(context)
     }
 
     suspend fun isSaved(uri: Uri): Boolean = withContext(Dispatchers.IO) {
-        return@withContext database.webmarkQueries.selectIdForUrl(uri).executeAsOneOrNull() != null
+        return@withContext database.webMarkQueries.selectIdForUrl(uri).executeAsOneOrNull() != null
     }
 }

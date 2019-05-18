@@ -27,7 +27,7 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-class WebmarkPopupTest : SampleDataUserInterfaceTest() {
+class WebMarkPopupTest : SampleDataUserInterfaceTest() {
 
     @Test
     fun displays_popup_menu_when_long_pressed_on_webmark() {

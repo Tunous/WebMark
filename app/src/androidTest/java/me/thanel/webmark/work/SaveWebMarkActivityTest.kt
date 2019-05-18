@@ -6,10 +6,10 @@ import me.thanel.webmark.test.base.work.BaseWorkerTest
 import org.junit.Rule
 import org.junit.Test
 
-class SaveWebmarkActivityTest : BaseWorkerTest() {
+class SaveWebMarkActivityTest : BaseWorkerTest() {
 
     @get:Rule
-    val activityRule = IntentsTestRule<SaveWebmarkActivity>(SaveWebmarkActivity::class.java, false, false)
+    val activityRule = IntentsTestRule<SaveWebMarkActivity>(SaveWebMarkActivity::class.java, false, false)
 
     @Test
     fun sharing_regular_text_will_not_start_save_work() {
@@ -18,7 +18,7 @@ class SaveWebmarkActivityTest : BaseWorkerTest() {
         }
         activityRule.launchActivity(intent)
 
-        assertWorkWithTagNotStarted(SaveWebmarkWorker.TAG)
+        assertWorkWithTagNotStarted(SaveWebMarkWorker.TAG)
     }
 
     @Test
@@ -26,14 +26,14 @@ class SaveWebmarkActivityTest : BaseWorkerTest() {
         val intent = Intent(Intent.ACTION_SEND)
         activityRule.launchActivity(intent)
 
-        assertWorkWithTagNotStarted(SaveWebmarkWorker.TAG)
+        assertWorkWithTagNotStarted(SaveWebMarkWorker.TAG)
     }
 
     @Test
     fun launching_activity_without_intent_will_not_start_save_work() {
         activityRule.launchActivity(null)
 
-        assertWorkWithTagNotStarted(SaveWebmarkWorker.TAG)
+        assertWorkWithTagNotStarted(SaveWebMarkWorker.TAG)
     }
 
     @Test
@@ -43,6 +43,6 @@ class SaveWebmarkActivityTest : BaseWorkerTest() {
         }
         activityRule.launchActivity(intent)
 
-        assertWorkWithTagStarted(SaveWebmarkWorker.TAG)
+        assertWorkWithTagStarted(SaveWebMarkWorker.TAG)
     }
 }
