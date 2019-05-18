@@ -1,4 +1,12 @@
-# WebMark [![CircleCI](https://circleci.com/gh/Tunous/WebMark.svg?style=svg)](https://circleci.com/gh/Tunous/WebMark)
+# WebMark ![GitHub release](https://img.shields.io/github/release/Tunous/WebMark.svg) ![CircleCI branch](https://img.shields.io/circleci/project/github/Tunous/WebMark/master.svg)
+
+Your convenient storage for links and articles.
+
+<a href='https://play.google.com/store/apps/details?id=me.thanel.webmark&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
+    <img alt='Get it on Google Play' src='https://play.google.com/intl/en/badges/images/generic/en_badge_web_generic.png' width='200' />
+</a>
+
+<img alt='App with light theme.' src='art/light-theme.png' height='580' /> <img alt='App with dark theme.' src='art/dark-theme.png' height='580' />
 
 # License
 

@@ -31,7 +31,7 @@
     <string name="info_invalid_url">Invalid URL</string>
     <string name="info_made_by">Made by Łukasz Rutkowski</string>
     <string name="info_save_instructions">You can save link to any webpage from other apps by using standard share action.</string>
-    <string name="info_saved">Saved page</string>
+    <string name="info_saved">Saved to WebMark</string>
     <string name="info_unarchived">Unarchived</string>
 
     <string name="question_save_copied_url">Save copied URL?\n%1$s</string>
