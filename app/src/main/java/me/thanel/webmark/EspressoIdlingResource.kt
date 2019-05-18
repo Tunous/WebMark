@@ -5,13 +5,13 @@ import androidx.test.espresso.idling.CountingIdlingResource
 
 object EspressoIdlingResource {
     @VisibleForTesting
-    val idlingResource = CountingIdlingResource("global")
+    var idlingResource: CountingIdlingResource? = null
 
     fun increment() {
-        idlingResource.increment()
+        idlingResource?.increment()
     }
 
     fun decrement() {
-        idlingResource.decrement()
+        idlingResource?.decrement()
     }
 }

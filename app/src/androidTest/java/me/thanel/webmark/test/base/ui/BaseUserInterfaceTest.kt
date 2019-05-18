@@ -6,7 +6,7 @@ import android.content.Context
 import android.util.Log
 import androidx.arch.core.executor.testing.CountingTaskExecutorRule
 import androidx.test.espresso.IdlingRegistry
-import androidx.test.espresso.IdlingResource
+import androidx.test.espresso.idling.CountingIdlingResource
 import androidx.test.espresso.intent.rule.IntentsTestRule
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.work.Configuration
@@ -27,7 +27,6 @@ import java.util.concurrent.TimeUnit
 abstract class BaseUserInterfaceTest : DKodeinAware {
 
     private lateinit var clipboardManager: ClipboardManager
-    private var idlingResource: IdlingResource? = null
     protected lateinit var appContext: Context
 
     override lateinit var dkodein: DKodein
@@ -42,8 +41,8 @@ abstract class BaseUserInterfaceTest : DKodeinAware {
     open fun setup() {
         appContext = InstrumentationRegistry.getInstrumentation().targetContext
         dkodein = appContext.asApp().kodein.direct
-        idlingResource = EspressoIdlingResource.idlingResource
-        IdlingRegistry.getInstance().register(idlingResource)
+        EspressoIdlingResource.idlingResource = CountingIdlingResource("test")
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.idlingResource)
 
         setupWorkManager()
 
@@ -57,8 +56,9 @@ abstract class BaseUserInterfaceTest : DKodeinAware {
 
     @After
     fun unregisterIdlingResource() {
-        if (idlingResource != null) {
-            IdlingRegistry.getInstance().unregister(idlingResource)
+        if (EspressoIdlingResource.idlingResource != null) {
+            IdlingRegistry.getInstance().unregister(EspressoIdlingResource.idlingResource)
+            EspressoIdlingResource.idlingResource = null
         }
     }
 
