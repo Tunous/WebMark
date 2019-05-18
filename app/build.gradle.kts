@@ -18,7 +18,7 @@ android {
         minSdkVersion(Config.minSdk)
         targetSdkVersion(Config.targetSdk)
         applicationId = "me.thanel.webmark"
-        versionCode = 1
+        versionCode = 2
         versionName = "0.1.0"
         testInstrumentationRunner = "me.thanel.webmark.test.WebMarkRunner"
     }
