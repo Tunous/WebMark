@@ -230,6 +230,7 @@ jobs:
     steps:
       - checkout
       - *attach_workspace
+      - *restore_cache
       - *setup_signing
       - run:
           name: Deploying to Google Play Store
