@@ -228,6 +228,7 @@ jobs:
   deploy_release_to_store:
     <<: *android_config
     steps:
+      - checkout
       - *attach_workspace
       - *setup_signing
       - run:
