@@ -12,8 +12,6 @@ object WebMarkPreferences : KotprefModel() {
 
     var latestSuggestedUrl by nullableStringPref(default = null)
 
-    var useDarkTheme by booleanPref(default = false)
-
     private val defaultAppTheme
         get() = if (Build.VERSION.SDK_INT >= 28) {
             AppTheme.FollowSystem

@@ -5,11 +5,13 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.longClick
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.intent.Intents.intended
+import androidx.test.espresso.matcher.ViewMatchers.isChecked
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import me.thanel.webmark.BuildConfig
 import me.thanel.webmark.R
+import me.thanel.webmark.preferences.AppTheme
 import me.thanel.webmark.preferences.WebMarkPreferences
 import me.thanel.webmark.test.base.ui.BaseUserInterfaceTest
 import me.thanel.webmark.test.matcher.browserIntent
@@ -17,8 +19,8 @@ import me.thanel.webmark.test.matcher.onTooltipView
 import me.thanel.webmark.test.matcher.onViewInPopup
 import me.thanel.webmark.test.matcher.stubExternalIntents
 import me.thanel.webmark.ui.popup.LicensesPopupMenu
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertTrue
+import org.hamcrest.CoreMatchers.equalTo
+import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
 
@@ -38,15 +40,43 @@ class OptionsMenuTest : BaseUserInterfaceTest() {
     }
 
     @Test
-    fun can_toggle_theme_from_options_popup() {
-        assertFalse("Theme should default to light", WebMarkPreferences.useDarkTheme)
+    fun can_select_light_theme_from_options_popup() {
+        openThemeOptionsPopup()
 
-        onView(withId(R.id.moreOptionsButton)).perform(click())
-        onViewInPopup(withText(R.string.action_use_dark_theme)).perform(click())
+        onViewInPopup(withText(R.string.title_theme_light)).perform(click())
 
-        assertTrue("Theme should change to dark", WebMarkPreferences.useDarkTheme)
+        assertThat(WebMarkPreferences.appTheme, equalTo(AppTheme.Light))
+        openThemeOptionsPopup()
+        onViewInPopup(withText(R.string.title_theme_light)).check(matches(isChecked()))
+    }
+
+    @Test
+    fun can_select_dark_theme_from_options_popup() {
+        openThemeOptionsPopup()
+
+        onViewInPopup(withText(R.string.title_theme_dark)).perform(click())
+
+        assertThat(WebMarkPreferences.appTheme, equalTo(AppTheme.Dark))
+        openThemeOptionsPopup()
+        onViewInPopup(withText(R.string.title_theme_dark)).check(matches(isChecked()))
+    }
+
+    // TODO: Test different settings for API >= 28 and for lower API
+
+    @Test
+    fun can_select_system_theme_from_options_popup() {
+        openThemeOptionsPopup()
+
+        onViewInPopup(withText(R.string.title_theme_follow_system)).perform(click())
+
+        assertThat(WebMarkPreferences.appTheme, equalTo(AppTheme.FollowSystem))
+        openThemeOptionsPopup()
+        onViewInPopup(withText(R.string.title_theme_follow_system)).check(matches(isChecked()))
+    }
+
+    private fun openThemeOptionsPopup() {
         onView(withId(R.id.moreOptionsButton)).perform(click())
-        onViewInPopup(withText(R.string.action_use_light_theme)).check(matches(isDisplayed()))
+        onViewInPopup(withText(R.string.action_select_theme)).perform(click())
     }
 
     @Test
