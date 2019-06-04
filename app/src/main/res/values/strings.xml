@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
     <string name="action_archive">Archive</string>
+    <string name="action_select_theme">Select theme</string>
     <string name="action_close_search">Close search</string>
     <string name="action_delete">Delete</string>
     <string name="action_extract_details">Extract details</string>
@@ -14,8 +15,6 @@
     <string name="action_show_archive">Show archive</string>
     <string name="action_unarchive">Unarchive</string>
     <string name="action_undo">Undo</string>
-    <string name="action_use_dark_theme">Use dark theme</string>
-    <string name="action_use_light_theme">Use light theme</string>
     <string name="action_view_github">View on GitHub</string>
 
     <string name="app_name">WebMark</string>
@@ -41,4 +40,8 @@
     <string name="title_nothing_found">Nothing found</string>
     <string name="title_nothing_saved">Nothing saved</string>
     <string name="title_share_with">Share with</string>
+    <string name="title_theme_battery_saver">Set by Battery Saver</string>
+    <string name="title_theme_dark">Dark</string>
+    <string name="title_theme_follow_system">Use system default</string>
+    <string name="title_theme_light">Light</string>
 </resources>

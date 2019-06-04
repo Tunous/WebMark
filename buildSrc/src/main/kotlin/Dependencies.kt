@@ -14,8 +14,8 @@ object Deps {
 
     const val androidGradlePlugin = "com.android.tools.build:gradle:3.4.0"
 
-    private const val appCompatVersion = "1.0.2"
-    const val androidxAppCompat = "androidx.appcompat:appcompat:$appCompatVersion}"
+    private const val appCompatVersion = "1.1.0-alpha05"
+    const val androidxAppCompat = "androidx.appcompat:appcompat:$appCompatVersion"
 
     private const val lifecycleVersion = "2.0.0"
     const val lifecycle = "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
@@ -89,7 +89,9 @@ object Deps {
     const val kotlin = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
 
-    const val kotpref = "com.chibatching.kotpref:kotpref:2.8.0"
+    private const val kotprefVersion = "2.8.0"
+    const val kotpref = "com.chibatching.kotpref:kotpref:$kotprefVersion"
+    const val kotprefEnum = "com.chibatching.kotpref:enum-support:$kotprefVersion"
 
     const val okhttp = "com.squareup.okhttp3:okhttp:3.14.1"
 

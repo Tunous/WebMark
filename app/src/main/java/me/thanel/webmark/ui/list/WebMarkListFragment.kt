@@ -25,7 +25,6 @@ import me.thanel.webmark.action.WebMarkAction
 import me.thanel.webmark.action.WebMarkActionHandler
 import me.thanel.webmark.data.Webmark
 import me.thanel.webmark.ext.launchIdling
-import me.thanel.webmark.ext.updateTheme
 import me.thanel.webmark.ext.viewModel
 import me.thanel.webmark.model.WebMarkItemCallback
 import me.thanel.webmark.preferences.WebMarkPreferences
@@ -88,7 +87,7 @@ class WebMarkListFragment : BaseFragment(R.layout.fragment_webmark_list), WebMar
 
         TooltipCompat.setTooltipText(moreOptionsButton, getString(R.string.action_more_options))
         moreOptionsButton.setOnClickListener { anchorView ->
-            OptionsPopupMenu.show(requireContext(), anchorView, ::toggleTheme)
+            OptionsPopupMenu.show(requireContext(), anchorView)
         }
 
         updateSearchButtonTooltip()
@@ -116,12 +115,6 @@ class WebMarkListFragment : BaseFragment(R.layout.fragment_webmark_list), WebMar
                 )
             }
         }
-    }
-
-    private fun toggleTheme() {
-        val useDarkTheme = !WebMarkPreferences.useDarkTheme
-        WebMarkPreferences.useDarkTheme = useDarkTheme
-        updateTheme(useDarkTheme)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -235,7 +228,10 @@ class WebMarkListFragment : BaseFragment(R.layout.fragment_webmark_list), WebMar
             WebMarkAction.Delete -> delete(webmark.id)
             WebMarkAction.ShareLink -> requireContext().share(webmark.url)
             WebMarkAction.Unarchive -> unarchive(webmark.id)
-            WebMarkAction.ExtractDetails -> ExtractWebMarkDetailsWorker.enqueue(requireContext(), webmark.id)
+            WebMarkAction.ExtractDetails -> ExtractWebMarkDetailsWorker.enqueue(
+                requireContext(),
+                webmark.id
+            )
         }
     }
 }

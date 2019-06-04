@@ -96,6 +96,7 @@ dependencies {
     implementation(Deps.kodeinAndroid)
     implementation(Deps.kotlin)
     implementation(Deps.kotpref)
+    implementation(Deps.kotprefEnum)
     implementation(Deps.ktx)
     implementation(Deps.lifecycle)
     implementation(Deps.material)
