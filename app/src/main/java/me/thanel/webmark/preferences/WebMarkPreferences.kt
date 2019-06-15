@@ -20,10 +20,6 @@ object WebMarkPreferences : KotprefModel() {
         }
     var appTheme by enumValuePref(default = defaultAppTheme)
 
-    init {
-        appTheme = AppTheme.FollowSystem
-    }
-
     var latestShareComponent: ComponentName?
         get() {
             val packageName = lastSharePackageName ?: return null

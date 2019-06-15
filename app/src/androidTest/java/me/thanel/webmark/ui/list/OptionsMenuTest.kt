@@ -9,6 +9,7 @@ import androidx.test.espresso.matcher.ViewMatchers.isChecked
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.filters.SdkSuppress
 import me.thanel.webmark.BuildConfig
 import me.thanel.webmark.R
 import me.thanel.webmark.preferences.AppTheme
@@ -61,9 +62,8 @@ class OptionsMenuTest : BaseUserInterfaceTest() {
         onViewInPopup(withText(R.string.title_theme_dark)).check(matches(isChecked()))
     }
 
-    // TODO: Test different settings for API >= 28 and for lower API
-
     @Test
+    @SdkSuppress(minSdkVersion = 28)
     fun can_select_system_theme_from_options_popup() {
         openThemeOptionsPopup()
 
@@ -72,6 +72,18 @@ class OptionsMenuTest : BaseUserInterfaceTest() {
         assertThat(WebMarkPreferences.appTheme, equalTo(AppTheme.FollowSystem))
         openThemeOptionsPopup()
         onViewInPopup(withText(R.string.title_theme_follow_system)).check(matches(isChecked()))
+    }
+
+    @Test
+    @SdkSuppress(maxSdkVersion = 27)
+    fun can_select_battery_saver_based_theme_from_options_popup() {
+        openThemeOptionsPopup()
+
+        onViewInPopup(withText(R.string.title_theme_battery_saver)).perform(click())
+
+        assertThat(WebMarkPreferences.appTheme, equalTo(AppTheme.BatterySaver))
+        openThemeOptionsPopup()
+        onViewInPopup(withText(R.string.title_theme_battery_saver)).check(matches(isChecked()))
     }
 
     private fun openThemeOptionsPopup() {

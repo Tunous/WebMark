@@ -109,6 +109,8 @@ dependencies {
     implementation(Deps.work)
 
     testImplementation(Deps.junit)
+    testImplementation(Deps.robolectric)
+    testImplementation(Deps.testCore)
 
     androidTestImplementation(Deps.lifecycleTesting)
     androidTestImplementation(Deps.espresso)
