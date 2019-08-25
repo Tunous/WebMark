@@ -96,6 +96,7 @@ dependencies {
     implementation(Deps.kodeinAndroid)
     implementation(Deps.kotlin)
     implementation(Deps.kotpref)
+    implementation(Deps.kotprefEnum)
     implementation(Deps.ktx)
     implementation(Deps.lifecycle)
     implementation(Deps.material)
@@ -108,6 +109,8 @@ dependencies {
     implementation(Deps.work)
 
     testImplementation(Deps.junit)
+    testImplementation(Deps.robolectric)
+    testImplementation(Deps.testCore)
 
     androidTestImplementation(Deps.lifecycleTesting)
     androidTestImplementation(Deps.espresso)

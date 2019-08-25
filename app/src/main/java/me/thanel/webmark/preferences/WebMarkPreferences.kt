@@ -1,7 +1,9 @@
 package me.thanel.webmark.preferences
 
 import android.content.ComponentName
+import android.os.Build
 import com.chibatching.kotpref.KotprefModel
+import com.chibatching.kotpref.enumpref.enumValuePref
 
 object WebMarkPreferences : KotprefModel() {
 
@@ -10,7 +12,13 @@ object WebMarkPreferences : KotprefModel() {
 
     var latestSuggestedUrl by nullableStringPref(default = null)
 
-    var useDarkTheme by booleanPref(default = false)
+    private val defaultAppTheme
+        get() = if (Build.VERSION.SDK_INT >= 28) {
+            AppTheme.FollowSystem
+        } else {
+            AppTheme.BatterySaver
+        }
+    var appTheme by enumValuePref(default = defaultAppTheme)
 
     var latestShareComponent: ComponentName?
         get() {

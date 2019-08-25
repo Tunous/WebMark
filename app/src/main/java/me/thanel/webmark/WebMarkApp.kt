@@ -1,10 +1,9 @@
 package me.thanel.webmark
 
 import android.app.Application
-import androidx.appcompat.app.AppCompatDelegate
 import com.chibatching.kotpref.Kotpref
 import me.thanel.webmark.data.databaseModule
-import me.thanel.webmark.preferences.WebMarkPreferences
+import me.thanel.webmark.ext.refreshDefaultTheme
 import me.thanel.webmark.share.QuickShareDetailsProvider
 import me.thanel.webmark.share.RealQuickShareDetailsProvider
 import me.thanel.webmark.ui.imageloader.GlideImageLoader
@@ -34,7 +33,7 @@ open class WebMarkApp : Application(), KodeinAware {
         super.onCreate()
         setupLogging()
         Kotpref.init(this)
-        setupTheme()
+        refreshDefaultTheme()
         CleanupDatabaseWorker.enqueuePeriodic(this)
     }
 
@@ -42,13 +41,5 @@ open class WebMarkApp : Application(), KodeinAware {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
-    }
-
-    private fun setupTheme() {
-        val nightMode = when {
-            WebMarkPreferences.useDarkTheme -> AppCompatDelegate.MODE_NIGHT_YES
-            else -> AppCompatDelegate.MODE_NIGHT_NO
-        }
-        AppCompatDelegate.setDefaultNightMode(nightMode)
     }
 }
