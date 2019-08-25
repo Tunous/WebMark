@@ -9,7 +9,7 @@ import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
 @Config(minSdk = 28)
-class WebMarkPreferencesTest: BasePreferencesTest() {
+class WebMarkPreferencesTest : BasePreferencesTest() {
 
     @Test
     fun `on API 28 or higher app theme should default to follow system`() {

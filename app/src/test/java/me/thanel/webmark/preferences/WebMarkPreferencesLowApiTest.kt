@@ -9,7 +9,7 @@ import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [21, 27])
-class WebMarkPreferencesLowApiTest: BasePreferencesTest() {
+class WebMarkPreferencesLowApiTest : BasePreferencesTest() {
 
     @Test
     fun `on API 27 or lower app theme should default to follow battery saver`() {
