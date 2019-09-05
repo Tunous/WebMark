@@ -19,7 +19,7 @@ android {
         targetSdkVersion(Config.targetSdk)
         applicationId = "me.thanel.webmark"
         versionCode = 3
-        versionName = "0.2.0-alpha"
+        versionName = "0.2.0"
         testInstrumentationRunner = "me.thanel.webmark.test.WebMarkRunner"
     }
 
